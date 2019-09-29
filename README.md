@@ -1,1 +1,4 @@
-# -android-cq2017-33-ttthinh-group03
+# Android CQ2017/33 TTThinh Group03
+
+
+## Shipe
