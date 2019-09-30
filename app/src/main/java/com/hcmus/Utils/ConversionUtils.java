@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class ConvertionUtils {
+public class ConversionUtils {
    public static class DateTime {
       public static Date parseDate(String dateInput) {
          try {
@@ -73,7 +73,6 @@ public class ConvertionUtils {
          } catch (Exception ex) {
             return new Date();
          }
-
       }
       public static String getCurrentFullDateTime() {
          TimeZone timeZone = getCustomerTimeZone();
@@ -84,5 +83,13 @@ public class ConvertionUtils {
          return format.format(today.getTime());
       }
    }
-
+   public static class User {
+      public static String EncryptPassword(String pwd) {
+         return CryptoUtil.encryptWithSHA256(CryptoUtil.encodeWithBase64(pwd));
+      }
+      public static String FormatPhone(String phonenumber) {
+         String phone = phonenumber.replaceAll("[^\\d.]", "");
+         return phone.substring(0,3) + "-" + phone.substring(3,6) + "-" + phone.substring(6);
+      }
+   }
 }
