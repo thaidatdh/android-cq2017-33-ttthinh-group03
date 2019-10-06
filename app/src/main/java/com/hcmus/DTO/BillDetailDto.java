@@ -5,6 +5,15 @@ public class BillDetailDto {
    private int itemId;
    private int amount;
 
+   public BillDetailDto() {
+   }
+
+   public BillDetailDto(int billId, int itemId, int amount) {
+      this.billId = billId;
+      this.itemId = itemId;
+      this.amount = amount;
+   }
+
    public void setBillId(int billId) {
       this.billId = billId;
    }

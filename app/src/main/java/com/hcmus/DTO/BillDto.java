@@ -15,6 +15,20 @@ public class BillDto {
 
    public BillDto() {}
 
+   public BillDto(int billId, int customerId, String createdDate, String description, long totalPrice, long shipCharge, boolean accepted, char status, int shipperId, String deliverTime, boolean completed) {
+      this.billId = billId;
+      this.customerId = customerId;
+      this.createdDate = createdDate;
+      this.description = description;
+      this.totalPrice = totalPrice;
+      this.shipCharge = shipCharge;
+      this.accepted = accepted;
+      this.status = status;
+      this.shipperId = shipperId;
+      this.deliverTime = deliverTime;
+      this.completed = completed;
+   }
+
    public void setDescription(String description) {
       this.description = description;
    }

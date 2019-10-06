@@ -13,6 +13,18 @@ public class ItemDto {
 
    public ItemDto() {}
 
+   public ItemDto(int id, String name, String description, String thumbnail, long price, int category, char status, String createdDate, String updatedDate) {
+      this.id = id;
+      this.name = name;
+      this.description = description;
+      this.thumbnail = thumbnail;
+      this.price = price;
+      this.category = category;
+      this.status = status;
+      this.createdDate = createdDate;
+      this.updatedDate = updatedDate;
+   }
+
    public void setName(String name) {
       this.name = name;
    }
