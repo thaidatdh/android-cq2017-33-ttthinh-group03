@@ -11,6 +11,16 @@ public class ReviewDto {
 
    public ReviewDto() {}
 
+   public ReviewDto(int userId, char type, int shipperId, int rating, String comment, String createdDate, String updatedDate) {
+      this.userId = userId;
+      this.type = type;
+      this.shipperId = shipperId;
+      this.rating = rating;
+      this.comment = comment;
+      this.createdDate = createdDate;
+      this.updatedDate = updatedDate;
+   }
+
    public int getUserId() {
       return userId;
    }

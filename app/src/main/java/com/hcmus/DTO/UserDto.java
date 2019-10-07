@@ -13,6 +13,18 @@ public class UserDto {
 
    public UserDto() {}
 
+   public UserDto(int userId, char userType, String username, String password, String firstName, String lastName, String address, String phone, String createdDate) {
+      this.userId = userId;
+      this.userType = userType;
+      this.username = username;
+      this.password = password;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.address = address;
+      this.phone = phone;
+      this.createdDate = createdDate;
+   }
+
    public int getUserId() {
       return userId;
    }

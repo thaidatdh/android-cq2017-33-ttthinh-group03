@@ -10,6 +10,15 @@ public class DiscountDto {
 
    public DiscountDto() {}
 
+   public DiscountDto(int discountId, int itemId, double percentage, String description, String startDate, String endDate) {
+      this.discountId = discountId;
+      this.itemId = itemId;
+      this.percentage = percentage;
+      this.description = description;
+      this.startDate = startDate;
+      this.endDate = endDate;
+   }
+
    public String getDescription() {
       return description;
    }

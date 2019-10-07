@@ -9,6 +9,14 @@ public class ShipperDto {
 
    public ShipperDto() {}
 
+   public ShipperDto(int userId, String plateNumber, String vehicle, String vehicleColor, String active) {
+      this.userId = userId;
+      this.plateNumber = plateNumber;
+      this.vehicle = vehicle;
+      this.vehicleColor = vehicleColor;
+      this.active = active;
+   }
+
    public void setUserId(int userId) {
       this.userId = userId;
    }

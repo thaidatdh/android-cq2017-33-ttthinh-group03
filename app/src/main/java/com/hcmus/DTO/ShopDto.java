@@ -8,6 +8,13 @@ public class ShopDto {
 
    public ShopDto() {}
 
+   public ShopDto(int shopId, String address, String openTime, String closeTime) {
+      this.shopId = shopId;
+      this.address = address;
+      this.openTime = openTime;
+      this.closeTime = closeTime;
+   }
+
    public String getAddress() {
       return address;
    }

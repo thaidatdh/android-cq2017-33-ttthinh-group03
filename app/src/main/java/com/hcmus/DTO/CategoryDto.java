@@ -7,6 +7,12 @@ public class CategoryDto {
 
    public CategoryDto() {}
 
+   public CategoryDto(int categoryId, String name, String description) {
+      this.categoryId = categoryId;
+      this.name = name;
+      this.description = description;
+   }
+
    public int getCategoryId() {
       return categoryId;
    }

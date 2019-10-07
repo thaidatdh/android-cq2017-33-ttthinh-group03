@@ -12,6 +12,17 @@ public class PaymentDto {
 
    public PaymentDto() {}
 
+   public PaymentDto(int billId, String paymentDate, int type, long amount, String description, int userId, int receiverId, boolean completed) {
+      this.billId = billId;
+      this.paymentDate = paymentDate;
+      this.type = type;
+      this.amount = amount;
+      this.description = description;
+      this.userId = userId;
+      this.receiverId = receiverId;
+      this.completed = completed;
+   }
+
    public void setAmount(long amount) {
       this.amount = amount;
    }
