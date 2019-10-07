@@ -2,28 +2,17 @@ package com.hcmus.DTO;
 
 public class UserDto {
    private int userId;
-   private char userType;
+   private String userType;
    private String username;
    private String password;
-   private String firstName;
-   private String lastName;
+   private String name;
+
    private String address;
    private String phone;
    private String createdDate;
+   private int age;
 
    public UserDto() {}
-
-   public UserDto(int userId, char userType, String username, String password, String firstName, String lastName, String address, String phone, String createdDate) {
-      this.userId = userId;
-      this.userType = userType;
-      this.username = username;
-      this.password = password;
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.address = address;
-      this.phone = phone;
-      this.createdDate = createdDate;
-   }
 
    public int getUserId() {
       return userId;
@@ -33,27 +22,30 @@ public class UserDto {
       this.userId = userId;
    }
 
-   public String getFirstName() {
-      return firstName;
-   }
 
-   public char getUserType() {
+
+   public String getUserType() {
       return userType;
    }
 
-   public String getLastName() {
-      return lastName;
+
+   public int getAge() {
+      return age;
    }
 
-   public void setFirstName(String firstName) {
-      this.firstName = firstName;
+   public void setAge(int age) {
+      this.age = age;
    }
 
-   public void setLastName(String lastName) {
-      this.lastName = lastName;
+   public String getName() {
+      return name;
    }
 
-   public void setUserType(char userType) {
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public void setUserType(String userType) {
       this.userType = userType;
    }
 
@@ -96,4 +88,5 @@ public class UserDto {
    public void setCreatedDate(String createdDate) {
       this.createdDate = createdDate;
    }
+
 }
