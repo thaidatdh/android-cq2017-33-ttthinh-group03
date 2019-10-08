@@ -35,20 +35,40 @@ public class UserDto {
       this.userId = userId;
    }
 
-   public String getFirstName() {
-      return firstName;
-   }
-
    public char getUserType() {
       return userType;
    }
 
-   public String getLastName() {
-      return lastName;
+   public void setUserType(char userType) {
+      this.userType = userType;
+   }
+
+   public String getUsername() {
+      return username;
+   }
+
+   public void setUsername(String username) {
+      this.username = username;
+   }
+
+   public String getPassword() {
+      return password;
+   }
+
+   public void setPassword(String password) {
+      this.password = password;
+   }
+
+   public String getFirstName() {
+      return firstName;
    }
 
    public void setFirstName(String firstName) {
       this.firstName = firstName;
+   }
+
+   public String getLastName() {
+      return lastName;
    }
 
    public void setLastName(String lastName) {
@@ -63,32 +83,12 @@ public class UserDto {
       this.birthDate = birthDate;
    }
 
-   public void setUserType(char userType) {
-      this.userType = userType;
-   }
-
-   public String getPassword() {
-      return password;
-   }
-
-   public void setPassword(String password) {
-      this.password = password;
-   }
-
    public String getAddress() {
       return address;
    }
 
    public void setAddress(String address) {
       this.address = address;
-   }
-
-   public String getUsername() {
-      return username;
-   }
-
-   public void setUsername(String username) {
-      this.username = username;
    }
 
    public String getPhone() {
