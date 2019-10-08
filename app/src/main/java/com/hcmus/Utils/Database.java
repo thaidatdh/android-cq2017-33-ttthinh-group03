@@ -4,9 +4,13 @@ import android.os.StrictMode;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database {
-    public Connection getConnection() {
+
+    public static Connection getConnection() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         Connection con = null;
@@ -24,5 +28,21 @@ public class Database {
         finally {
         }
         return con;
+    }
+
+    public static ResultSet SelectQuery(String sql) throws SQLException {
+        Connection conn = getConnection();
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        conn.close();
+        return rs;
+    }
+
+    public static int ExecuteQuery(String sql) throws SQLException {
+        int result = -1;
+        Connection conn = getConnection();
+        Statement statement = conn.createStatement();
+        result = statement.executeUpdate(sql);
+        return result;
     }
 }

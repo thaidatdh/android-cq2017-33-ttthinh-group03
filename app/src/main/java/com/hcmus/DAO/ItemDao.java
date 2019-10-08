@@ -11,69 +11,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDao {
-    Database db = new Database();
-    Connection conn;
-
     public ItemDao() {
-        conn = db.getConnection();
     }
 
     public List<ItemDto> SelectAll() throws SQLException {
         List<ItemDto> item = new ArrayList<>();
-        Statement statement = conn.createStatement();
         String sql = "select * from Item";
-        ResultSet rs = statement.executeQuery(sql);
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            item.add(new ItemDto());
+            item.add(new ItemDto(rs.getInt("item_id"), rs.getString("name"), rs.getString("description"), rs.getString("thumnail"), rs.getInt("price"), rs.getInt("category"), rs.getString("status").charAt(0), rs.getString("created_date"), rs.getString("updated_date")));
         }
-        conn.close();// Đóng kết nối
         return item;
     }
 
     public boolean Insert(ItemDto item) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "insert into Items(item_id , name , description , thumnail , price , category , status , created_date , updated_date) VALUES ("+item.getId() + ", '" + item.getName() + "', '" + item.getDescription() + "', '" + item.getThumbnail() + "', " + item.getPrice() + ", " + item.getCategory() + ", '" + item.getStatus() + "', '" + item.getCreatedDate() + "', '" + item.getUpdatedDate() +")";
+
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else {
-            conn.close();
             return false;
         }
     }
 
     public boolean Update(ItemDto item) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "" ;
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "update items set name = '" +item.getName() + "', description = '" + item.getDescription() + "', thumnail = '" + item.getThumbnail() + "', price = " + item.getPrice()
+                + ", category = " + item.getCategory() + ", status = '" + item.getStatus() + "', created_date = '" + item.getCreatedDate() + "', updated_date = '" + item.getUpdatedDate() + "' where item_id = " + item.getId(); ;
+        if (Database.ExecuteQuery(sql) > 0) {
+
             return true;
         } else
-            conn.close();
+
         return false;
     }
 
     public boolean Delete(ItemDto item) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "delete from items where item_id = " + item.getId();
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
-
     public ItemDto findById(int Id) throws SQLException {
         ItemDto item = new ItemDto();
-        Statement statement = conn.createStatement();
-        String sql = "" + Id;
-        ResultSet rs = statement.executeQuery(sql);
+        String sql = "select * from items where item_id = " + Id;
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            item = new ItemDto();
+            item = new ItemDto(rs.getInt("item_id"), rs.getString("name"), rs.getString("description"), rs.getString("thumnail"), rs.getInt("price"), rs.getInt("category"), rs.getString("status").charAt(0), rs.getString("created_date"), rs.getString("updated_date"));
         }
-        conn.close();
         return item;
     }
 }

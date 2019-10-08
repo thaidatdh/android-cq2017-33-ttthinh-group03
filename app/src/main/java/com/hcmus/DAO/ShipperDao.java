@@ -11,69 +11,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShipperDao  {
-    Database db = new Database();
-    Connection conn;
+
 
     public ShipperDao() {
-        conn = db.getConnection();
     }
 
     public List<ShipperDto> SelectAll() throws SQLException {
         List<ShipperDto> shipper = new ArrayList<>();
-        Statement statement = conn.createStatement();
         String sql = "select * from Shipper";
-        ResultSet rs = statement.executeQuery(sql);
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            shipper.add(new ShipperDto(rs.getInt("userId"), rs.getString("plateNumber"), rs.getString("vehicle"), rs.getString("vehicleColor"), rs.getString("active")));
+            shipper.add(new ShipperDto(rs.getInt("user_id"), rs.getString("plate_number"), rs.getString("vehicle"), rs.getString("vehicle_color"), rs.getString("active")));
         }
-        conn.close();// Đóng kết nối
         return shipper;
     }
 
     public boolean Insert(ShipperDto shipper) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "insert into Shipper(plateNumber, vehicle, vehicleColor, active) values('" + shipper.getPlateNumber() + "', '" + shipper.getVehicle() + "', '" + shipper.getVehicleColor() + "', '" + shipper.getActive()+ "')";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "insert into Shipper(plate_number, vehicle, vehicle_color, active) values('" + shipper.getPlateNumber() + "', '" + shipper.getVehicle() + "', '" + shipper.getVehicleColor() + "', '" + shipper.getActive()+ "')";
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else {
-            conn.close();
             return false;
         }
     }
 
     public boolean Update(ShipperDto shipper) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "Update Shipper set plateNumber = '" + shipper.getPlateNumber() + "', vehicle = '" + shipper.getVehicle() +"', vehicleColor = '"+ shipper.getVehicle() + "', active = '" + shipper.getActive() + "' where userId = " + shipper.getUserId()+ ")" ;
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "Update Shipper set plate_number = '" + shipper.getPlateNumber() + "', vehicle = '" + shipper.getVehicle() +"', vehicle_color = '"+ shipper.getVehicle() + "', active = " + shipper.getActive() + " where user_id = " + shipper.getUserId()+ ")" ;
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
     public boolean Delete(ShipperDto shipper) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "delete from Shipper where ID = " + shipper.getUserId();
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "delete from Shipper where user_id = " + shipper.getUserId();
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
-
     public ShipperDto findById(int Id) throws SQLException {
         ShipperDto shipper = new ShipperDto();
-        Statement statement = conn.createStatement();
-        String sql = "select * from Shipper where ID = " + Id;
-        ResultSet rs = statement.executeQuery(sql);
+        String sql = "select * from Shipper where user_id = " + Id;
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            shipper = new ShipperDto(rs.getInt("userId"), rs.getString("plateNumber"), rs.getString("vehicle"), rs.getString("vehicleColor"), rs.getString("active"));
+            shipper = new ShipperDto(rs.getInt("user_id"), rs.getString("plate_number"), rs.getString("vehicle"), rs.getString("vehicle_color"), rs.getString("active"));
         }
-        conn.close();
         return shipper;
     }
 

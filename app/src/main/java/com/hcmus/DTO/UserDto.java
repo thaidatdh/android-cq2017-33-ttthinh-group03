@@ -7,19 +7,21 @@ public class UserDto {
    private String password;
    private String firstName;
    private String lastName;
+   private String birthDate;
    private String address;
    private String phone;
    private String createdDate;
 
    public UserDto() {}
 
-   public UserDto(int userId, char userType, String username, String password, String firstName, String lastName, String address, String phone, String createdDate) {
+   public UserDto(int userId, char userType, String username, String password, String firstName, String lastName, String birthDate, String address, String phone, String createdDate) {
       this.userId = userId;
       this.userType = userType;
       this.username = username;
       this.password = password;
       this.firstName = firstName;
       this.lastName = lastName;
+      this.birthDate = birthDate;
       this.address = address;
       this.phone = phone;
       this.createdDate = createdDate;
@@ -51,6 +53,14 @@ public class UserDto {
 
    public void setLastName(String lastName) {
       this.lastName = lastName;
+   }
+
+   public String getBirthDate() {
+      return birthDate;
+   }
+
+   public void setBirthDate(String birthDate) {
+      this.birthDate = birthDate;
    }
 
    public void setUserType(char userType) {

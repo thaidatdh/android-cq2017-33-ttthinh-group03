@@ -11,69 +11,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDao {
-    Database db = new Database();
-    Connection conn;
 
     public ReviewDao() {
-        conn = db.getConnection();
     }
 
     public List<ReviewDto> SelectAll() throws SQLException {
         List<ReviewDto> review = new ArrayList<>();
-        Statement statement = conn.createStatement();
         String sql = "select * from Review";
-        ResultSet rs = statement.executeQuery(sql);
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            review.add(new ReviewDto());
+            review.add(new ReviewDto(rs.getInt("review_id"), rs.getInt("user_id"), rs.getString("type").charAt(0), rs.getInt("objectid"), rs.getInt("item_id"), rs.getInt("rating"), rs.getString("comment"), rs.getString("created_date"), rs.getString("updated_date")));
         }
-        conn.close();// Đóng kết nối
         return review;
     }
 
     public boolean Insert(ReviewDto review) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "insert into review(review_id, user_id, type, objectid, item_id, rating, comment, created_date, updated_date) values ("
+                + review.getReviewId() + ", "+ review.getUserId() + ", '" + review.getType() + "', " + review.getObjectId() + ", " + review.getItemId() + ", " + review.getRating() + ", '" + review.getComment() + "', '" + review.getCreatedDate() + "', '" + review.getUpdatedDate()+ "')";
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else {
-            conn.close();
             return false;
         }
     }
 
     public boolean Update(ReviewDto review) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "" ;
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "update review set user_id = '" + review.getUserId() + "', type = '" + review.getType() + "', objectid = '" + review.getObjectId() + "', item_id = '" + review.getItemId()
+            + "', rating = '" + review.getRating() + "', comment = '" + review.getComment() + "', created_date = '" + review.getCreatedDate() + "', updated_date = '" + review.getUpdatedDate() + "where review_id = " + review.getReviewId();
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
     public boolean Delete(ReviewDto review) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "delete from review where review_id = " + review.getReviewId();
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
 
     public ReviewDto findById(int Id) throws SQLException {
         ReviewDto review = new ReviewDto();
-        Statement statement = conn.createStatement();
-        String sql = "" + Id;
-        ResultSet rs = statement.executeQuery(sql);
+        String sql = "select * from review where review_id = " + Id;
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            review = new ReviewDto();
+            review = new ReviewDto(rs.getInt("review_id"), rs.getInt("user_id"), rs.getString("type").charAt(0), rs.getInt("objectid"), rs.getInt("item_id"), rs.getInt("rating"), rs.getString("comment"), rs.getString("created_date"), rs.getString("updated_date"));
         }
-        conn.close();
         return review;
     }
 }

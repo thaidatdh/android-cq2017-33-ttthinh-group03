@@ -25,64 +25,60 @@ public class ItemDto {
       this.updatedDate = updatedDate;
    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   public void setDescription(String description) {
-      this.description = description;
-   }
-
-   public String getName() {
-      return name;
-   }
-
-   public String getDescription() {
-      return description;
-   }
-
-   public int getCategory() {
-      return category;
-   }
-
-   public char getStatus() {
-      return status;
-   }
-
    public int getId() {
       return id;
-   }
-
-   public long getPrice() {
-      return price;
-   }
-
-   public String getThumbnail() {
-      return thumbnail;
-   }
-
-   public void setCategory(int category) {
-      this.category = category;
    }
 
    public void setId(int id) {
       this.id = id;
    }
 
-   public void setPrice(long price) {
-      this.price = price;
+   public String getName() {
+      return name;
    }
 
-   public void setStatus(char status) {
-      this.status = status;
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public String getDescription() {
+      return description;
+   }
+
+   public void setDescription(String description) {
+      this.description = description;
+   }
+
+   public String getThumbnail() {
+      return thumbnail;
    }
 
    public void setThumbnail(String thumbnail) {
       this.thumbnail = thumbnail;
    }
 
-   public void setUpdatedDate(String updatedDate) {
-      this.updatedDate = updatedDate;
+   public long getPrice() {
+      return price;
+   }
+
+   public void setPrice(long price) {
+      this.price = price;
+   }
+
+   public int getCategory() {
+      return category;
+   }
+
+   public void setCategory(int category) {
+      this.category = category;
+   }
+
+   public char getStatus() {
+      return status;
+   }
+
+   public void setStatus(char status) {
+      this.status = status;
    }
 
    public String getCreatedDate() {
@@ -95,5 +91,9 @@ public class ItemDto {
 
    public String getUpdatedDate() {
       return updatedDate;
+   }
+
+   public void setUpdatedDate(String updatedDate) {
+      this.updatedDate = updatedDate;
    }
 }

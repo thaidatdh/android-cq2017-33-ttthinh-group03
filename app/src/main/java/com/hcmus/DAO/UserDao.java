@@ -11,69 +11,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    Database db = new Database();
-    Connection conn;
-
     public UserDao() {
-        conn = db.getConnection();
     }
 
     public List<UserDto> SelectAll() throws SQLException {
         List<UserDto> user = new ArrayList<>();
-        Statement statement = conn.createStatement();
-        String sql = "select * from User";
-        ResultSet rs = statement.executeQuery(sql);
+        String sql = "select * from Users";
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            user.add(new UserDto());
+            user.add(new UserDto(rs.getInt("user_id"), rs.getString("user_type").charAt(0), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date")));
         }
-        conn.close();// Đóng kết nối
         return user;
     }
 
     public boolean Insert(UserDto user) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "INSERT INTO Users(username, password, firstname, lastname, birth_date, user_type, address, phone, created_date) VALUES('"
+                + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "', '" + user.getBirthDate() + "', '" + user.getUserType() + "', '" + user.getAddress() + "', '" + user.getPhone() + "', '" + user.getCreatedDate() + "')";
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else {
-            conn.close();
             return false;
         }
     }
 
     public boolean Update(UserDto user) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "" ;
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "UPDATE Users set username = '" + user.getUsername() + "',  password = '" + user.getPassword() + "',  firstname = '"
+                + user.getFirstName() + "',  lastname = '" + user.getLastName() + "',  birth_date = '" + user.getBirthDate() + "',  user_type = '"
+                + user.getUserType() + "',  address = '" + user.getAddress() + "',  phone = '" + user.getPhone() + "',  created_date = '" + user.getCreatedDate() + "' WHERE user_id = " + user.getUserId();
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
     public boolean Delete(UserDto user) throws SQLException {
-        Statement statement = conn.createStatement();// Tạo đối tượng Statement.
-        String sql = "";
-        if (statement.executeUpdate(sql) > 0) {
-            conn.close();
+        String sql = "delete from Users where user_id = " + user.getUserId();
+        if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
-            conn.close();
         return false;
     }
 
 
     public UserDto findById(int Id) throws SQLException {
         UserDto user = new UserDto();
-        Statement statement = conn.createStatement();
-        String sql = "" + Id;
-        ResultSet rs = statement.executeQuery(sql);
+        String sql = "Select * from Users WHERE use_id = " + Id;
+        ResultSet rs = Database.SelectQuery(sql);
         while (rs.next()){
-            user = new UserDto();
+            user = new UserDto(rs.getInt("user_id"), rs.getString("user_type").charAt(0), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date"));
         }
-        conn.close();
         return user;
     }
 }
