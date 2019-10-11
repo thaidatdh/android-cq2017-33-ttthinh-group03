@@ -15,7 +15,7 @@ public class DiscountDao {
     public DiscountDao() {
     }
 
-    public List<DiscountDto> SelectAll() throws SQLException {
+    public static List<DiscountDto> SelectAll() throws SQLException {
         List<DiscountDto> billDetail = new ArrayList<>();
         
         String sql = "select * from Discount";
@@ -27,7 +27,7 @@ public class DiscountDao {
         return billDetail;
     }
 
-    public boolean Insert(DiscountDto billDetail) throws SQLException {
+    public static boolean Insert(DiscountDto billDetail) throws SQLException {
         String sql = "insert into Discount(id, item_id, percentage, description, start_date, end_date) values(" + billDetail.getDiscountId() + ", " + billDetail.getItemId() + ", '" + billDetail.getDescription() + "', '" + billDetail.getStartDate() + "', '" + billDetail.getEndDate() + "')";
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -36,7 +36,7 @@ public class DiscountDao {
         }
     }
 
-    public boolean Update(DiscountDto billDetail) throws SQLException {
+    public static boolean Update(DiscountDto billDetail) throws SQLException {
         String sql = "Update Discount set item_id = "+billDetail.getItemId()+", percentage = " + billDetail.getPercentage()+", description = '" + billDetail.getDescription() +"', start_date = '"+ billDetail.getStartDate() +"', end_date = '"+ billDetail.getEndDate() + "' where id = " + billDetail.getDiscountId() + ")" ;
             if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -44,7 +44,7 @@ public class DiscountDao {
         return false;
     }
 
-    public boolean Delete(DiscountDto billDetail) throws SQLException {
+    public static boolean Delete(DiscountDto billDetail) throws SQLException {
         String sql = "delete from Discount where id = " + billDetail.getDiscountId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -53,7 +53,7 @@ public class DiscountDao {
     }
 
 
-    public DiscountDto findById(int Id) throws SQLException {
+    public static DiscountDto findById(int Id) throws SQLException {
         DiscountDto billDetail = new DiscountDto();
         String sql = "select * from Shipper where id = " + Id;
         ResultSet rs = Database.SelectQuery(sql);

@@ -14,7 +14,7 @@ public class ItemDao {
     public ItemDao() {
     }
 
-    public List<ItemDto> SelectAll() throws SQLException {
+    public static List<ItemDto> SelectAll() throws SQLException {
         List<ItemDto> item = new ArrayList<>();
         String sql = "select * from Item";
         ResultSet rs = Database.SelectQuery(sql);
@@ -24,7 +24,7 @@ public class ItemDao {
         return item;
     }
 
-    public boolean Insert(ItemDto item) throws SQLException {
+    public static boolean Insert(ItemDto item) throws SQLException {
         String sql = "insert into Items(item_id , name , description , thumnail , price , category , status , created_date , updated_date) VALUES ("+item.getId() + ", '" + item.getName() + "', '" + item.getDescription() + "', '" + item.getThumbnail() + "', " + item.getPrice() + ", " + item.getCategory() + ", '" + item.getStatus() + "', '" + item.getCreatedDate() + "', '" + item.getUpdatedDate() +")";
 
         if (Database.ExecuteQuery(sql) > 0) {
@@ -34,7 +34,7 @@ public class ItemDao {
         }
     }
 
-    public boolean Update(ItemDto item) throws SQLException {
+    public static boolean Update(ItemDto item) throws SQLException {
         String sql = "update items set name = '" +item.getName() + "', description = '" + item.getDescription() + "', thumnail = '" + item.getThumbnail() + "', price = " + item.getPrice()
                 + ", category = " + item.getCategory() + ", status = '" + item.getStatus() + "', created_date = '" + item.getCreatedDate() + "', updated_date = '" + item.getUpdatedDate() + "' where item_id = " + item.getId(); ;
         if (Database.ExecuteQuery(sql) > 0) {
@@ -45,7 +45,7 @@ public class ItemDao {
         return false;
     }
 
-    public boolean Delete(ItemDto item) throws SQLException {
+    public static boolean Delete(ItemDto item) throws SQLException {
         String sql = "delete from items where item_id = " + item.getId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -53,7 +53,7 @@ public class ItemDao {
         return false;
     }
 
-    public ItemDto findById(int Id) throws SQLException {
+    public static ItemDto findById(int Id) throws SQLException {
         ItemDto item = new ItemDto();
         String sql = "select * from items where item_id = " + Id;
         ResultSet rs = Database.SelectQuery(sql);

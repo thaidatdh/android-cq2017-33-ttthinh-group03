@@ -15,7 +15,7 @@ public class PaymentDao {
     public PaymentDao() {
     }
 
-    public List<PaymentDto> SelectAll() throws SQLException {
+    public static List<PaymentDto> SelectAll() throws SQLException {
         List<PaymentDto> payment = new ArrayList<>();
         String sql = "select * from Payment";
         ResultSet rs = Database.SelectQuery(sql);
@@ -25,7 +25,7 @@ public class PaymentDao {
         return payment;
     }
 
-    public boolean Insert(PaymentDto payment) throws SQLException {
+    public static boolean Insert(PaymentDto payment) throws SQLException {
         String sql = "insert into Payment(bill_id, payment_date, type, amount, description, user_id, receiver_id, is_complete) values(" + payment.getBillId() + ", '" + payment.getPaymentDate() + "', '" + payment.getType() + "', " + payment.getAmount() + ", '" + payment.getDescription() + "', "  + payment.getUserId() + ", '" + payment.getReceiverId() + "', " + payment.isCompleted() + ")";
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -34,7 +34,7 @@ public class PaymentDao {
         }
     }
 
-    public boolean Update(PaymentDto payment) throws SQLException {
+    public static boolean Update(PaymentDto payment) throws SQLException {
         String sql = "UPDATE Payment set payment_date =  '" + payment.getPaymentDate() + "', type =  '" + payment.getType() + "', amount =  " + payment.getAmount() + ", description =  '" + payment.getDescription() +
         "', user_id =  "  + payment.getUserId() + ", receiver_id =  '" + payment.getReceiverId() + "', is_complete =  " + payment.isCompleted() ;
         if (Database.ExecuteQuery(sql) > 0) {
@@ -43,7 +43,7 @@ public class PaymentDao {
         return false;
     }
 
-    public boolean Delete(PaymentDto payment) throws SQLException {
+    public static boolean Delete(PaymentDto payment) throws SQLException {
         String sql = "delete from Payment where bill_id = " + payment.getBillId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -51,7 +51,7 @@ public class PaymentDao {
         return false;
     }
 
-    public PaymentDto findById(int Id) throws SQLException {
+    public static PaymentDto findById(int Id) throws SQLException {
         PaymentDto payment = new PaymentDto();
         String sql = "Select * from Payment where bill_id" + Id;
         ResultSet rs = Database.SelectQuery(sql);

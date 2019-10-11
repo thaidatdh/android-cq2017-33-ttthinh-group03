@@ -15,7 +15,7 @@ public class ReviewDao {
     public ReviewDao() {
     }
 
-    public List<ReviewDto> SelectAll() throws SQLException {
+    public static List<ReviewDto> SelectAll() throws SQLException {
         List<ReviewDto> review = new ArrayList<>();
         String sql = "select * from Review";
         ResultSet rs = Database.SelectQuery(sql);
@@ -25,7 +25,7 @@ public class ReviewDao {
         return review;
     }
 
-    public boolean Insert(ReviewDto review) throws SQLException {
+    public static boolean Insert(ReviewDto review) throws SQLException {
         String sql = "insert into review(review_id, user_id, type, objectid, item_id, rating, comment, created_date, updated_date) values ("
                 + review.getReviewId() + ", "+ review.getUserId() + ", '" + review.getType() + "', " + review.getObjectId() + ", " + review.getItemId() + ", " + review.getRating() + ", '" + review.getComment() + "', '" + review.getCreatedDate() + "', '" + review.getUpdatedDate()+ "')";
         if (Database.ExecuteQuery(sql) > 0) {
@@ -35,7 +35,7 @@ public class ReviewDao {
         }
     }
 
-    public boolean Update(ReviewDto review) throws SQLException {
+    public static boolean Update(ReviewDto review) throws SQLException {
         String sql = "update review set user_id = '" + review.getUserId() + "', type = '" + review.getType() + "', objectid = '" + review.getObjectId() + "', item_id = '" + review.getItemId()
             + "', rating = '" + review.getRating() + "', comment = '" + review.getComment() + "', created_date = '" + review.getCreatedDate() + "', updated_date = '" + review.getUpdatedDate() + "where review_id = " + review.getReviewId();
         if (Database.ExecuteQuery(sql) > 0) {
@@ -44,7 +44,7 @@ public class ReviewDao {
         return false;
     }
 
-    public boolean Delete(ReviewDto review) throws SQLException {
+    public static boolean Delete(ReviewDto review) throws SQLException {
         String sql = "delete from review where review_id = " + review.getReviewId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -53,7 +53,7 @@ public class ReviewDao {
     }
 
 
-    public ReviewDto findById(int Id) throws SQLException {
+    public static ReviewDto findById(int Id) throws SQLException {
         ReviewDto review = new ReviewDto();
         String sql = "select * from review where review_id = " + Id;
         ResultSet rs = Database.SelectQuery(sql);

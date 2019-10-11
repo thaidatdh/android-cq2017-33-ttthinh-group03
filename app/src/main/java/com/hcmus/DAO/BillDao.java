@@ -15,7 +15,7 @@ public class BillDao {
     public BillDao() {
     }
 
-    public List<BillDto> SelectAll() throws SQLException {
+    public static List<BillDto> SelectAll() throws SQLException {
         List<BillDto> bill = new ArrayList<>();
         String sql = "select * from Bill";
         ResultSet rs = Database.SelectQuery(sql);
@@ -25,7 +25,7 @@ public class BillDao {
         return bill;
     }
 
-    public boolean Insert(BillDto bill) throws SQLException {
+    public static boolean Insert(BillDto bill) throws SQLException {
         String sql = "insert into Bill(customer_id, created_date, description, total_price, ship_charge, accepted, status, shipper_id, deliver_time, is_completed) values(" + bill.getCustomerId() + ", '" + bill.getCreatedDate() + "', '" + bill.getDescription() + "', " + bill.getTotalPrice()+ ", " + bill.getShipCharge() + ", " + bill.isAccepted() + ", '" + bill.getStatus()+ "', " + bill.getShipperId() + ", '" + bill.getDeliverTime() + "', " + bill.isCompleted()+ ")";
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -34,7 +34,7 @@ public class BillDao {
         }
     }
 
-    public boolean Update(BillDto bill) throws SQLException {
+    public static boolean Update(BillDto bill) throws SQLException {
         String sql = "Update Bill set bill_id = " + bill.getBillId() + ", customer_id = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = " + bill.isAccepted() + ", status = '" + bill.getStatus()
                 + "', shipper_id = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = " + bill.isCompleted() + " where bill_id = " + bill.getBillId()+ ")" ;
         if (Database.ExecuteQuery(sql) > 0) {
@@ -43,7 +43,7 @@ public class BillDao {
         return false;
     }
 
-    public boolean Delete(BillDto bill) throws SQLException {
+    public static boolean Delete(BillDto bill) throws SQLException {
         String sql = "delete from Bill where bill_id = " + bill.getBillId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -52,7 +52,7 @@ public class BillDao {
     }
 
 
-    public BillDto findById(int Id) throws SQLException {
+    public static BillDto findById(int Id) throws SQLException {
         BillDto bill = new BillDto();
         String sql = "select * from Bill where ID = " + Id;
         ResultSet rs = Database.SelectQuery(sql);

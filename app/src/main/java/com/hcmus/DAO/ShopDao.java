@@ -14,34 +14,37 @@ public class ShopDao {
     public ShopDao() {
     }
 
-    public List<ShopDto> SelectAll() throws SQLException {
+    public static List<ShopDto> SelectAll() {
         List<ShopDto> shop = new ArrayList<>();
         String sql = "select * from Shop";
-        ResultSet rs = Database.SelectQuery(sql);
-        while (rs.next()){
-            shop.add(new ShopDto(rs.getInt("shop_id"), rs.getString("name"), rs.getString("address"), rs.getString("open_time"), rs.getString("close_time")));
-        }
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                shop.add(new ShopDto(rs.getInt("shop_id"), rs.getString("name"), rs.getString("address"), rs.getString("open_time"), rs.getString("close_time")));
+            }
+        } catch (Exception ex) {}
         return shop;
     }
 
-    public boolean Insert(ShopDto shop) throws SQLException {
+    public static int Insert(ShopDto shop) {
         String sql = "insert into Shop(name, address, open_time, close_time) values('" + shop.getName() + "', '" + shop.getAddress() + "', '" + shop.getOpenTime() + "', '" + shop.getCloseTime() + "')";
-        if (Database.ExecuteQuery(sql) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        sql = sql.replace("null", "");
+        int result = Database.ExecuteQuery(sql);
+        if (result == -1)
+            return result;
+        return Database.GetLastestId("shop","shop_id");
     }
 
-    public boolean Update(ShopDto shop) throws SQLException {
+    public static boolean Update(ShopDto shop) {
         String sql = "Update Shop set name = '" + shop.getName() + "', address = '" + shop.getAddress() + "', open_time = '" + shop.getOpenTime() +"', close_time = '"+ shop.getCloseTime() + "' where shop_id = " + shop.getShopId() + ")" ;
+        sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
-        } else
+        }
         return false;
     }
 
-    public boolean Delete(ShopDto shop) throws SQLException {
+    public static boolean Delete(ShopDto shop){
         String sql = "delete from Shop where id_shop = " + shop.getShopId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -50,13 +53,15 @@ public class ShopDao {
     }
 
 
-    public ShopDto findById(int Id) throws SQLException {
-        ShopDto shop = new ShopDto();
-        String sql = "select * from Shipper where id_shop = " + Id;
-        ResultSet rs = Database.SelectQuery(sql);
-        while (rs.next()){
-            shop = new ShopDto(rs.getInt("shop_id"), rs.getString("name"), rs.getString("address"), rs.getString("open_time"), rs.getString("close_time"));
-        }
+    public static ShopDto findById(int Id) {
+        ShopDto shop = null;
+        String sql = "select * from Shop where shop_id = " + Id;
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                shop = new ShopDto(rs.getInt("shop_id"), rs.getString("name"), rs.getString("address"), rs.getString("open_time"), rs.getString("close_time"));
+            }
+        }catch (SQLException ex) {}
         return shop;
     }
 }

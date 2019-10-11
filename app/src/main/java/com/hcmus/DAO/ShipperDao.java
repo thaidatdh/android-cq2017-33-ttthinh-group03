@@ -16,7 +16,7 @@ public class ShipperDao  {
     public ShipperDao() {
     }
 
-    public List<ShipperDto> SelectAll() throws SQLException {
+    public static List<ShipperDto> SelectAll() throws SQLException {
         List<ShipperDto> shipper = new ArrayList<>();
         String sql = "select * from Shipper";
         ResultSet rs = Database.SelectQuery(sql);
@@ -26,7 +26,7 @@ public class ShipperDao  {
         return shipper;
     }
 
-    public boolean Insert(ShipperDto shipper) throws SQLException {
+    public static boolean Insert(ShipperDto shipper) throws SQLException {
         String sql = "insert into Shipper(plate_number, vehicle, vehicle_color, active) values('" + shipper.getPlateNumber() + "', '" + shipper.getVehicle() + "', '" + shipper.getVehicleColor() + "', '" + shipper.getActive()+ "')";
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -35,7 +35,7 @@ public class ShipperDao  {
         }
     }
 
-    public boolean Update(ShipperDto shipper) throws SQLException {
+    public static boolean Update(ShipperDto shipper) throws SQLException {
         String sql = "Update Shipper set plate_number = '" + shipper.getPlateNumber() + "', vehicle = '" + shipper.getVehicle() +"', vehicle_color = '"+ shipper.getVehicle() + "', active = " + shipper.getActive() + " where user_id = " + shipper.getUserId()+ ")" ;
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -43,7 +43,7 @@ public class ShipperDao  {
         return false;
     }
 
-    public boolean Delete(ShipperDto shipper) throws SQLException {
+    public static boolean Delete(ShipperDto shipper) throws SQLException {
         String sql = "delete from Shipper where user_id = " + shipper.getUserId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -51,7 +51,7 @@ public class ShipperDao  {
         return false;
     }
 
-    public ShipperDto findById(int Id) throws SQLException {
+    public static ShipperDto findById(int Id) throws SQLException {
         ShipperDto shipper = new ShipperDto();
         String sql = "select * from Shipper where user_id = " + Id;
         ResultSet rs = Database.SelectQuery(sql);

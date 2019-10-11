@@ -14,7 +14,7 @@ public class BillDetailDao {
     public BillDetailDao() {
     }
 
-    public List<BillDetailDto> SelectAll() throws SQLException {
+    public static List<BillDetailDto> SelectAll() throws SQLException {
         List<BillDetailDto> billDetail = new ArrayList<>();
         String sql = "select * from BillDetail";
         ResultSet rs = Database.SelectQuery(sql);
@@ -24,7 +24,7 @@ public class BillDetailDao {
         return billDetail;
     }
 
-    public boolean Insert(BillDetailDto billDetail) throws SQLException {
+    public static boolean Insert(BillDetailDto billDetail) throws SQLException {
         String sql = "insert into BillDetail(billId, itemId, amount) values(" + billDetail.getBillId() + ", " + billDetail.getItemId() + ", " + billDetail.getAmount() + ")";
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -33,7 +33,7 @@ public class BillDetailDao {
         }
     }
 
-    public boolean Update(BillDetailDto billDetail) throws SQLException {
+    public static boolean Update(BillDetailDto billDetail) throws SQLException {
         String sql = "Update BillDetail set itemId = " + billDetail.getItemId() +", amount = "+ billDetail.getAmount() + " where billId = " + billDetail.getBillId() + ")" ;
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -41,7 +41,7 @@ public class BillDetailDao {
         return false;
     }
 
-    public boolean Delete(BillDetailDto billDetail) throws SQLException {
+    public static boolean Delete(BillDetailDto billDetail) throws SQLException {
         String sql = "delete from BillDetail where ID = " + billDetail.getBillId();
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -50,7 +50,7 @@ public class BillDetailDao {
     }
 
 
-    public BillDetailDto findById(int Id) throws SQLException {
+    public static BillDetailDto findById(int Id) throws SQLException {
         BillDetailDto billDetail = new BillDetailDto();
         String sql = "select * from Shipper where ID = " + Id;
         ResultSet rs = Database.SelectQuery(sql);
