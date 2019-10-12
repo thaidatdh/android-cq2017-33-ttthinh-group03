@@ -1,45 +1,45 @@
 package com.hcmus.DTO;
 
 public class ReviewDto {
-   private int reviewId;
-   private int userId;
+   private int review_id;
+   private int user_id;
    private char type;
-   private int objectId;
-   private int itemId;
+   private int objectid;
+   private int item_id;
    private int rating;
    private String comment;
-   private String createdDate;
-   private String updatedDate;
+   private String created_date;
+   private String updated_date;
 
    public ReviewDto() {
    }
 
-   public ReviewDto(int reviewId, int userId, char type, int objectId, int itemId, int rating, String comment, String createdDate, String updatedDate) {
-      this.reviewId = reviewId;
-      this.userId = userId;
+   public ReviewDto(int review_id, int user_id, char type, int objectid, int item_id, int rating, String comment, String created_date, String updated_date) {
+      this.review_id = review_id;
+      this.user_id = user_id;
       this.type = type;
-      this.objectId = objectId;
-      this.itemId = itemId;
+      this.objectid = objectid;
+      this.item_id = item_id;
       this.rating = rating;
       this.comment = comment;
-      this.createdDate = createdDate;
-      this.updatedDate = updatedDate;
+      this.created_date = created_date;
+      this.updated_date = updated_date;
    }
 
    public int getReviewId() {
-      return reviewId;
+      return review_id;
    }
 
-   public void setReviewId(int reviewId) {
-      this.reviewId = reviewId;
+   public void setReviewId(int review_id) {
+      this.review_id = review_id;
    }
 
    public int getUserId() {
-      return userId;
+      return user_id;
    }
 
-   public void setUserId(int userId) {
-      this.userId = userId;
+   public void setUserId(int user_id) {
+      this.user_id = user_id;
    }
 
    public char getType() {
@@ -51,19 +51,19 @@ public class ReviewDto {
    }
 
    public int getObjectId() {
-      return objectId;
+      return objectid;
    }
 
-   public void setObjectId(int objectId) {
-      this.objectId = objectId;
+   public void setObjectId(int objectid) {
+      this.objectid = objectid;
    }
 
    public int getItemId() {
-      return itemId;
+      return item_id;
    }
 
-   public void setItemId(int itemId) {
-      this.itemId = itemId;
+   public void setItemId(int item_id) {
+      this.item_id = item_id;
    }
 
    public int getRating() {
@@ -83,18 +83,18 @@ public class ReviewDto {
    }
 
    public String getCreatedDate() {
-      return createdDate;
+      return created_date;
    }
 
-   public void setCreatedDate(String createdDate) {
-      this.createdDate = createdDate;
+   public void setCreatedDate(String created_date) {
+      this.created_date = created_date;
    }
 
    public String getUpdatedDate() {
-      return updatedDate;
+      return updated_date;
    }
 
-   public void setUpdatedDate(String updatedDate) {
-      this.updatedDate = updatedDate;
+   public void setUpdatedDate(String updated_date) {
+      this.updated_date = updated_date;
    }
 }
