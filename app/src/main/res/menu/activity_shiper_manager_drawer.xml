@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_shipper_management"
+            android:icon="@drawable/motorbike"
+            android:title="@string/menu_shipper_management" />
+        <item
+            android:id="@+id/nav_customer_management"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_customer_management" />
+        <item
+            android:id="@+id/nav_bill_management"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_bill_management" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/menu_send" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
+        </menu>
+    </item>
+
+</menu>

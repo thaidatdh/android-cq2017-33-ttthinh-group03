@@ -1,7 +1,7 @@
 package com.hcmus.DTO;
 
 public class ItemDto {
-   private int id;
+   private int item_id;
    private String name;
    private String description;
    private String thumbnail;
@@ -13,8 +13,8 @@ public class ItemDto {
 
    public ItemDto() {}
 
-   public ItemDto(int id, String name, String description, String thumbnail, long price, int category, char status, String createdDate, String updatedDate) {
-      this.id = id;
+   public ItemDto(int item_id, String name, String description, String thumbnail, long price, int category, char status, String createdDate, String updatedDate) {
+      this.item_id = item_id;
       this.name = name;
       this.description = description;
       this.thumbnail = thumbnail;
@@ -26,11 +26,11 @@ public class ItemDto {
    }
 
    public int getId() {
-      return id;
+      return item_id;
    }
 
-   public void setId(int id) {
-      this.id = id;
+   public void setId(int item_id) {
+      this.item_id = item_id;
    }
 
    public String getName() {

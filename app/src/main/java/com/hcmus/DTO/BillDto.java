@@ -1,31 +1,31 @@
 package com.hcmus.DTO;
 
 public class BillDto {
-   private int billId;
-   private int customerId;
-   private String createdDate;
+   private int bill_id;
+   private int customer_id;
+   private String created_date;
    private String description;
-   private long totalPrice;
-   private long shipCharge;
+   private long total_price;
+   private long ship_charge;
    private boolean accepted;
    private char status;
-   private int shipperId;
-   private String deliverTime;
+   private int shipper;
+   private String deliver_time;
    private boolean completed;
 
    public BillDto() {}
 
-   public BillDto(int billId, int customerId, String createdDate, String description, long totalPrice, long shipCharge, boolean accepted, char status, int shipperId, String deliverTime, boolean completed) {
-      this.billId = billId;
-      this.customerId = customerId;
-      this.createdDate = createdDate;
+   public BillDto(int bill_id, int customer_id, String created_date, String description, long total_price, long ship_charge, boolean accepted, char status, int shipper, String deliver_time, boolean completed) {
+      this.bill_id = bill_id;
+      this.customer_id = customer_id;
+      this.created_date = created_date;
       this.description = description;
-      this.totalPrice = totalPrice;
-      this.shipCharge = shipCharge;
+      this.total_price = total_price;
+      this.ship_charge = ship_charge;
       this.accepted = accepted;
       this.status = status;
-      this.shipperId = shipperId;
-      this.deliverTime = deliverTime;
+      this.shipper = shipper;
+      this.deliver_time = deliver_time;
       this.completed = completed;
    }
 
@@ -37,12 +37,12 @@ public class BillDto {
       return description;
    }
 
-   public void setCreatedDate(String createdDate) {
-      this.createdDate = createdDate;
+   public void setCreatedDate(String created_date) {
+      this.created_date = created_date;
    }
 
    public String getCreatedDate() {
-      return createdDate;
+      return created_date;
    }
 
    public void setStatus(char status) {
@@ -53,8 +53,8 @@ public class BillDto {
       return status;
    }
 
-   public void setShipperId(int shipperId) {
-      this.shipperId = shipperId;
+   public void setShipperId(int shipper) {
+      this.shipper = shipper;
    }
 
    public boolean isAccepted() {
@@ -62,51 +62,51 @@ public class BillDto {
    }
 
    public int getShipperId() {
-      return shipperId;
+      return shipper;
    }
 
    public int getBillId() {
-      return billId;
+      return bill_id;
    }
 
    public int getCustomerId() {
-      return customerId;
+      return customer_id;
    }
 
    public long getShipCharge() {
-      return shipCharge;
+      return ship_charge;
    }
 
    public long getTotalPrice() {
-      return totalPrice;
+      return total_price;
    }
 
    public String getDeliverTime() {
-      return deliverTime;
+      return deliver_time;
    }
 
    public void setAccepted(boolean accepted) {
       this.accepted = accepted;
    }
 
-   public void setBillId(int billId) {
-      this.billId = billId;
+   public void setBillId(int bill_id) {
+      this.bill_id = bill_id;
    }
 
-   public void setCustomerId(int customerId) {
-      this.customerId = customerId;
+   public void setCustomerId(int customer_id) {
+      this.customer_id = customer_id;
    }
 
-   public void setShipCharge(long shipCharge) {
-      this.shipCharge = shipCharge;
+   public void setShipCharge(long ship_charge) {
+      this.ship_charge = ship_charge;
    }
 
-   public void setTotalPrice(long totalPrice) {
-      this.totalPrice = totalPrice;
+   public void setTotalPrice(long total_price) {
+      this.total_price = total_price;
    }
 
-   public void setDeliverTime(String deliverTime) {
-      this.deliverTime = deliverTime;
+   public void setDeliverTime(String deliver_time) {
+      this.deliver_time = deliver_time;
    }
 
    public boolean isCompleted() {

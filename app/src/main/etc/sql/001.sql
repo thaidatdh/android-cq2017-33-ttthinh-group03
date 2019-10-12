@@ -28,7 +28,7 @@ create table shipper (
 	plate_number varchar(15),
 	vehicle nvarchar(20),
 	vehicle_color varchar(10),
-	is_active varchar(6) default 'TRUE'
+	is_active varchar(6) default 'NULL'
 );
 GO
 create table category (
@@ -54,8 +54,7 @@ create table review (
 	user_id int,
 	type char,
 	objectid int,
-	item_id int,
-	rating int,
+	rating float,
 	comment nvarchar(200),
 	created_date datetime default getdate(),
 	updated_date datetime

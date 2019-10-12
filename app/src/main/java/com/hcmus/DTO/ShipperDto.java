@@ -1,36 +1,36 @@
 package com.hcmus.DTO;
 
 public class ShipperDto {
-   private int userId;
-   private String plateNumber;
+   private int user_id;
+   private String plate_number;
    private String vehicle;
-   private String vehicleColor;
-   private String active;
+   private String vehicle_color;
+   private String is_active;
 
    public ShipperDto() {}
 
-   public ShipperDto(int userId, String plateNumber, String vehicle, String vehicleColor, String active) {
-      this.userId = userId;
-      this.plateNumber = plateNumber;
+   public ShipperDto(int user_id, String plate_number, String vehicle, String vehicle_color, String is_active) {
+      this.user_id = user_id;
+      this.plate_number = plate_number;
       this.vehicle = vehicle;
-      this.vehicleColor = vehicleColor;
-      this.active = active;
+      this.vehicle_color = vehicle_color;
+      this.is_active = is_active;
    }
 
-   public void setUserId(int userId) {
-      this.userId = userId;
+   public void setUserId(int user_id) {
+      this.user_id = user_id;
    }
 
    public int getUserId() {
-      return userId;
+      return user_id;
    }
 
    public String getActive() {
-      return active;
+      return is_active;
    }
 
    public String getPlateNumber() {
-      return plateNumber;
+      return plate_number;
    }
 
    public String getVehicle() {
@@ -38,22 +38,22 @@ public class ShipperDto {
    }
 
    public String getVehicleColor() {
-      return vehicleColor;
+      return vehicle_color;
    }
 
-   public void setActive(String active) {
-      this.active = active;
+   public void setActive(String is_active) {
+      this.is_active = is_active;
    }
 
-   public void setPlateNumber(String plateNumber) {
-      this.plateNumber = plateNumber;
+   public void setPlateNumber(String plate_number) {
+      this.plate_number = plate_number;
    }
 
    public void setVehicle(String vehicle) {
       this.vehicle = vehicle;
    }
 
-   public void setVehicleColor(String vehicleColor) {
-      this.vehicleColor = vehicleColor;
+   public void setVehicleColor(String vehicle_color) {
+      this.vehicle_color = vehicle_color;
    }
 }
