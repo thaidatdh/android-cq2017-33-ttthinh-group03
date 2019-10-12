@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app"
+    tools:context=".ShipperActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="30dp"
+        android:background="@android:color/transparent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/title_size" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTitle"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:tabTextColor="@color/colorTabText"
+        app:tabBackground="@drawable/bg_tab"
+        app:tabSelectedTextColor="@color/colorTabBg">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_home"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tab_home" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_task"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tab_task"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_order"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tab_order"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_map"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tab_map"/>
+    </com.google.android.material.tabs.TabLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

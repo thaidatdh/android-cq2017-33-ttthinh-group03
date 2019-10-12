@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Shipe</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_shipper">shipper</string>
+
+    <!-- Shipper -->
+    <string name="tab_home">Home</string>
+    <string name="tab_task">Task</string>
+    <string name="tab_order">Order</string>
+    <string name="tab_map">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
