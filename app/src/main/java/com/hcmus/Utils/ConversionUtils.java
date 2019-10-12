@@ -1,10 +1,15 @@
 package com.hcmus.Utils;
 
+import com.hcmus.Const.Const;
+import com.hcmus.DAO.ReviewDao;
+import com.hcmus.DTO.ReviewDto;
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public class ConversionUtils {
@@ -90,6 +95,19 @@ public class ConversionUtils {
       public static String FormatPhone(String phonenumber) {
          String phone = phonenumber.replaceAll("[^\\d.]", "");
          return phone.substring(0,3) + "-" + phone.substring(3,6) + "-" + phone.substring(6);
+      }
+   }
+   public static class Review {
+      public static float GetReviewStarForShipper(int shipper_id) {
+         List<ReviewDto> list = ReviewDao.GetAllShipperReviewForShipper(shipper_id);
+         if (list.size() == 0)
+            return Const.DEFAULT_RATING_STAR;
+         float result = 0;
+         for(ReviewDto review : list) {
+            result += review.getRating();
+         }
+         result = result/list.size();
+         return result;
       }
    }
 }

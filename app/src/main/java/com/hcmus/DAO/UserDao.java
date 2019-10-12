@@ -8,24 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    public UserDao() {
-    }
-
     public static List<UserDto> SelectAll() {
         List<UserDto> user = new ArrayList<>();
         String sql = "select * from Users";
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
-                user.add(new UserDto(rs.getInt("user_id"), rs.getString("user_type").charAt(0), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date")));
+                user.add(new UserDto(rs.getInt("user_id"), rs.getString("type"), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date")));
             }
         } catch (Exception ex) {}
         return user;
     }
 
     public static int Insert(UserDto user) {
-        String sql = "INSERT INTO Users(username, password, firstname, lastname, birth_date, user_type, address, phone, created_date) VALUES('"
+        String sql = "INSERT INTO Users(username, password, firstname, lastname, birth_date, type, address, phone, created_date) VALUES('"
                 + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "', '" + user.getBirthDate() + "', '" + user.getUserType() + "', '" + user.getAddress() + "', '" + user.getPhone() + "', '" + user.getCreatedDate() + "')";
+        sql = sql.replace("null","");
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
@@ -34,8 +32,9 @@ public class UserDao {
 
     public static boolean Update(UserDto user) {
         String sql = "UPDATE Users set username = '" + user.getUsername() + "',  password = '" + user.getPassword() + "',  firstname = '"
-                + user.getFirstName() + "',  lastname = '" + user.getLastName() + "',  birth_date = '" + user.getBirthDate() + "',  user_type = '"
+                + user.getFirstName() + "',  lastname = '" + user.getLastName() + "',  birth_date = '" + user.getBirthDate() + "',  type = '"
                 + user.getUserType() + "',  address = '" + user.getAddress() + "',  phone = '" + user.getPhone() + "',  created_date = '" + user.getCreatedDate() + "' WHERE user_id = " + user.getUserId();
+        sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else
@@ -52,12 +51,23 @@ public class UserDao {
 
 
     public static UserDto findById(int Id) {
-        UserDto user = new UserDto();
-        String sql = "Select * from Users WHERE use_id = " + Id;
+        UserDto user = null;
+        String sql = "select * from users where user_id=" + Id;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
-                user = new UserDto(rs.getInt("user_id"), rs.getString("user_type").charAt(0), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date"));
+                user = new UserDto(rs.getInt("user_id"), rs.getString("type"), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date"));
+            }
+        } catch (Exception ex) {}
+        return user;
+    }
+    public static List<UserDto> GetAllCustomer() {
+        List<UserDto> user = new ArrayList<>();
+        String sql = "select * from users where type='CUSTOMER'";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                user.add(new UserDto(rs.getInt("user_id"), rs.getString("type"), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date")));
             }
         } catch (Exception ex) {}
         return user;

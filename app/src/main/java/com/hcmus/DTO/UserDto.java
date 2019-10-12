@@ -2,7 +2,7 @@ package com.hcmus.DTO;
 
 public class UserDto {
    private int userId;
-   private char userType;
+   private String userType;
    private String username;
    private String password;
    private String firstName;
@@ -14,7 +14,7 @@ public class UserDto {
 
    public UserDto() {}
 
-   public UserDto(int userId, char userType, String username, String password, String firstName, String lastName, String birthDate, String address, String phone, String createdDate) {
+   public UserDto(int userId, String userType, String username, String password, String firstName, String lastName, String birthDate, String address, String phone, String createdDate) {
       this.userId = userId;
       this.userType = userType;
       this.username = username;
@@ -35,11 +35,11 @@ public class UserDto {
       this.userId = userId;
    }
 
-   public char getUserType() {
+   public String getUserType() {
       return userType;
    }
 
-   public void setUserType(char userType) {
+   public void setUserType(String userType) {
       this.userType = userType;
    }
 

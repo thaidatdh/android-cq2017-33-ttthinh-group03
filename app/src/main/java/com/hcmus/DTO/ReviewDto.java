@@ -5,8 +5,7 @@ public class ReviewDto {
    private int userId;
    private char type;
    private int objectId;
-   private int itemId;
-   private int rating;
+   private float rating;
    private String comment;
    private String createdDate;
    private String updatedDate;
@@ -14,12 +13,11 @@ public class ReviewDto {
    public ReviewDto() {
    }
 
-   public ReviewDto(int reviewId, int userId, char type, int objectId, int itemId, int rating, String comment, String createdDate, String updatedDate) {
+   public ReviewDto(int reviewId, int userId, char type, int objectId, float rating, String comment, String createdDate, String updatedDate) {
       this.reviewId = reviewId;
       this.userId = userId;
       this.type = type;
       this.objectId = objectId;
-      this.itemId = itemId;
       this.rating = rating;
       this.comment = comment;
       this.createdDate = createdDate;
@@ -58,19 +56,11 @@ public class ReviewDto {
       this.objectId = objectId;
    }
 
-   public int getItemId() {
-      return itemId;
-   }
-
-   public void setItemId(int itemId) {
-      this.itemId = itemId;
-   }
-
-   public int getRating() {
+   public float getRating() {
       return rating;
    }
 
-   public void setRating(int rating) {
+   public void setRating(float rating) {
       this.rating = rating;
    }
 
