@@ -48,10 +48,7 @@ public class ShipperManagementFragment extends Fragment {
         Spinner shipperTypeSpinner = root.findViewById(R.id.shipper_type_spinner);
         shipperTypeSpinner.setAdapter(new ArrayAdapter<String>(root.getContext(),R.layout.support_simple_spinner_dropdown_item, SHIPPER_TYPE));
         shipperTypeSpinner.setSelection(3);
-        listShipper = ShipperDao.GetAll();
-        adapter = new CustomListAdapter(root.getContext(), R.layout.shipper_list_item, listShipper);
         shipperListView = root.findViewById(R.id.list_shipper_view);
-        shipperListView.setAdapter(adapter);
 
         shipperTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

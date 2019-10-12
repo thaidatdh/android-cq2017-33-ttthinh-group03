@@ -1,28 +1,28 @@
 package com.hcmus.DTO;
 
 public class ShopDto {
-   private int shopId;
+   private int shop_id;
    private String name;
    private String address;
-   private String openTime;
-   private String closeTime;
+   private String open_time;
+   private String close_time;
 
    public ShopDto() {}
 
-   public ShopDto(int shopId, String name, String address, String openTime, String closeTime) {
-      this.shopId = shopId;
+   public ShopDto(int shop_id, String name, String address, String open_time, String close_time) {
+      this.shop_id = shop_id;
       this.name = name;
       this.address = address;
-      this.openTime = openTime;
-      this.closeTime = closeTime;
+      this.open_time = open_time;
+      this.close_time = close_time;
    }
 
    public int getShopId() {
-      return shopId;
+      return shop_id;
    }
 
-   public void setShopId(int shopId) {
-      this.shopId = shopId;
+   public void setShopId(int shop_id) {
+      this.shop_id = shop_id;
    }
 
    public String getName() {
@@ -42,18 +42,18 @@ public class ShopDto {
    }
 
    public String getOpenTime() {
-      return openTime;
+      return open_time;
    }
 
-   public void setOpenTime(String openTime) {
-      this.openTime = openTime;
+   public void setOpenTime(String open_time) {
+      this.open_time = open_time;
    }
 
    public String getCloseTime() {
-      return closeTime;
+      return close_time;
    }
 
-   public void setCloseTime(String closeTime) {
-      this.closeTime = closeTime;
+   public void setCloseTime(String close_time) {
+      this.close_time = close_time;
    }
 }

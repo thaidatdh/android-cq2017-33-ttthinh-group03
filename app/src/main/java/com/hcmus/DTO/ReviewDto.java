@@ -1,43 +1,43 @@
 package com.hcmus.DTO;
 
 public class ReviewDto {
-   private int reviewId;
-   private int userId;
+   private int review_id;
+   private int user_id;
    private char type;
    private int objectId;
    private float rating;
    private String comment;
-   private String createdDate;
-   private String updatedDate;
+   private String created_date;
+   private String updated_date;
 
    public ReviewDto() {
    }
 
    public ReviewDto(int reviewId, int userId, char type, int objectId, float rating, String comment, String createdDate, String updatedDate) {
-      this.reviewId = reviewId;
-      this.userId = userId;
+      this.review_id = reviewId;
+      this.user_id = userId;
       this.type = type;
       this.objectId = objectId;
       this.rating = rating;
       this.comment = comment;
-      this.createdDate = createdDate;
-      this.updatedDate = updatedDate;
+      this.created_date = created_date;
+      this.updated_date = updated_date;
    }
 
    public int getReviewId() {
-      return reviewId;
+      return review_id;
    }
 
-   public void setReviewId(int reviewId) {
-      this.reviewId = reviewId;
+   public void setReviewId(int review_id) {
+      this.review_id = review_id;
    }
 
    public int getUserId() {
-      return userId;
+      return user_id;
    }
 
-   public void setUserId(int userId) {
-      this.userId = userId;
+   public void setUserId(int user_id) {
+      this.user_id = user_id;
    }
 
    public char getType() {
@@ -52,8 +52,8 @@ public class ReviewDto {
       return objectId;
    }
 
-   public void setObjectId(int objectId) {
-      this.objectId = objectId;
+   public void setObjectId(int objectid) {
+      this.objectId = objectid;
    }
 
    public float getRating() {
@@ -73,18 +73,18 @@ public class ReviewDto {
    }
 
    public String getCreatedDate() {
-      return createdDate;
+      return created_date;
    }
 
-   public void setCreatedDate(String createdDate) {
-      this.createdDate = createdDate;
+   public void setCreatedDate(String created_date) {
+      this.created_date = created_date;
    }
 
    public String getUpdatedDate() {
-      return updatedDate;
+      return updated_date;
    }
 
-   public void setUpdatedDate(String updatedDate) {
-      this.updatedDate = updatedDate;
+   public void setUpdatedDate(String updated_date) {
+      this.updated_date = updated_date;
    }
 }

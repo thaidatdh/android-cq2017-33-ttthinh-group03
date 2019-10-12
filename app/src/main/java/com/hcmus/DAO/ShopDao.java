@@ -3,10 +3,7 @@ package com.hcmus.DAO;
 import com.hcmus.DTO.ShopDto;
 import com.hcmus.Utils.Database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +58,7 @@ public class ShopDao {
             while (rs.next()){
                 shop = new ShopDto(rs.getInt("shop_id"), rs.getString("name"), rs.getString("address"), rs.getString("open_time"), rs.getString("close_time"));
             }
-        }catch (SQLException ex) {}
+        }catch (Exception ex) {}
         return shop;
     }
 }
