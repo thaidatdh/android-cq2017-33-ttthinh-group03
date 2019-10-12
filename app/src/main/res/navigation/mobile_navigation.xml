@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_shipper_management">
+
+    <fragment
+        android:id="@+id/nav_shipper_management"
+        android:name="com.hcmus.Activities.ui.ShipperManagement.ShipperManagementFragment"
+        android:label="@string/menu_shipper_management"
+        tools:layout="@layout/fragment_shipper_management" />
+
+    <fragment
+        android:id="@+id/nav_customer_management"
+        android:name="com.hcmus.Activities.ui.CustomerManagement.CustomerManagementFragment"
+        android:label="@string/menu_customer_management"
+        tools:layout="@layout/fragment_customer_management" />
+
+    <fragment
+        android:id="@+id/nav_bill_management"
+        android:name="com.hcmus.Activities.ui.BillManagement.BillManagementFragment"
+        android:label="@string/menu_bill_management"
+        tools:layout="@layout/fragment_bill_management" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.hcmus.Activities.ui.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="com.hcmus.Activities.ui.send.SendFragment"
+        android:label="@string/menu_send"
+        tools:layout="@layout/fragment_send" />
+</navigation>

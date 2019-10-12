@@ -72,7 +72,7 @@ public class ShipperDao  {
     }
 
     public static boolean Update(ShipperDto shipper){
-        String sql = "Update shipper set plate_number = '" + shipper.getPlateNumber() + "', vehicle = '" + shipper.getVehicle() +"', vehicle_color = '"+ shipper.getVehicle() + "', is_active = '" + shipper.getActive() + "' where user_id = " + shipper.getUserId()+ ")" ;
+        String sql = "Update shipper set plate_number = '" + shipper.getPlateNumber() + "', vehicle = '" + shipper.getVehicle() +"', vehicle_color = '"+ shipper.getVehicle() + "', is_active = '" + shipper.getActive() + "' where user_id = " + shipper.getUserId()+ "" ;
         sql = sql.replace("null","");
         try {
             if (Database.ExecuteQuery(sql) > 0) {
