@@ -15,16 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.hcmus.Activities.ui.ItemManagement.ItemManagement"></activity>
+        <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory" />
+        <activity
+            android:name=".ShipperActivity"
+            android:label="@string/title_activity_shipper"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.hcmus.Activities.ManagerActivity"
             android:label="@string/title_activity_manager"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_shiper_manager"
@@ -48,7 +48,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".fragment.ShipperMapFragment"
             android:label="@string/title_activity_maps" />
     </application>
 
