@@ -52,13 +52,13 @@ public class BillDetailDao {
     }
 
 
-    public static BillDetailDto findById(int Id) {
-        BillDetailDto billDetail = new BillDetailDto();
-        String sql = "select * from Shipper where ID = " + Id;
+    public static List<BillDetailDto> findById(int Id) {
+        List<BillDetailDto> billDetail = new ArrayList<>();
+        String sql = "select * from bill_detail where bill_id = " + Id;
         ResultSet rs = Database.SelectQuery(sql);
         try {
             while (rs.next()){
-                billDetail = new BillDetailDto(rs.getInt("bill_id"), rs.getInt("item_id"), rs.getInt("amount"));
+                billDetail.add(new BillDetailDto(rs.getInt("bill_id"), rs.getInt("item"), rs.getInt("amount")));
             }
         } catch (Exception ex) {}
         return billDetail;
