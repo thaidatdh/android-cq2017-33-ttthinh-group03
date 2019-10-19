@@ -1,6 +1,7 @@
 package com.hcmus.Const;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hcmus.Activities.ui.ItemManagement.CartDomain;
+import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.DAO.ItemDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.DTO.CategoryDto;
@@ -62,6 +64,7 @@ public class BillDetailCustomAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Toast.makeText(context, "Delete Item", Toast.LENGTH_SHORT).show();
                     CartDomain.ListItemInCart.remove(i);
+                    BillDetailCustomAdapter.this.notifyDataSetChanged();
                 }
             });
         }

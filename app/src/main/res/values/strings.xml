@@ -59,4 +59,7 @@
     <string name="item_amount">Item Amount</string>
     <string name="item_total_price">Item Total Price</string>
     <string name="list_Bill_Detail">List Bill Detail</string>
+
+    <!-- Customer -->
+    <string name="btn_buy">Buy</string>
 </resources>

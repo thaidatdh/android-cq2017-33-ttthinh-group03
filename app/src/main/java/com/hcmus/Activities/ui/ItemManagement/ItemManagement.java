@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hcmus.Activities.ui.Category.CustomerCategory;
 import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.Const.ItemCustomAdapter;
 import com.hcmus.DAO.BillDao;
@@ -32,6 +33,7 @@ public class ItemManagement extends AppCompatActivity {
 
     ListView listView;
     ItemDto selectedItem;
+    TextView textCartItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,15 @@ public class ItemManagement extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        setupBadge();
+    }
+
+
     private void dialogShoppingCart(){
         final Dialog dialog=new Dialog(ItemManagement.this);
         dialog.setContentView(R.layout.item_info_popup);
@@ -83,9 +94,7 @@ public class ItemManagement extends AppCompatActivity {
                 bill.setItemId(selectedItem.getId());
                 bill.setAmount((int)selectedItem.getPrice());
                 CartDomain.ListItemInCart.add(bill);
-
-                Intent intent = new Intent(ItemManagement.this, ShoppingCartManagement.class);
-                startActivity(intent);
+                setupBadge();
                 dialog.dismiss();
             }
         });
@@ -94,6 +103,16 @@ public class ItemManagement extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_bar_customer,menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_cart);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        setupBadge();
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
         return true;
     }
 
@@ -103,8 +122,25 @@ public class ItemManagement extends AppCompatActivity {
         if(id==R.id.action_search){
             return true;
         }else if(id==R.id.action_cart){
+            Intent intent = new Intent(ItemManagement.this, ShoppingCartManagement.class);
+            startActivity(intent);
             return true;
         }
         return false;
+    }
+    public void setupBadge() {
+        int mCartItemCount = CartDomain.ListItemInCart.size();
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }
