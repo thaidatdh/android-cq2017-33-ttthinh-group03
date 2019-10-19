@@ -94,7 +94,7 @@ public class ShipperManagementFragment extends Fragment {
     }
     private void ShowPopup(){
         Dialog view = myDialog;
-        view.setCancelable(false);
+        view.setCancelable(true);
         view.setContentView(R.layout.shipper_info_popup);
         TextView name = (TextView)view.findViewById(R.id.shipper_info_name);
         TextView address = (TextView)view.findViewById(R.id.shipper_info_address);
@@ -113,7 +113,7 @@ public class ShipperManagementFragment extends Fragment {
                 String nameStr = (user.getLastName() + ", " + user.getFirstName()).trim();
                 name.setText(nameStr);
                 address.setText(user.getAddress());
-                birthdate.setText(user.getBirthDate());
+                birthdate.setText(ConversionUtils.DateTime.formatDate(user.getBirthDate()));
                 phone.setText(user.getPhone());
             }
             license.setText(selectedShipper.getPlateNumber());
@@ -200,7 +200,7 @@ public class ShipperManagementFragment extends Fragment {
         @Override
         public View getView(int i, View view, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.shipper_list_item, null);
+            view = inflater.inflate(myLayout, null);
             RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar_Shipper);
             TextView shipperName = (TextView)view.findViewById(R.id.textView_Name_Shipper);
             TextView shipperPlate = (TextView)view.findViewById(R.id.textView_Plate_Shipper);

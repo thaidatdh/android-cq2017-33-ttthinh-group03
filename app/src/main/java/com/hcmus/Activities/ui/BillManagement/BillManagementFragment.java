@@ -34,6 +34,7 @@ import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.DTO.BillDto;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.DTO.UserDto;
+import com.hcmus.Utils.ConversionUtils;
 import com.hcmus.shipe.R;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class BillManagementFragment extends Fragment {
     private int selectedType = 0;
     private boolean recordChanged = false;
     private final String[] BILL_TYPE = {"New", "Getting", "On-Going", "Completed", "All"};
-    private final String[] BILL_ALL_STATUS = {"New", "Getting", "On-Going", "Completed"};
+    public static final String[] BILL_ALL_STATUS = {"New", "Getting", "On-Going", "Completed"};
     private final String[] BILL_STATUS = {"Active", "Inactive"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -113,7 +114,7 @@ public class BillManagementFragment extends Fragment {
 
     private void ShowPopup(){
         Dialog view = myDialog;
-        view.setCancelable(false);
+        view.setCancelable(true);
         view.setContentView(R.layout.bill_info_popup);
         TextView customer = (TextView)view.findViewById(R.id.bill_info_customer);
         TextView shipper= (TextView)view.findViewById(R.id.bill_info_shipper);
@@ -151,8 +152,8 @@ public class BillManagementFragment extends Fragment {
             customer.setText(namecustomer);
             shipper.setText(nameshipper);
             description.setText(selectedBill.getDescription());
-            created.setText(selectedBill.getCreatedDate());
-            delivery.setText(selectedBill.getDeliverTime());
+            created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
+            delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
 
             switch (selectedBill.getStatus()) {
                 case 'N':
@@ -217,7 +218,7 @@ public class BillManagementFragment extends Fragment {
         billListView.setAdapter(adapter);
     }
 
-    public class CustomListAdapter extends ArrayAdapter<BillDto> {
+    public static class CustomListAdapter extends ArrayAdapter<BillDto> {
         Context myContext;
         int myLayout;
         List<BillDto> myList;
@@ -231,8 +232,8 @@ public class BillManagementFragment extends Fragment {
 
         @Override
         public int getCount() {
-            if (listBill != null)
-                return listBill.size();
+            if (myList != null)
+                return myList.size();
             else
                 return 0;
         }
@@ -280,15 +281,15 @@ public class BillManagementFragment extends Fragment {
                 if (billShipper.getFirstName() != null){
                     fshipper = billShipper.getFirstName().trim();
                 }
-                nameshipper = lshipper + " " + fshipper;
+                nameshipper = ("Shipper: " + lshipper + " " + fshipper).trim();
             }
 
 
 
             customerName.setText(namecustomer);
             shipperName.setText(nameshipper);
-            Long totalPrice =  billDto.getTotalPrice();
-            String price = totalPrice.toString() + "VNĐ";
+            Long totalPrice =  billDto.getTotalPrice() + billDto.getShipCharge();
+            String price = totalPrice.toString() + " VNĐ";
             billPrice.setText(price);
             switch (billDto.getStatus()) {
                 case 'N':
@@ -311,7 +312,7 @@ public class BillManagementFragment extends Fragment {
             return view;
         }
     }
-    public class BillListAdapter extends ArrayAdapter<BillDetailDto> {
+    public static class BillListAdapter extends ArrayAdapter<BillDetailDto> {
         Context myContext;
         int myLayout;
         List<BillDetailDto> myList;
@@ -325,8 +326,8 @@ public class BillManagementFragment extends Fragment {
 
         @Override
         public int getCount() {
-            if (billDetailList != null)
-                return billDetailList.size();
+            if (myList != null)
+                return myList.size();
             else
                 return 0;
         }
