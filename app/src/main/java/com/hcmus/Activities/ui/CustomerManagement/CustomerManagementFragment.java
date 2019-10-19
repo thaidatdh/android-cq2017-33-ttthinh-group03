@@ -149,8 +149,8 @@ public class CustomerManagementFragment extends Fragment {
             customer.setText(namecustomer);
             shipper.setText(nameshipper);
             description.setText(selectedBill.getDescription());
-            created.setText(selectedBill.getCreatedDate());
-            delivery.setText(selectedBill.getDeliverTime());
+            created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
+            delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
 
             switch (selectedBill.getStatus()) {
                 case 'N':
