@@ -11,12 +11,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hcmus.DAO.UserDao;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Login extends AppCompatActivity implements View.OnClickListener {
+    TextView txtvRegister;
 
     EditText edtUsername,edtPassword;
-    Button btnLogin;
-    TextView txtvRegisterLink;
-    UserLocalStore userLocalStore;
+    Button btnSignIn;
 
     @Override
 
@@ -24,15 +28,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        txtvRegister=(TextView)findViewById(R.id.txtvRegister);
         edtUsername=(EditText)findViewById(R.id.edtUsername);
         edtPassword=(EditText)findViewById(R.id.edtPassword);
-        btnLogin=(Button)findViewById(R.id.btnLogin);
-        txtvRegisterLink=(TextView)findViewById(R.id.txtvRegisterLink);
+        btnSignIn=(Button)findViewById(R.id.btnSignIn);
 
 
-        btnLogin.setOnClickListener(this);
-        txtvRegisterLink.setOnClickListener(this);
-        userLocalStore=new UserLocalStore(this);
+        btnSignIn.setOnClickListener(this);
+        txtvRegister.setOnClickListener(this);
 
 
     }
@@ -40,19 +43,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch(view.getId())
         {
-            case R.id.btnLogin:
-                String username= edtUsername.getText().toString();
+            case R.id.btnSignIn:
+                String username=edtUsername.getText().toString();
                 String password=edtPassword.getText().toString();
-                //encrypt password
-               /* String encodePw=com.hcmus.Utils.ConversionUtils.User.EncryptPassword(password);
-                User user=new User(username,encodePw);
-                userLocalStore.storeUserData(user);
-                userLocalStore.setUserLoggedIn(true);*/
 
-                Intent intent = new Intent(this, MainActivity.class);
-                this.startActivity(intent);
+                boolean test=false;
+
+                test= UserDao.CheckLogin(username,password);
+
+                if(test==true)
+                {
+                    android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
+                    builder.setMessage("Login success!").create().show();
+                    Intent intent=new Intent(Login.this,MainActivity.class);
+
+                    Login.this.startActivity(intent);
+
+                }
+                else
+                {
+                    android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
+                    builder.setMessage("Login failed!").setNegativeButton("Retry",null).create().show();
+
+                }
+
                 break;
-            case R.id.txtvRegisterLink:
+            case R.id.txtvRegister:
                 startActivity(new Intent(this, Register.class));
                 break;
 

@@ -7,9 +7,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     Button btnLogout;
-    UserLocalStore userLocalStore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,22 +17,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLogout=(Button)findViewById(R.id.btnLogout);
 
-        btnLogout.setOnClickListener(this);
-        userLocalStore=new UserLocalStore(this);
-    }
-    @Override
-    public void onClick(View view) {
-        switch(view.getId())
-        {
-            case R.id.btnLogout:
-               /* userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);*/
-                startActivity(new Intent(this, Login.class));
-
-                break;
-
-
-        }
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

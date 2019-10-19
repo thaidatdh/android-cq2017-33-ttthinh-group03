@@ -26,7 +26,16 @@ public class UserDto {
       this.phone = phone;
       this.created_date = created_date;
    }
-
+   public UserDto( String username, String password, String firstName, String lastName, String birthDate, String address, String phone,String userType) {
+      this.user_type = userType;
+      this.username = username;
+      this.password = password;
+      this.first_name = firstName;
+      this.last_name = lastName;
+      this.birth_date = birthDate;
+      this.address = address;
+      this.phone = phone;
+   }
    public int getUserId() {
       return user_id;
    }

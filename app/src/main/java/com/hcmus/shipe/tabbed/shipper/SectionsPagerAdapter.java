@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.hcmus.shipe.R;
 import com.hcmus.shipe.fragment.ShipperHomeFragment;
-import com.hcmus.shipe.fragment.ShipperMapFragment;
+//import com.hcmus.shipe.fragment.ShipperMapFragment;
 import com.hcmus.shipe.fragment.ShipperOrderFragment;
 import com.hcmus.shipe.fragment.ShipperTaskFragment;
 
@@ -41,7 +41,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return new ShipperOrderFragment();
             case 3:
-                return new ShipperMapFragment(mContext);
+               // return new ShipperMapFragment(mContext);
         }
         return null;
     }

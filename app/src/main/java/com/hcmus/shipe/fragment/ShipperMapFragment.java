@@ -1,3 +1,4 @@
+/*
 package com.hcmus.shipe.fragment;
 
 import androidx.fragment.app.Fragment;
@@ -100,3 +101,4 @@ public class ShipperMapFragment extends Fragment{
         return rootView;
     }
 }
+*/

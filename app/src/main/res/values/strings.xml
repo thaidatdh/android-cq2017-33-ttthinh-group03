@@ -2,7 +2,9 @@
     <string name="app_name">Shipe</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_shipper">shipper</string>
-
+    <string name="shop">Shop</string>
+    <string name="shipper">Shipper</string>
+    <string name="customer">Customer</string>
     <!-- Shipper -->
     <string name="tab_home">Home</string>
     <string name="tab_task">Task</string>
