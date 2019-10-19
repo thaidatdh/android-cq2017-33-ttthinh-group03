@@ -39,6 +39,8 @@
     <string name="phone">Phone: </string>
     <string name="plate">Plate license: </string>
     <string name="status">Status:</string>
+    <string name="customer_spent">Spent amount</string>
+    <string name="back">Back</string>
 
     <string name="bill_type">Bill Type: </string>
     <string name="customer_name">Customer Name</string>

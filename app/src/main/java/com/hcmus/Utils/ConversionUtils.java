@@ -21,6 +21,21 @@ public class ConversionUtils {
          } catch (Exception ex) { }
          return null;
       }
+      public static String formatDate(String dateString) {
+         String result = dateString;
+         try {
+            Date date = parseDate(dateString, "yyyy-MM-dd HH:mm:ss.SSS");
+            result = formatDate(date, "dd/MM/yyyy");
+         }
+         catch (Exception ex) {
+            try {
+               Date date = parseDate(dateString, "yyyy-MM-dd");
+               result = formatDate(date, "dd/MM/yyyy");
+            }
+            catch (Exception ex2) { }
+         }
+         return result;
+      }
       public static Date parseDate(String dateInput, String pattern) {
          try {
             SimpleDateFormat format = new SimpleDateFormat(pattern);
