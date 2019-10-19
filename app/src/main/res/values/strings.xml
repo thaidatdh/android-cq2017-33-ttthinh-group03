@@ -11,7 +11,7 @@
 
     <!-- Manager -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_shiper_manager">ShiperManager</string>
+    <string name="title_activity_shiper_manager">Shipper Manager</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -59,4 +59,8 @@
     <string name="item_amount">Item Amount</string>
     <string name="item_total_price">Item Total Price</string>
     <string name="list_Bill_Detail">List Bill Detail</string>
+    <string name="name">Name</string>
+    <string name="price">Price(VNĐ)</string>
+    <string name="amount">Amount</string>
+    <string name="total_price">Total Price(VNĐ)</string>
 </resources>

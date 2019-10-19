@@ -121,10 +121,9 @@ public class BillManagementFragment extends Fragment {
         TextView description = (TextView)view.findViewById(R.id.bill_info_description);
         TextView created = (TextView)view.findViewById(R.id.bill_info_created);
         TextView delivery = (TextView)view.findViewById(R.id.bill_info_delivery);
-        Spinner statusSpinner = (Spinner)view.findViewById(R.id.bill_info_status_spinner);
+        TextView statusSpinner = (TextView)view.findViewById(R.id.bill_info_status);
         ImageView closeBtn = (ImageView)view.findViewById(R.id.bill_info_close);
         if (selectedBill!=null) {
-            statusSpinner.setAdapter(new ArrayAdapter<String>(view.getContext(),R.layout.support_simple_spinner_dropdown_item, BILL_ALL_STATUS));
             UserDto billCustomer = UserDao.findById(selectedBill.getCustomerId());
             UserDto billShipper = UserDao.findById(selectedBill.getShipperId());
             String namecustomer = "";
@@ -154,19 +153,22 @@ public class BillManagementFragment extends Fragment {
             description.setText(selectedBill.getDescription());
             created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
             delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
-
             switch (selectedBill.getStatus()) {
                 case 'N':
-                    statusSpinner.setSelection(0);
+                    statusSpinner.setText(R.string.N);
+                    statusSpinner.setTextColor(Color.parseColor("#ff0000"));
                     break;
                 case 'G':
-                    statusSpinner.setSelection(1);
+                    statusSpinner.setText(R.string.G);
+                    statusSpinner.setTextColor(Color.parseColor("#0000ff"));
                     break;
                 case 'O':
-                    statusSpinner.setSelection(2);
+                    statusSpinner.setText(R.string.O);
+                    statusSpinner.setTextColor(Color.parseColor("#00ff00"));
                     break;
                 case 'C':
-                    statusSpinner.setSelection(3);
+                    statusSpinner.setText(R.string.C);
+                    statusSpinner.setTextColor(Color.parseColor("#000000"));
                     break;
             }
 
@@ -175,33 +177,7 @@ public class BillManagementFragment extends Fragment {
             billAdapter = new BillListAdapter(getContext(), R.layout.bill_detail_list_item , billDetailList);
             listBillDetail.setAdapter(billAdapter);
         }
-        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (selectedBill==null)
-                    return;
-                switch (i) {
-                    case 0:
-                        selectedBill.setStatus('N');
-                        break;
-                    case 1:
-                        selectedBill.setStatus('G');
-                        break;
-                    case 2:
-                        selectedBill.setStatus('O');
-                        break;
-                    case 3:
-                        selectedBill.setStatus('C');
-                        break;
-                }
-                BillDao.Update(selectedBill);
-                recordChanged = true;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
