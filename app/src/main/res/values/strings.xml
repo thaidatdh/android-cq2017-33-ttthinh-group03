@@ -59,8 +59,12 @@
     <string name="item_amount">Item Amount</string>
     <string name="item_total_price">Item Total Price</string>
     <string name="list_Bill_Detail">List Bill Detail</string>
+
     <string name="name">Name</string>
     <string name="price">Price(VNĐ)</string>
     <string name="amount">Amount</string>
     <string name="total_price">Total Price(VNĐ)</string>
+
+    <!-- Customer -->
+    <string name="btn_buy">Buy</string>
 </resources>
