@@ -7,6 +7,12 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hcmus.Activities.ui.Category.CustomerCategory;
+import com.hcmus.Activities.ui.ItemManagement.ItemManagement;
+import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
+import com.hcmus.DAO.CategoryDao;
+import com.hcmus.DTO.CategoryDto;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnLogout;
     UserLocalStore userLocalStore;
@@ -28,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogout:
                /* userLocalStore.clearUserData();
                 userLocalStore.setUserLoggedIn(false);*/
-                startActivity(new Intent(this, Login.class));
+
+                startActivity(new Intent(MainActivity.this,CustomerCategory.class));
 
                 break;
 

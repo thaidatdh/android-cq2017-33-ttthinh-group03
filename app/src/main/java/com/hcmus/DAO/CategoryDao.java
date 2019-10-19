@@ -53,7 +53,7 @@ public class CategoryDao {
 
     public static CategoryDto findById(int Id){
         CategoryDto billDetail = new CategoryDto();
-        String sql = "select * from Shipper where ID = " + Id;
+        String sql = "select * from Category where ID = " + Id;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){

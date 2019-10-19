@@ -28,15 +28,17 @@ public class CustomerCategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_category);
 
+        Intent intent=getIntent();
         gridView=(GridView) findViewById(R.id.gridView);
-        List<CategoryDto> categoryDtos= CategoryDao.SelectAll();
+        final List<CategoryDto> categoryDtos= CategoryDao.SelectAll();
         CategoryCustomAdapter ca= new CategoryCustomAdapter(CustomerCategory.this,categoryDtos);
         gridView.setAdapter(ca);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(CustomerCategory.this, ItemManagement.class);
-                intent.putExtra("pos",i);
+                int pos=categoryDtos.get(i).getCategoryId();
+                intent.putExtra("pos",pos);
                 startActivity(intent);
             }
         });
