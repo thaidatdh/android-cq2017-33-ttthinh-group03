@@ -34,10 +34,24 @@ public class MapUtils {
         DownloadTask downloadTask = new DownloadTask(callback);
         downloadTask.execute(url);
     }
+    //List of coordinates
     public void callDirectionAPIWithWaypoints(LatLng origin, List<LatLng> waypoints, HashMap<String, String> params, MyCallback callback){
         LatLng destination = waypoints.get(waypoints.size() - 1);
         waypoints.remove(waypoints.size() - 1);
         String url = createDirectionWithWaypointsquestUrl(origin, destination, waypoints, params);
+        travelingType = "one-many";
+        DownloadTask downloadTask = new DownloadTask(callback);
+        downloadTask.execute(url);
+    }
+    //List of addresses
+    public void callDirectionAPIWithWaypoints(Object origin, List<String> waypoints, HashMap<String, String> params, MyCallback callback){
+        String destination = waypoints.get(waypoints.size() - 1);
+        waypoints.remove(waypoints.size() - 1);
+        String url = "";
+        if (origin instanceof LatLng)
+             url = createDirectionWithWaypointsquestUrl((LatLng)origin, destination, waypoints, params);
+        if (origin instanceof String)
+            url = createDirectionWithWaypointsquestUrl((String)origin, destination, waypoints, params);
         travelingType = "one-many";
         DownloadTask downloadTask = new DownloadTask(callback);
         downloadTask.execute(url);
@@ -119,6 +133,7 @@ public class MapUtils {
         parameters += "&key=" + mKey;
         return url + originStr + "&" + destinationStr + parameters;
     }
+    //Request from coordinate
     private String createDirectionWithWaypointsquestUrl(LatLng origin, LatLng destination, List<LatLng> waypoints, Map<String, String> params){
         String format = "json";
         String url = directionAPIUrl + format + "?";
@@ -133,6 +148,48 @@ public class MapUtils {
         parameters += "&waypoints=";
         for (LatLng waypoint : waypoints){
             parameters += waypoint.latitude + "," + waypoint.longitude + "|";
+        }
+        parameters = parameters.substring(0, parameters.length() - 1);
+
+        parameters += "&key=" + mKey;
+        return url + originStr + "&" + destinationStr + parameters;
+    }
+    //Request from address
+    private String createDirectionWithWaypointsquestUrl(String origin, String destination, List<String> waypoints, Map<String, String> params){
+        String format = "json";
+        String url = directionAPIUrl + format + "?";
+
+        String originStr = "origin=" + origin.replace(' ', '+');
+        String destinationStr = "destination=" + destination.replace(' ', '+');
+        String parameters = "";
+        for (String key : params.keySet()){
+            parameters += "&" + key.toLowerCase() + "=" + params.get(key).toLowerCase();
+        }
+        //Waypoints
+        parameters += "&waypoints=";
+        for (String waypoint : waypoints){
+            parameters += "via:" + waypoint + "|";
+        }
+        parameters = parameters.substring(0, parameters.length() - 1);
+
+        parameters += "&key=" + mKey;
+        return url + originStr + "&" + destinationStr + parameters;
+    }
+    //Request from address, Start LatLng
+    private String createDirectionWithWaypointsquestUrl(LatLng origin, String destination, List<String> waypoints, Map<String, String> params){
+        String format = "json";
+        String url = directionAPIUrl + format + "?";
+
+        String originStr = "origin=" + origin.latitude + "," + origin.longitude;
+        String destinationStr = "destination=" + destination.replace(' ', '+');
+        String parameters = "";
+        for (String key : params.keySet()){
+            parameters += "&" + key.toLowerCase() + "=" + params.get(key).toLowerCase();
+        }
+        //Waypoints
+        parameters += "&waypoints=";
+        for (String waypoint : waypoints){
+            parameters += "via:" + waypoint + "|";
         }
         parameters = parameters.substring(0, parameters.length() - 1);
 
@@ -164,5 +221,4 @@ public class MapUtils {
         }
         return data;
     }
-
 }
