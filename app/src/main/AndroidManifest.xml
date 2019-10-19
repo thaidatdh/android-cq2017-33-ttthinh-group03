@@ -26,6 +26,12 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".Register"></activity>
+
+        <activity android:name="com.hcmus.Activities.ui.ItemManagement.ItemManagement"></activity>
+        <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory" />
+
+
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_shiper_manager"

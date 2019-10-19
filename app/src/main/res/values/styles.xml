@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+
+        <item name="android:actionBarStyle">@style/AppTheme.DefaultActionBar</item>
+        <item name="actionBarStyle">@style/AppTheme.DefaultActionBar</item>
     </style>
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif-black</item>
@@ -21,8 +24,19 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <!-- Default Action Bar -->
+    <style name="AppTheme.DefaultActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid" >
+        <item name="android:background">@drawable/bg_app</item>
+        <item name="background">@drawable/bg_app</item>
+        <item name="android:titleTextStyle">@style/AppTheme.DefaultActionBarTitleText</item>
+        <item name="titleTextStyle">@style/AppTheme.DefaultActionBarTitleText</item>
+    </style>
+    <style name="AppTheme.DefaultActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" >
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

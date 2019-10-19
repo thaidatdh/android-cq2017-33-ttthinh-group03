@@ -41,4 +41,22 @@
     <string name="phone">Phone: </string>
     <string name="plate">Plate license: </string>
     <string name="status">Status:</string>
+
+    <string name="bill_type">Bill Type: </string>
+    <string name="customer_name">Customer Name</string>
+    <string name="bill_price">Bill Price</string>
+    <string name="N">New</string>
+    <string name="G">Getting</string>
+    <string name="O">On-Going</string>
+    <string name="C">Completed</string>
+    <string name="customer">Customer:</string>
+    <string name="shipper">Shipper:</string>
+    <string name="description">Description:</string>
+    <string name="created">Created Date:</string>
+    <string name="delivery">Delivery Date:</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">Item Price</string>
+    <string name="item_amount">Item Amount</string>
+    <string name="item_total_price">Item Total Price</string>
+    <string name="list_Bill_Detail">List Bill Detail</string>
 </resources>
