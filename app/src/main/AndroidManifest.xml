@@ -23,7 +23,8 @@
         <activity
             android:name="com.hcmus.Activities.ManagerActivity"
             android:label="@string/title_activity_manager"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_shiper_manager"

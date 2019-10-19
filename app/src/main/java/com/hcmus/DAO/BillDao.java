@@ -112,4 +112,15 @@ public class BillDao {
         } catch (Exception ex) {}
         return bill;
     }
+    public static List<BillDto> FindByCustomer(int customer_id){
+        List<BillDto> bill = new ArrayList<>();
+        String sql = "select * from Bill where customer=" + customer_id + " order by created_date desc;";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                bill.add(new BillDto(rs.getInt("bill_id"), rs.getInt("customer"), rs.getString("created_date"), rs.getString("description"), rs.getLong("total_price"), rs.getLong("ship_charge"), rs.getBoolean("accepted"), rs.getString("status").charAt(0), rs.getInt("shipper"), rs.getString("deliver_time"), rs.getBoolean("is_completed")));
+            }
+        } catch (Exception ex) {}
+        return bill;
+    }
 }

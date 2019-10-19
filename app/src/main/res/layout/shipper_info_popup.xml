@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
     android:layout_width="350dp"
-    android:layout_height="475dp"
+    android:layout_height="400dp"
     android:layout_gravity="center"
-    android:background="@color/lightBlue">
+    android:background="@color/colorTransparent">
 
     <TextView
         android:id="@+id/shipper_info_name"
