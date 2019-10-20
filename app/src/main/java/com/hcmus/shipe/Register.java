@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Register extends AppCompatActivity implements View.OnClickListener{
 
@@ -74,8 +75,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 int selectedUserType=radUserType.getCheckedRadioButtonId();
                 String usertype=((RadioButton)findViewById(selectedUserType)).getText().toString();
 
-                UserDto userDto=new UserDto(username,password,fname,lname,birthdate,address,phone,usertype);
+                //Lay ngay hien tai
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String currentDateTime=simpleDateFormat.format(new Date());
+
+                //Tao userDto
+                UserDto userDto=new UserDto(username,password,fname,lname,birthdate,address,phone,usertype,currentDateTime);
+
+                //Dua thong tin user vao database
                 UserDao.Insert(userDto);
+
+                startActivity(new Intent(this, Login.class));
 
                 break;
             case R.id.txtvLogin:

@@ -49,8 +49,8 @@
     <string name="G">Getting</string>
     <string name="O">On-Going</string>
     <string name="C">Completed</string>
-    <string name="customer">Customer:</string>
-    <string name="shipper">Shipper:</string>
+    <string name="Customer">Customer:</string>
+    <string name="Shipper">Shipper:</string>
     <string name="description">Description:</string>
     <string name="created">Created Date:</string>
     <string name="delivery">Delivery Date:</string>

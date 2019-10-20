@@ -26,7 +26,7 @@ public class UserDto {
       this.phone = phone;
       this.created_date = created_date;
    }
-   public UserDto( String username, String password, String firstName, String lastName, String birthDate, String address, String phone,String userType) {
+   public UserDto( String username, String password, String firstName, String lastName, String birthDate, String address, String phone,String userType,String created_date) {
       this.user_type = userType;
       this.username = username;
       this.password = password;
@@ -35,6 +35,8 @@ public class UserDto {
       this.birth_date = birthDate;
       this.address = address;
       this.phone = phone;
+      this.created_date = created_date;
+
    }
    public int getUserId() {
       return user_id;

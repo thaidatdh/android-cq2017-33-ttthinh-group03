@@ -13,10 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.DAO.UserDao;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+
+public class Login extends AppCompatActivity  {
     TextView txtvRegister;
 
     EditText edtUsername,edtPassword;
@@ -34,16 +33,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         btnSignIn=(Button)findViewById(R.id.btnSignIn);
 
 
-        btnSignIn.setOnClickListener(this);
-        txtvRegister.setOnClickListener(this);
-
-
-    }
-    @Override
-    public void onClick(View view) {
-        switch(view.getId())
-        {
-            case R.id.btnSignIn:
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 String username=edtUsername.getText().toString();
                 String password=edtPassword.getText().toString();
 
@@ -66,14 +58,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     builder.setMessage("Login failed!").setNegativeButton("Retry",null).create().show();
 
                 }
+            }
+        });
+        txtvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, Register.class));
 
-                break;
-            case R.id.txtvRegister:
-                startActivity(new Intent(this, Register.class));
-                break;
+            }
+        });
 
-        }
+
     }
+
     private void ClickLogin()
     {
         AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);

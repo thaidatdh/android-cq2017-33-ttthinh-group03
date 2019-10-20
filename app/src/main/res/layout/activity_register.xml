@@ -324,6 +324,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
                 android:id="@+id/btnSignUp"
+                android:textSize="30dp"
                 android:background="@drawable/sign"
                 />
             <TextView

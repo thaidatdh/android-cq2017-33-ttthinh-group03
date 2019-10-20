@@ -27,7 +27,7 @@ public class InsertItems extends AppCompatActivity {
     EditText edtNameItem,edtDescriptionItem,edtPriceItem,edtThumbnail;
     Button btnInsertItem;
 
-    Spinner spnInsertItem;
+    Spinner spnCategoryItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class InsertItems extends AppCompatActivity {
         edtThumbnail=(EditText)findViewById(R.id.edtThumbnailItem);
 
         btnInsertItem=(Button)findViewById(R.id.btnInsertItem);
-        spnInsertItem=(Spinner)findViewById(R.id.spnInsertItem);
+        spnCategoryItem=(Spinner)findViewById(R.id.spnCategoryItem);
 
         //Lay category ra tu database
         List<String> data= new ArrayList<>();
@@ -48,11 +48,11 @@ public class InsertItems extends AppCompatActivity {
         data= CategoryDao.SelectAllName();
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,data);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        spnInsertItem.setAdapter(adapter);
-        spnInsertItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnCategoryItem.setAdapter(adapter);
+        spnCategoryItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(InsertItems.this, spnInsertItem.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InsertItems.this, spnCategoryItem.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -70,7 +70,7 @@ public class InsertItems extends AppCompatActivity {
                 String priceString=edtPriceItem.getText().toString();
                 long price=Long.parseLong(priceString);
                 //Category
-                String categoryName=spnInsertItem.getSelectedItem().toString();
+                String categoryName=spnCategoryItem.getSelectedItem().toString();
                 int category=CategoryDao.findByName(categoryName);
                 //status
                 char status='N';
