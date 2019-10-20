@@ -10,10 +10,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hcmus.Activities.ui.Category.CustomerCategory;
+import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.Const.ItemCustomAdapter;
+import com.hcmus.DAO.BillDao;
+import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.DAO.ItemDao;
+import com.hcmus.DTO.BillDetailDto;
+import com.hcmus.DTO.BillDto;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.shipe.R;
 
@@ -22,6 +32,8 @@ import java.util.List;
 public class ItemManagement extends AppCompatActivity {
 
     ListView listView;
+    ItemDto selectedItem;
+    TextView textCartItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +44,75 @@ public class ItemManagement extends AppCompatActivity {
         int pos = intent.getIntExtra("pos",0);
 
         listView=(ListView)findViewById(R.id.listView_ItemManagement);
-        List<ItemDto> itemDtos= (List<ItemDto>) ItemDao.findByCategory(pos);
-        ItemCustomAdapter ca= new ItemCustomAdapter(ItemManagement.this,itemDtos,pos);
+        final List<ItemDto> itemDtos=ItemDao.findByCategory(pos);
+        ItemCustomAdapter ca= new ItemCustomAdapter(ItemManagement.this,itemDtos);
+        listView.setAdapter(ca);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem=itemDtos.get(position);
                 dialogShoppingCart();
             }
         });
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        setupBadge();
+    }
+
+
     private void dialogShoppingCart(){
-        Dialog dialog=new Dialog(ItemManagement.this);
-        dialog.setContentView(R.layout.shoppingcart_dialog);
+        final Dialog dialog=new Dialog(ItemManagement.this);
+        dialog.setContentView(R.layout.item_info_popup);
+        TextView name=(TextView)dialog.findViewById(R.id.Name_item);
+        TextView price=(TextView)dialog.findViewById(R.id.price_item);
+        TextView des=(TextView)dialog.findViewById(R.id.description);
+        ImageView closeBtn=(ImageView)dialog.findViewById(R.id.close);
+        ImageView thumbnailItem=(ImageView)dialog.findViewById(R.id.thumbnail_item);
+        Button addBtn=(Button)dialog.findViewById(R.id.button_add);
+
+        name.setText(selectedItem.getName());
+        price.setText(Long.toString(selectedItem.getPrice()));
+        des.setText(selectedItem.getDescription());
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ItemManagement.this, "add success", Toast.LENGTH_SHORT).show();
+                //add item
+                BillDetailDto bill = new BillDetailDto();
+                bill.setItemId(selectedItem.getId());
+                bill.setAmount((int)selectedItem.getPrice());
+                CartDomain.ListItemInCart.add(bill);
+                setupBadge();
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_bar_customer,menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_cart);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        setupBadge();
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
         return true;
     }
 
@@ -58,8 +122,25 @@ public class ItemManagement extends AppCompatActivity {
         if(id==R.id.action_search){
             return true;
         }else if(id==R.id.action_cart){
+            Intent intent = new Intent(ItemManagement.this, ShoppingCartManagement.class);
+            startActivity(intent);
             return true;
         }
         return false;
+    }
+    public void setupBadge() {
+        int mCartItemCount = CartDomain.ListItemInCart.size();
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }

@@ -35,6 +35,7 @@ import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.DTO.BillDto;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.DTO.UserDto;
+import com.hcmus.Utils.ConversionUtils;
 import com.hcmus.shipe.R;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class BillManagementFragment extends Fragment {
     private int selectedType = 0;
     private boolean recordChanged = false;
     private final String[] BILL_TYPE = {"New", "Getting", "On-Going", "Completed", "All"};
-    private final String[] BILL_ALL_STATUS = {"New", "Getting", "On-Going", "Completed"};
+    public static final String[] BILL_ALL_STATUS = {"New", "Getting", "On-Going", "Completed"};
     private final String[] BILL_STATUS = {"Active", "Inactive"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -117,17 +118,16 @@ public class BillManagementFragment extends Fragment {
 
     private void ShowPopup(){
         Dialog view = myDialog;
-        view.setCancelable(false);
+        view.setCancelable(true);
         view.setContentView(R.layout.bill_info_popup);
         TextView customer = (TextView)view.findViewById(R.id.bill_info_customer);
         TextView shipper= (TextView)view.findViewById(R.id.bill_info_shipper);
         TextView description = (TextView)view.findViewById(R.id.bill_info_description);
         TextView created = (TextView)view.findViewById(R.id.bill_info_created);
         TextView delivery = (TextView)view.findViewById(R.id.bill_info_delivery);
-        Spinner statusSpinner = (Spinner)view.findViewById(R.id.bill_info_status_spinner);
+        TextView statusSpinner = (TextView)view.findViewById(R.id.bill_info_status);
         ImageView closeBtn = (ImageView)view.findViewById(R.id.bill_info_close);
         if (selectedBill!=null) {
-            statusSpinner.setAdapter(new ArrayAdapter<String>(view.getContext(),R.layout.support_simple_spinner_dropdown_item, BILL_ALL_STATUS));
             UserDto billCustomer = UserDao.findById(selectedBill.getCustomerId());
             UserDto billShipper = UserDao.findById(selectedBill.getShipperId());
             String namecustomer = "";
@@ -155,21 +155,24 @@ public class BillManagementFragment extends Fragment {
             customer.setText(namecustomer);
             shipper.setText(nameshipper);
             description.setText(selectedBill.getDescription());
-            created.setText(selectedBill.getCreatedDate());
-            delivery.setText(selectedBill.getDeliverTime());
-
+            created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
+            delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
             switch (selectedBill.getStatus()) {
                 case 'N':
-                    statusSpinner.setSelection(0);
+                    statusSpinner.setText(R.string.N);
+                    statusSpinner.setTextColor(Color.parseColor("#ff0000"));
                     break;
                 case 'G':
-                    statusSpinner.setSelection(1);
+                    statusSpinner.setText(R.string.G);
+                    statusSpinner.setTextColor(Color.parseColor("#0000ff"));
                     break;
                 case 'O':
-                    statusSpinner.setSelection(2);
+                    statusSpinner.setText(R.string.O);
+                    statusSpinner.setTextColor(Color.parseColor("#00ff00"));
                     break;
                 case 'C':
-                    statusSpinner.setSelection(3);
+                    statusSpinner.setText(R.string.C);
+                    statusSpinner.setTextColor(Color.parseColor("#000000"));
                     break;
             }
 
@@ -178,33 +181,7 @@ public class BillManagementFragment extends Fragment {
             billAdapter = new BillListAdapter(getContext(), R.layout.bill_detail_list_item , billDetailList);
             listBillDetail.setAdapter(billAdapter);
         }
-        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (selectedBill==null)
-                    return;
-                switch (i) {
-                    case 0:
-                        selectedBill.setStatus('N');
-                        break;
-                    case 1:
-                        selectedBill.setStatus('G');
-                        break;
-                    case 2:
-                        selectedBill.setStatus('O');
-                        break;
-                    case 3:
-                        selectedBill.setStatus('C');
-                        break;
-                }
-                BillDao.Update(selectedBill);
-                recordChanged = true;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,7 +198,7 @@ public class BillManagementFragment extends Fragment {
         billListView.setAdapter(adapter);
     }
 
-    public class CustomListAdapter extends ArrayAdapter<BillDto> {
+    public static class CustomListAdapter extends ArrayAdapter<BillDto> {
         Context myContext;
         int myLayout;
         List<BillDto> myList;
@@ -235,8 +212,8 @@ public class BillManagementFragment extends Fragment {
 
         @Override
         public int getCount() {
-            if (listBill != null)
-                return listBill.size();
+            if (myList != null)
+                return myList.size();
             else
                 return 0;
         }
@@ -284,15 +261,15 @@ public class BillManagementFragment extends Fragment {
                 if (billShipper.getFirstName() != null){
                     fshipper = billShipper.getFirstName().trim();
                 }
-                nameshipper = lshipper + " " + fshipper;
+                nameshipper = ("Shipper: " + lshipper + " " + fshipper).trim();
             }
 
 
 
             customerName.setText(namecustomer);
             shipperName.setText(nameshipper);
-            Long totalPrice =  billDto.getTotalPrice();
-            String price = totalPrice.toString() + "VNĐ";
+            Long totalPrice =  billDto.getTotalPrice() + billDto.getShipCharge();
+            String price = totalPrice.toString() + " VNĐ";
             billPrice.setText(price);
             switch (billDto.getStatus()) {
                 case 'N':
@@ -315,7 +292,7 @@ public class BillManagementFragment extends Fragment {
             return view;
         }
     }
-    public class BillListAdapter extends ArrayAdapter<BillDetailDto> {
+    public static class BillListAdapter extends ArrayAdapter<BillDetailDto> {
         Context myContext;
         int myLayout;
         List<BillDetailDto> myList;
@@ -329,8 +306,8 @@ public class BillManagementFragment extends Fragment {
 
         @Override
         public int getCount() {
-            if (billDetailList != null)
-                return billDetailList.size();
+            if (myList != null)
+                return myList.size();
             else
                 return 0;
         }

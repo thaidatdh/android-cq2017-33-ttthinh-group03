@@ -1,6 +1,7 @@
 package com.hcmus.DAO;
 
 import com.hcmus.DTO.BillDto;
+import com.hcmus.Models.Task;
 import com.hcmus.Utils.Database;
 
 import java.sql.Connection;
@@ -104,6 +105,31 @@ public class BillDao {
     public static List<BillDto> GetCompleted(){
         List<BillDto> bill = new ArrayList<>();
         String sql = "select * from Bill where status ='C'";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                bill.add(new BillDto(rs.getInt("bill_id"), rs.getInt("customer"), rs.getString("created_date"), rs.getString("description"), rs.getLong("total_price"), rs.getLong("ship_charge"), rs.getBoolean("accepted"), rs.getString("status").charAt(0), rs.getInt("shipper"), rs.getString("deliver_time"), rs.getBoolean("is_completed")));
+            }
+        } catch (Exception ex) {}
+        return bill;
+    }
+    public static List<Task> GetTaskOfShipper(int shipper){
+        List<Task> bill = new ArrayList<>();
+        String sql = "select * " +
+                "from users us inner join bill " +
+                "on us.user_id = bill.customer " +
+                "where bill.shipper = " + shipper;
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                bill.add(new Task(rs.getInt("bill_id"), rs.getInt("customer"), rs.getString("created_date"), rs.getString("description"), rs.getLong("total_price"), rs.getLong("ship_charge"), rs.getBoolean("accepted"), rs.getString("status").charAt(0), rs.getInt("shipper"), rs.getString("deliver_time"), rs.getBoolean("is_completed"), rs.getString("type"), rs.getString("username"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone")));
+            }
+        } catch (Exception ex) {}
+        return bill;
+    }
+    public static List<BillDto> FindByCustomer(int customer_id){
+        List<BillDto> bill = new ArrayList<>();
+        String sql = "select * from Bill where customer=" + customer_id + " order by created_date desc;";
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){

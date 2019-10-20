@@ -64,13 +64,13 @@ public class ItemDao {
         } catch (Exception ex) {}
         return item;
     }
-    public static ItemDto findByCategory(int category) {
-        ItemDto item = new ItemDto();
+    public static List<ItemDto> findByCategory(int category) {
+        List<ItemDto> item = new ArrayList<>();
         String sql = "select * from Items where category = " + category;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
-                item = new ItemDto(rs.getInt("item_id"), rs.getString("name"), rs.getString("description"), rs.getString("thumnail"), rs.getInt("price"), rs.getInt("category"), rs.getString("status").charAt(0), rs.getString("created_date"), rs.getString("updated_date"));
+                item.add(new ItemDto(rs.getInt("item_id"), rs.getString("name"), rs.getString("description"), rs.getString("thumnail"), rs.getInt("price"), rs.getInt("category"), rs.getString("status").charAt(0), rs.getString("created_date"), rs.getString("updated_date")));
             }
         } catch (Exception ex) {}
         return item;
