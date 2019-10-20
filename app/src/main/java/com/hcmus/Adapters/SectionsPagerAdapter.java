@@ -1,4 +1,4 @@
-package com.hcmus.shipe.tabbed.shipper;
+package com.hcmus.Adapters;
 
 import android.content.Context;
 
@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.hcmus.shipe.R;
-import com.hcmus.shipe.fragment.ShipperHomeFragment;
-import com.hcmus.shipe.fragment.ShipperMapFragment;
-import com.hcmus.shipe.fragment.ShipperOrderFragment;
-import com.hcmus.shipe.fragment.ShipperTaskFragment;
+import com.hcmus.Fragments.ShipperHomeFragment;
+import com.hcmus.Fragments.ShipperMapFragment;
+import com.hcmus.Fragments.ShipperOrderFragment;
+import com.hcmus.Fragments.ShipperTaskFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -34,7 +34,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
         numOfTabs = num;
         shipperHome = new ShipperHomeFragment();
-        shipperTask = new ShipperTaskFragment();
+        shipperTask = new ShipperTaskFragment(context);
         shipperOrder = new ShipperOrderFragment();
         shipperMap = new ShipperMapFragment(context);
     }

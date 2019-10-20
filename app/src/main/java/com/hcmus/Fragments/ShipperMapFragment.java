@@ -1,7 +1,6 @@
-package com.hcmus.shipe.fragment;
+package com.hcmus.Fragments;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -83,7 +82,7 @@ public class ShipperMapFragment extends Fragment{
         }
         mapUtils.callDirectionAPIWithWaypoints(start, waypoints, params, new MyCallback() {
             @Override
-            public void onComplete(List<List<HashMap<String, String>>> routes, List<Integer> distances) {
+            public void onCompleteDirection(List<List<HashMap<String, String>>> routes, List<Integer> distances) {
                 for (int i = 0; i < routes.size(); i++){
                     List<HashMap<String, String>> path = routes.get(i);
                     for (int j = 0; j < path.size(); j++){
@@ -104,6 +103,10 @@ public class ShipperMapFragment extends Fragment{
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points.get(0), defaultZoom  ));
 
                 }
+            }
+            @Override
+            public void onCompleteDistanceMatrix(List<HashMap<String, HashMap<String, String>>> results){
+
             }
         });
 

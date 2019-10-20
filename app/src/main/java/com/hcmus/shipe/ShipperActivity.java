@@ -7,10 +7,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.widget.TabHost;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -22,18 +20,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.DAO.BillDao;
 import com.hcmus.Models.Task;
-import com.hcmus.shipe.fragment.ShipperHomeFragment;
-import com.hcmus.shipe.fragment.ShipperMapFragment;
-import com.hcmus.shipe.fragment.ShipperOrderFragment;
-import com.hcmus.shipe.fragment.ShipperTaskFragment;
-import com.hcmus.shipe.tabbed.shipper.SectionsPagerAdapter;
+import com.hcmus.Fragments.ShipperHomeFragment;
+import com.hcmus.Fragments.ShipperMapFragment;
+import com.hcmus.Fragments.ShipperOrderFragment;
+import com.hcmus.Fragments.ShipperTaskFragment;
+import com.hcmus.Adapters.SectionsPagerAdapter;
+import com.hcmus.Utils.MapUtils;
+import com.hcmus.Utils.MyCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShipperActivity extends AppCompatActivity implements LocationListener {
     private LocationManager mLocationManager;
     private Location mLocation;
+    private MapUtils mMapUtils;
     private TabLayout tabLayout;
     private TabItem tabHome;
     private TabItem tabTask;
@@ -57,7 +59,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
             mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         }
-
+        mMapUtils = new MapUtils(this);
         final List<Task> tasks = BillDao.GetTaskOfShipper(2);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
@@ -81,12 +83,14 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
 
         tabLayout.setupWithViewPager(viewPager);
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int index = tab.getPosition();
                 switch (index){
+                    case 1:
+                        shipperTask.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), tasks);
+                        break;
                     case 3:
                         if (mLocation != null){
                             viewPager.setCurrentItem(index);

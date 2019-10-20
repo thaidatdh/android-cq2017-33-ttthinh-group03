@@ -16,4 +16,5 @@
     <color name="green">#45bc62</color>
     <color name="orange">#eaad43</color>
     <color name="white">#ffffff</color>
+    <color name="md_grey_500">#9e9e9e</color>
 </resources>

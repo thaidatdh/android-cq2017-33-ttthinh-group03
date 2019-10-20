@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+    <TextView
+        android:id="@+id/shipper_task_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"
+        android:padding="5dp"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/shipper_task_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:textSize="@dimen/sub_text_size"
+        android:textColor="@color/md_grey_500"
+        android:padding="5dp"
+        android:gravity="start"
+        android:textStyle="italic" />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:id="@+id/shipper_task_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="@dimen/sub_text_size"
+            android:textColor="@color/md_grey_500"
+            android:gravity="top"
+            android:textStyle="italic"
+            android:text="dsa"/>
+        <TextView
+            android:id="@+id/shipper_task_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shipper_task_distance"
+            android:textSize="@dimen/sub_text_size"
+            android:textColor="@color/md_grey_500"
+            android:gravity="start"
+            android:textStyle="italic"
+            android:text="123"/>
+    </RelativeLayout>
+</LinearLayout>

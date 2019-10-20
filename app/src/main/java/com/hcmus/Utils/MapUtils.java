@@ -20,11 +20,13 @@ public class MapUtils {
     private Context mContext;
     private static String mKey;
     private String directionAPIUrl;
+    private String distanceMatrixAPIUrl;
     private String travelingType;
     public MapUtils(Context context){
         this.mContext = context;
         mKey = context.getString(R.string.google_maps_key);
         directionAPIUrl = "https://maps.googleapis.com/maps/api/directions/";
+        distanceMatrixAPIUrl = "https://maps.googleapis.com/maps/api/distancematrix/";
         this.travelingType = "";
     }
 
@@ -53,6 +55,17 @@ public class MapUtils {
         if (origin instanceof String)
             url = createDirectionWithWaypointsquestUrl((String)origin, destination, waypoints, params);
         travelingType = "one-many";
+        DownloadTask downloadTask = new DownloadTask(callback);
+        downloadTask.execute(url);
+    }
+    //Distance Matrix API
+    public void callDistanceMatrixAPI(Object origin, List<String> destinations, HashMap<String, String> params, MyCallback callback){
+        String url = "";
+        if (origin instanceof LatLng)
+            url = createDistanceMatrixRequestUrl((LatLng)origin, destinations, params);
+        if (origin instanceof String)
+            url = createDistanceMatrixRequestUrl((String)origin, destinations, params);
+        travelingType = "one-many-distance";
         DownloadTask downloadTask = new DownloadTask(callback);
         downloadTask.execute(url);
     }
@@ -106,6 +119,19 @@ public class MapUtils {
                     }
                     result.add(routes);
                     result.add(distances);
+                    break;
+                case "one-many-distance":
+                    List<HashMap<String, HashMap<String, String>>> results = null;
+                    try {
+                        json = new JSONObject(data[0]);
+                        DistanceMatrixJSONParser parser = new DistanceMatrixJSONParser();
+                        results = parser.parseDistances(json);
+
+                    }  catch(Exception e){
+                        Log.d("Parser Task: ", e.toString());
+                    }
+                    result.add(results);
+                    break;
             }
             return result;
         }
@@ -114,7 +140,10 @@ public class MapUtils {
             switch(travelingType){
                 case "one-one":
                 case "one-many":
-                    this.callback.onComplete((List<List<HashMap<String, String>>>)result.get(0), (List<Integer>)result.get(1));
+                    this.callback.onCompleteDirection((List<List<HashMap<String, String>>>)result.get(0), (List<Integer>)result.get(1));
+                    break;
+                case "one-many-distance":
+                    this.callback.onCompleteDistanceMatrix((List<HashMap<String, HashMap<String, String>>>) result.get(0));
                     break;
             }
 
@@ -196,6 +225,47 @@ public class MapUtils {
         parameters += "&key=" + mKey;
         return url + originStr + "&" + destinationStr + parameters;
     }
+    //Distance Matrix API
+    //Start LatLng
+    private String createDistanceMatrixRequestUrl(LatLng origin, List<String> destinations, Map<String, String> params){
+        String format = "json";
+        String url = distanceMatrixAPIUrl + format + "?";
+
+        String originStr = "origins=" + origin.latitude + "," + origin.longitude;
+        String destinationsStr = "destinations=";
+        for (String destination : destinations){
+            destinationsStr+= destination.replace(' ', '+') +"|";
+        }
+        destinationsStr = destinationsStr.substring(0, destinationsStr.length() - 1);
+        String parameters = "";
+        for (String key : params.keySet()){
+            parameters += "&" + key.toLowerCase() + "=" + params.get(key).toLowerCase();
+        }
+        parameters = parameters.substring(0, parameters.length() - 1);
+
+        parameters += "&key=" + mKey;
+        return url + originStr + "&" + destinationsStr + parameters;
+    }
+    //Start Address
+    private String createDistanceMatrixRequestUrl(String origin, List<String> destinations, Map<String, String> params){
+        String format = "json";
+        String url = distanceMatrixAPIUrl + format + "?";
+
+        String originStr = "origins=" + origin.replace(' ', '+');
+        String destinationsStr = "destinations=";
+        for (String destination : destinations){
+            destinationsStr+= destination.replace(' ', '+') +"+ON|";
+        }
+        destinationsStr = destinationsStr.substring(0, destinationsStr.length() - 1);
+        String parameters = "";
+        for (String key : params.keySet()){
+            parameters += "&" + key.toLowerCase() + "=" + params.get(key).toLowerCase();
+        }
+        parameters = parameters.substring(0, parameters.length() - 1);
+
+        parameters += "&key=" + mKey;
+        return url + originStr + "&" + destinationsStr + parameters;
+    }
     private String fetchDataFromUrl(String requestUrl) throws IOException {
         String data = "";
         InputStream inputStream = null;
@@ -221,4 +291,5 @@ public class MapUtils {
         }
         return data;
     }
+
 }
