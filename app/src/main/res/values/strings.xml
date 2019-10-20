@@ -61,9 +61,9 @@
     <string name="list_Bill_Detail">List Bill Detail</string>
 
     <string name="name">Name</string>
-    <string name="price">Price(VNĐ)</string>
+    <string name="price">Price</string>
     <string name="amount">Amount</string>
-    <string name="total_price">Total Price(VNĐ)</string>
+    <string name="total_price">Total Price</string>
 
     <!-- Customer -->
     <string name="btn_buy">Buy</string>
