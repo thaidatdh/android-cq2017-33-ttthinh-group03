@@ -62,4 +62,28 @@ public class CategoryDao {
         } catch (Exception ex) {}
         return billDetail;
     }
+    public static List<String> SelectAllName(){
+        List<String> data = new ArrayList<>();
+        String sql = "select name from category";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                String name=rs.getString("name");
+                data.add(name);
+            }
+        } catch (Exception ex) {}
+
+        return data;
+    }
+    public static int findByName(String name){
+        String sql = "select category_id from Category where name = "+name;
+        int id=-1;
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            if (rs.next()) {
+                id = rs.getInt("category_id");
+            }
+        } catch (Exception ex) {}
+        return id;
+    }
 }

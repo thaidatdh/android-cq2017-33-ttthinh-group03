@@ -1,3 +1,4 @@
+
 package com.hcmus.Activities.ui.CustomerManagement;
 
 import android.app.Dialog;
@@ -25,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+//import androidx.lifecycle.ViewModelProviders;
 
 import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDao;
@@ -51,6 +52,9 @@ public class CustomerManagementFragment extends Fragment {
     private Dialog billDialog;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+      //  customerManagementViewModel =
+     //           ViewModelProviders.of(this).get(CustomerManagementViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_customer_management, container, false);
         customerListView = root.findViewById(R.id.list_customer_view);
         listCustomer = UserDao.GetAllCustomer();
@@ -66,6 +70,7 @@ public class CustomerManagementFragment extends Fragment {
         });
         return root;
     }
+
     private BillDto selectedBill = null;
     private List<BillDto> listBill;
     public void ShowUserDialog() {

@@ -1,3 +1,4 @@
+
 package com.hcmus.Activities.ui.BillManagement;
 
 import android.Manifest;
@@ -27,6 +28,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import androidx.lifecycle.Observer;
+//import androidx.lifecycle.ViewModelProviders;
 
 import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
@@ -62,6 +66,8 @@ public class BillManagementFragment extends Fragment {
     private static final int REQUEST_PHONE_CALL = 1;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+      //  billManagementViewModel =
+        //        ViewModelProviders.of(this).get(BillManagementViewModel.class);
         View root = inflater.inflate(R.layout.fragment_bill_management, container, false);
         Spinner billTypeSpinner = root.findViewById(R.id.bill_type_spinner);
         billTypeSpinner.setAdapter(new ArrayAdapter<String>(root.getContext(), R.layout.support_simple_spinner_dropdown_item, BILL_TYPE));
@@ -90,6 +96,7 @@ public class BillManagementFragment extends Fragment {
         });
         return root;
     }
+
 
     private void SetListView(int typeIndex) {
         switch (typeIndex) {

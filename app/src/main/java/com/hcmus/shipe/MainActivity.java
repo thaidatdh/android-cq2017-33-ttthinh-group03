@@ -12,35 +12,35 @@ import com.hcmus.Activities.ui.ItemManagement.ItemManagement;
 import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.DAO.CategoryDao;
 import com.hcmus.DTO.CategoryDto;
+public class MainActivity extends AppCompatActivity  {
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
     Button btnLogout;
-    UserLocalStore userLocalStore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        btnLogout=(Button)findViewById(R.id.btnLogout);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
 
-        btnLogout.setOnClickListener(this);
-        userLocalStore=new UserLocalStore(this);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CustomerCategory.class));
+
+            }
+        });
     }
-    @Override
-    public void onClick(View view) {
-        switch(view.getId())
-        {
-            case R.id.btnLogout:
-               /* userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);*/
-
-                startActivity(new Intent(MainActivity.this,CustomerCategory.class));
-
-                break;
 
 
-        }
-    }
 
 }

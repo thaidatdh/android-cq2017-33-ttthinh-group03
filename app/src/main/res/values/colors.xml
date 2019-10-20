@@ -16,4 +16,14 @@
     <color name="green">#45bc62</color>
     <color name="orange">#eaad43</color>
     <color name="white">#ffffff</color>
+    <color name="colorBorder">#3366CC</color>
+    <color name="LightBlue">#ADD8E6</color>
+    <color name="AliceBlue">#F0F8FF</color>
+    <color name="PowderBlue">#B0E0E6</color>
+    <color name="LightSteelBlue">#B0C4DE</color>
+    <color name="PaleTurquoise">#AFEEEE</color>
+    <color name="GreenYellow">#ADFF2F</color>
+    <color name="BlueViolet">#8A2BE2</color>
+    <color name="LightSkyBlue">#87CEFA</color>
+    <color name="SkyBlue">#87CEEB</color>
 </resources>
