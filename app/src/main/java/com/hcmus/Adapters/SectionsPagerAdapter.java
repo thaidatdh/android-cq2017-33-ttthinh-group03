@@ -9,10 +9,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.hcmus.shipe.R;
+
 import com.hcmus.Fragments.ShipperHomeFragment;
 import com.hcmus.Fragments.ShipperMapFragment;
 import com.hcmus.Fragments.ShipperOrderFragment;
 import com.hcmus.Fragments.ShipperTaskFragment;
+
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

@@ -4,6 +4,7 @@ import com.hcmus.DTO.UserDto;
 import com.hcmus.Utils.Database;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,4 +73,17 @@ public class UserDao {
         } catch (Exception ex) {}
         return user;
     }
+    public static boolean CheckLogin(String username, String password) {
+        String sql = "Select * from Users where username = '" + username +"' AND password = '" + password+"'";
+        ResultSet rs = Database.SelectQuery(sql);
+        try {
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

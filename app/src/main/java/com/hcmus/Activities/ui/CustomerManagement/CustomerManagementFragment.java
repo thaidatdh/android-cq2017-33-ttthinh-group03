@@ -1,3 +1,4 @@
+
 package com.hcmus.Activities.ui.CustomerManagement;
 
 import android.app.Dialog;
@@ -25,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+//import androidx.lifecycle.ViewModelProviders;
 
 import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDao;
@@ -51,6 +52,9 @@ public class CustomerManagementFragment extends Fragment {
     private Dialog billDialog;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+      //  customerManagementViewModel =
+     //           ViewModelProviders.of(this).get(CustomerManagementViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_customer_management, container, false);
         customerListView = root.findViewById(R.id.list_customer_view);
         listCustomer = UserDao.GetAllCustomer();
@@ -66,6 +70,7 @@ public class CustomerManagementFragment extends Fragment {
         });
         return root;
     }
+
     private BillDto selectedBill = null;
     private List<BillDto> listBill;
     public void ShowUserDialog() {
@@ -118,10 +123,9 @@ public class CustomerManagementFragment extends Fragment {
         TextView description = (TextView)view.findViewById(R.id.bill_info_description);
         TextView created = (TextView)view.findViewById(R.id.bill_info_created);
         TextView delivery = (TextView)view.findViewById(R.id.bill_info_delivery);
-        Spinner statusSpinner = (Spinner)view.findViewById(R.id.bill_info_status_spinner);
+        TextView statusSpinner = (TextView)view.findViewById(R.id.bill_info_status);
         ImageView closeBtn = (ImageView)view.findViewById(R.id.bill_info_close);
         if (selectedBill!=null) {
-            statusSpinner.setAdapter(new ArrayAdapter<String>(view.getContext(),R.layout.support_simple_spinner_dropdown_item, BillManagementFragment.BILL_ALL_STATUS));
             UserDto billCustomer = UserDao.findById(selectedBill.getCustomerId());
             UserDto billShipper = UserDao.findById(selectedBill.getShipperId());
             String namecustomer = "";
@@ -151,19 +155,22 @@ public class CustomerManagementFragment extends Fragment {
             description.setText(selectedBill.getDescription());
             created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
             delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
-
             switch (selectedBill.getStatus()) {
                 case 'N':
-                    statusSpinner.setSelection(0);
+                    statusSpinner.setText(R.string.N);
+                    statusSpinner.setTextColor(Color.parseColor("#ff0000"));
                     break;
                 case 'G':
-                    statusSpinner.setSelection(1);
+                    statusSpinner.setText(R.string.G);
+                    statusSpinner.setTextColor(Color.parseColor("#0000ff"));
                     break;
                 case 'O':
-                    statusSpinner.setSelection(2);
+                    statusSpinner.setText(R.string.O);
+                    statusSpinner.setTextColor(Color.parseColor("#00ff00"));
                     break;
                 case 'C':
-                    statusSpinner.setSelection(3);
+                    statusSpinner.setText(R.string.C);
+                    statusSpinner.setTextColor(Color.parseColor("#000000"));
                     break;
             }
 

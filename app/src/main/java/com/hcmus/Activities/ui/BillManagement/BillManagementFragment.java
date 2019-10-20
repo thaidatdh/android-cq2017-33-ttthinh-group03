@@ -1,10 +1,16 @@
+
 package com.hcmus.Activities.ui.BillManagement;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +20,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+//import androidx.lifecycle.ViewModelProviders;
 
 import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
@@ -41,6 +47,7 @@ import java.util.List;
 
 public class BillManagementFragment extends Fragment {
 
+    private static final int PERMISSION_REQUEST_CODE = 1 ;
     private List<BillDto> listBill;
     private ListView billListView;
 
@@ -55,9 +62,12 @@ public class BillManagementFragment extends Fragment {
     private final String[] BILL_TYPE = {"New", "Getting", "On-Going", "Completed", "All"};
     public static final String[] BILL_ALL_STATUS = {"New", "Getting", "On-Going", "Completed"};
     private final String[] BILL_STATUS = {"Active", "Inactive"};
-
+    private static final int REQUEST_CALL = 1;
+    private static final int REQUEST_PHONE_CALL = 1;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+      //  billManagementViewModel =
+        //        ViewModelProviders.of(this).get(BillManagementViewModel.class);
         View root = inflater.inflate(R.layout.fragment_bill_management, container, false);
         Spinner billTypeSpinner = root.findViewById(R.id.bill_type_spinner);
         billTypeSpinner.setAdapter(new ArrayAdapter<String>(root.getContext(), R.layout.support_simple_spinner_dropdown_item, BILL_TYPE));
@@ -86,6 +96,7 @@ public class BillManagementFragment extends Fragment {
         });
         return root;
     }
+
 
     private void SetListView(int typeIndex) {
         switch (typeIndex) {
@@ -117,14 +128,14 @@ public class BillManagementFragment extends Fragment {
         view.setCancelable(true);
         view.setContentView(R.layout.bill_info_popup);
         TextView customer = (TextView)view.findViewById(R.id.bill_info_customer);
+        final TextView phone = (TextView)view.findViewById(R.id.bill_phone_customer);
         TextView shipper= (TextView)view.findViewById(R.id.bill_info_shipper);
         TextView description = (TextView)view.findViewById(R.id.bill_info_description);
         TextView created = (TextView)view.findViewById(R.id.bill_info_created);
         TextView delivery = (TextView)view.findViewById(R.id.bill_info_delivery);
-        Spinner statusSpinner = (Spinner)view.findViewById(R.id.bill_info_status_spinner);
+        TextView statusSpinner = (TextView)view.findViewById(R.id.bill_info_status);
         ImageView closeBtn = (ImageView)view.findViewById(R.id.bill_info_close);
         if (selectedBill!=null) {
-            statusSpinner.setAdapter(new ArrayAdapter<String>(view.getContext(),R.layout.support_simple_spinner_dropdown_item, BILL_ALL_STATUS));
             UserDto billCustomer = UserDao.findById(selectedBill.getCustomerId());
             UserDto billShipper = UserDao.findById(selectedBill.getShipperId());
             String namecustomer = "";
@@ -150,23 +161,28 @@ public class BillManagementFragment extends Fragment {
                 nameshipper = lshipper + " " + fshipper;
             }
             customer.setText(namecustomer);
+            phone.setText(billCustomer.getPhone());
+            phone.setTextColor(Color.parseColor("#00ccff"));
             shipper.setText(nameshipper);
             description.setText(selectedBill.getDescription());
             created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
             delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
-
             switch (selectedBill.getStatus()) {
                 case 'N':
-                    statusSpinner.setSelection(0);
+                    statusSpinner.setText(R.string.N);
+                    statusSpinner.setTextColor(Color.parseColor("#ff0000"));
                     break;
                 case 'G':
-                    statusSpinner.setSelection(1);
+                    statusSpinner.setText(R.string.G);
+                    statusSpinner.setTextColor(Color.parseColor("#0000ff"));
                     break;
                 case 'O':
-                    statusSpinner.setSelection(2);
+                    statusSpinner.setText(R.string.O);
+                    statusSpinner.setTextColor(Color.parseColor("#00ff00"));
                     break;
                 case 'C':
-                    statusSpinner.setSelection(3);
+                    statusSpinner.setText(R.string.C);
+                    statusSpinner.setTextColor(Color.parseColor("#000000"));
                     break;
             }
 
@@ -175,33 +191,14 @@ public class BillManagementFragment extends Fragment {
             billAdapter = new BillListAdapter(getContext(), R.layout.bill_detail_list_item , billDetailList);
             listBillDetail.setAdapter(billAdapter);
         }
-        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        phone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (selectedBill==null)
-                    return;
-                switch (i) {
-                    case 0:
-                        selectedBill.setStatus('N');
-                        break;
-                    case 1:
-                        selectedBill.setStatus('G');
-                        break;
-                    case 2:
-                        selectedBill.setStatus('O');
-                        break;
-                    case 3:
-                        selectedBill.setStatus('C');
-                        break;
-                }
-                BillDao.Update(selectedBill);
-                recordChanged = true;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
+            public void onClick(View v) {
+                String numPhone = phone.getText().toString();
+                makePhoneCall(numPhone);
             }
         });
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,6 +210,67 @@ public class BillManagementFragment extends Fragment {
         });
         myDialog.show();
     }
+
+    private void makePhoneCall(String numPhone) {
+
+        numPhone = numPhone.replace("-", "");
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkPermission()) {
+                Log.e("permission", "Permission already granted.");
+            } else {
+                requestPermission();
+            }
+        }
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + numPhone));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public boolean checkPermission() {
+
+        int CallPermissionResult = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
+
+        return CallPermissionResult == PackageManager.PERMISSION_GRANTED ;
+
+    }
+
+    private void requestPermission() {
+
+        requestPermissions( new String[]
+                {
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.CALL_PHONE
+                }, PERMISSION_REQUEST_CODE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+
+            case PERMISSION_REQUEST_CODE:
+                TextView phone = (TextView)getView().findViewById(R.id.bill_phone_customer);
+
+                if (grantResults.length > 0) {
+
+                    boolean CallPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                    if (CallPermission) {
+
+                        Toast.makeText(getActivity(),
+                                "Permission accepted", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getActivity(),
+                                "Permission denied", Toast.LENGTH_LONG).show();
+                     phone.setEnabled(false);
+
+                    }
+                    break;
+                }
+        }
+    }
+
+
     private void SetListViewBill() {
         adapter = new CustomListAdapter(getContext(), R.layout.bill_list_item, listBill);
         billListView.setAdapter(adapter);
@@ -238,11 +296,6 @@ public class BillManagementFragment extends Fragment {
                 return 0;
         }
 
-        /*@Override
-        public Object getItem(int position) {
-            return listBill.get(position);
-        }
-*/
         @Override
         public long getItemId(int position) {
             return position;

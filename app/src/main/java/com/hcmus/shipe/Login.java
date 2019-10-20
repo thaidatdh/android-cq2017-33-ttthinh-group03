@@ -11,12 +11,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+import com.hcmus.DAO.UserDao;
+
+
+
+public class Login extends AppCompatActivity  {
+    TextView txtvRegister;
 
     EditText edtUsername,edtPassword;
-    Button btnLogin;
-    TextView txtvRegisterLink;
-    UserLocalStore userLocalStore;
+    Button btnSignIn;
 
     @Override
 
@@ -24,40 +27,50 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        txtvRegister=(TextView)findViewById(R.id.txtvRegister);
         edtUsername=(EditText)findViewById(R.id.edtUsername);
         edtPassword=(EditText)findViewById(R.id.edtPassword);
-        btnLogin=(Button)findViewById(R.id.btnLogin);
-        txtvRegisterLink=(TextView)findViewById(R.id.txtvRegisterLink);
+        btnSignIn=(Button)findViewById(R.id.btnSignIn);
 
 
-        btnLogin.setOnClickListener(this);
-        txtvRegisterLink.setOnClickListener(this);
-        userLocalStore=new UserLocalStore(this);
-
-
-    }
-    @Override
-    public void onClick(View view) {
-        switch(view.getId())
-        {
-            case R.id.btnLogin:
-                String username= edtUsername.getText().toString();
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username=edtUsername.getText().toString();
                 String password=edtPassword.getText().toString();
-                //encrypt password
-               /* String encodePw=com.hcmus.Utils.ConversionUtils.User.EncryptPassword(password);
-                User user=new User(username,encodePw);
-                userLocalStore.storeUserData(user);
-                userLocalStore.setUserLoggedIn(true);*/
 
-                Intent intent = new Intent(this, MainActivity.class);
-                this.startActivity(intent);
-                break;
-            case R.id.txtvRegisterLink:
-                startActivity(new Intent(this, Register.class));
-                break;
+                boolean test=false;
 
-        }
+                test= UserDao.CheckLogin(username,password);
+
+                if(test==true)
+                {
+                    android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
+                    builder.setMessage("Login success!").create().show();
+                    Intent intent=new Intent(Login.this,MainActivity.class);
+
+                    Login.this.startActivity(intent);
+
+                }
+                else
+                {
+                    android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
+                    builder.setMessage("Login failed!").setNegativeButton("Retry",null).create().show();
+
+                }
+            }
+        });
+        txtvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, Register.class));
+
+            }
+        });
+
+
     }
+
     private void ClickLogin()
     {
         AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);

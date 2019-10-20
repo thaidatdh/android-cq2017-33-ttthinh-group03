@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permision.CALL_PHONE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -17,15 +18,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement"></activity>
-        <activity android:name="com.hcmus.Activities.ui.ItemManagement.ItemManagement" />
-        <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory" />
-        <activity android:name=".ShipperActivity" />
+        <activity android:name=".InsertItems"></activity>
+        <activity
+            android:name=".ShipperActivity" />
         <activity
             android:name="com.hcmus.Activities.ManagerActivity"
             android:label="@string/title_activity_manager"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Login"></activity>
+        <activity android:name=".Register"></activity>
+
+        <activity android:name="com.hcmus.Activities.ui.ItemManagement.ItemManagement"></activity>
+        <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement"></activity>
+      
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_shiper_manager"

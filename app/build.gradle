@@ -5,11 +5,16 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.hcmus.shipe"
-        minSdkVersion 27
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.implementation 'com.google.android.gms:play-services-maps:16.1.0'\n" +
+                "    implementation 'com.google.android.material:material:1.0.0'\n" +
+                "    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'\n" +
+                "    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\n" +
+                "    implementation 'androidx.navigation:navigation-fragment:2.0.0'\n" +
+                "    implementation 'androidx.navigation:navigation-ui:2.0.0'AndroidJUnitRunner"
     }
     buildTypes {
         release {

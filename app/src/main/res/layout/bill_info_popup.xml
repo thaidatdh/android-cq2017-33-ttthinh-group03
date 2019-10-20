@@ -49,6 +49,23 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/bill_phone_customer_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone" />
+
+            <TextView
+                android:id="@+id/bill_phone_customer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
                 android:id="@+id/bill_info_shipper_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,8 +139,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/status" />
 
-            <Spinner
-                android:id="@+id/bill_info_status_spinner"
+            <TextView
+                android:id="@+id/bill_info_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </TableRow>
@@ -141,6 +158,50 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="0.072" />
+
+    <TextView
+        android:id="@+id/textView_Name_Item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_Bill_Detail"/>
+
+    <TextView
+        android:id="@+id/textView_Price_Item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.307"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_Bill_Detail"/>
+
+    <TextView
+        android:id="@+id/textView_Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.579"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_Bill_Detail"/>
+
+    <TextView
+        android:id="@+id/textView_Total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/total_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_Bill_Detail" />
 
     <ListView
         android:id="@+id/listBillDetail"
