@@ -3,10 +3,7 @@ package com.hcmus.DAO;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.Utils.Database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +42,16 @@ public class ItemDao {
         return false;
     }
 
+    public static boolean UpdateItem(ItemDto item) {
+        String sql = "update items set name = '" +item.getName() + "', description = '" + item.getDescription() + "', thumnail = '" + item.getThumbnail() + "', price = " + item.getPrice()
+                + ", category = " + item.getCategory() + ", status = '" + item.getStatus() +  "', updated_date = '" + item.getUpdatedDate() + "' where item_id = " + item.getId(); ;
+        if (Database.ExecuteQuery(sql) > 0) {
+
+            return true;
+        } else
+
+            return false;
+    }
     public static boolean Delete(ItemDto item) {
         String sql = "delete from items where item_id = " + item.getId();
         if (Database.ExecuteQuery(sql) > 0) {
@@ -75,4 +82,5 @@ public class ItemDao {
         } catch (Exception ex) {}
         return item;
     }
+
 }

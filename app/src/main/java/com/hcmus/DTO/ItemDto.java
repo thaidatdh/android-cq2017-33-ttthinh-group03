@@ -35,7 +35,17 @@ public class ItemDto {
       this.createdDate = createdDate;
       this.updatedDate = updatedDate;
    }
-
+   //update
+   public ItemDto(int id, String name, String description, String thumbnail, long price, int category, char status,  String updatedDate) {
+      this.item_id=id;
+      this.name = name;
+      this.description = description;
+      this.thumbnail = thumbnail;
+      this.price = price;
+      this.category = category;
+      this.status = status;
+      this.updatedDate = updatedDate;
+   }
    public int getId() {
       return item_id;
    }

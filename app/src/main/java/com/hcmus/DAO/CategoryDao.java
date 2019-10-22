@@ -3,10 +3,7 @@ package com.hcmus.DAO;
 import com.hcmus.DTO.CategoryDto;
 import com.hcmus.Utils.Database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +73,7 @@ public class CategoryDao {
         return data;
     }
     public static int findByName(String name){
-        String sql = "select category_id from Category where name = "+name;
+        String sql = "select category_id from Category where name = '"+name+"'";
         int id=-1;
         try {
             ResultSet rs = Database.SelectQuery(sql);

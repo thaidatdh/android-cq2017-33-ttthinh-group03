@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InsertItems">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Name"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edit_text_background"
+
+                    android:id="@+id/edtNameItem"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Description"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edit_text_background"
+
+                    android:id="@+id/edtDescriptionItem"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Thumbnail"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edit_text_background"
+
+                    android:id="@+id/edtThumbnailItem"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Price"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.5"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edit_text_background"
+
+                    android:id="@+id/edtPriceItem"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="đ"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Category : " />
+
+                <Spinner
+                    android:id="@+id/spnCategoryItem"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.7"
+                    android:layout_gravity="end" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Status : " />
+
+                <Spinner
+                    android:id="@+id/spnStatusItem"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.7"
+                    android:layout_gravity="end" />
+            </LinearLayout>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UPDATE"
+                android:textStyle="bold"
+                android:layout_marginTop="25dp"
+                android:id="@+id/btnInsertItem"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

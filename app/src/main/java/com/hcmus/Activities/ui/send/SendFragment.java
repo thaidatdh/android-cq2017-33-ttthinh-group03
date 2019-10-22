@@ -1,4 +1,4 @@
-/*
+
 package com.hcmus.Activities.ui.send;
 
 import android.os.Bundle;
@@ -33,4 +33,4 @@ public class SendFragment extends Fragment {
         });
         return root;
     }
-}*/
+}
