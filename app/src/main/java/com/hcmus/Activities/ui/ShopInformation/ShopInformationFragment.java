@@ -1,5 +1,4 @@
-
-package com.hcmus.Activities.ui.send;
+package com.hcmus.Activities.ui.ShopInformation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hcmus.shipe.R;
 
-public class SendFragment extends Fragment {
+public class ShopInformationFragment extends Fragment {
 
-    private SendViewModel sendViewModel;
+    private ShopInformationViewModel shopInformationViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        sendViewModel =
-                ViewModelProviders.of(this).get(SendViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_send, container, false);
-        final TextView textView = root.findViewById(R.id.text_send);
-        sendViewModel.getText().observe(this, new Observer<String>() {
+       shopInformationViewModel =
+                ViewModelProviders.of(this).get(ShopInformationViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_shop_information, container, false);
+        final TextView textView = root.findViewById(R.id.text_share);
+        shopInformationViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

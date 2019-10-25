@@ -25,8 +25,8 @@
     <string name="menu_customer_management">Customer Management</string>
     <string name="menu_bill_management">Bill Management</string>
     <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_shop_information">Shop Information</string>
+    <string name="menu_product_management">Product Management</string>
     <string name="shipper_type">Shipper Type: </string>
     <string name="shipper_name">Shipper Name</string>
     <string name="shipper_plate_number">Plate number</string>

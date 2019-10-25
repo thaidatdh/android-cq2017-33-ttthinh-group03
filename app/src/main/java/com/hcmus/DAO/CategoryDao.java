@@ -28,7 +28,7 @@ public class CategoryDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("category","category_id");
+        return Database.GetLatestId("category","category_id");
     }
 
     public static boolean Update(CategoryDto billDetail){
