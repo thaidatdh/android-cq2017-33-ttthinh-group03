@@ -32,7 +32,7 @@ public class DiscountDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("discount","discount_id");
+        return Database.GetLatestId("discount","discount_id");
     }
 
     public static boolean Update(DiscountDto billDetail) {

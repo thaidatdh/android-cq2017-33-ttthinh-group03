@@ -52,7 +52,7 @@ public class ReviewDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("review","review_id");
+        return Database.GetLatestId("review","review_id");
     }
 
     public static boolean Update(ReviewDto review) {

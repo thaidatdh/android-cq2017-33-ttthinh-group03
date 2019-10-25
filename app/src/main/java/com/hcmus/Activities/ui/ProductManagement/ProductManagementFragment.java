@@ -1,4 +1,5 @@
-package com.hcmus.Activities.ui.share;
+
+package com.hcmus.Activities.ui.ProductManagement;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +15,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.hcmus.shipe.R;
 
-public class ShareFragment extends Fragment {
+public class ProductManagementFragment extends Fragment {
 
-    private ShareViewModel shareViewModel;
+    private ProductManagementViewModel productManagementViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       shareViewModel =
-                ViewModelProviders.of(this).get(ShareViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_share, container, false);
-        final TextView textView = root.findViewById(R.id.text_share);
-        shareViewModel.getText().observe(this, new Observer<String>() {
+        productManagementViewModel =
+                ViewModelProviders.of(this).get(ProductManagementViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_product_management, container, false);
+        final TextView textView = root.findViewById(R.id.text_send);
+        productManagementViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
