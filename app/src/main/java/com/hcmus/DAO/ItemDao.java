@@ -24,7 +24,8 @@ public class ItemDao {
     }
 
     public static int Insert(ItemDto item) {
-        String sql = "insert into Items(name , description , thumnail , price , category , status , created_date , updated_date) VALUES ('" + item.getName() + "', '" + item.getDescription() + "', '" + item.getThumbnail() + "', " + item.getPrice() + ", " + item.getCategory() + ", '" + item.getStatus() + "', '" + item.getCreatedDate() + "', '" + item.getUpdatedDate() +")";
+        String sql = "insert into Items(name , description , thumnail , price , category , status , created_date , updated_date) VALUES ('" + item.getName() + "', '" + item.getDescription() + "', '" + item.getThumbnail() + "', " + item.getPrice() + ", " + item.getCategory() + ", '" + item.getStatus() + "', '" + item.getCreatedDate() + "', '" + item.getUpdatedDate() +"')";
+        sql = sql.replace("null","");
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;

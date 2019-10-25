@@ -60,6 +60,7 @@
     <string name="item_price">Item Price</string>
     <string name="item_amount">Item Amount</string>
     <string name="item_total_price">Item Total Price</string>
+    <string name="update_item">Update</string>
     <string name="list_Bill_Detail">List Bill Detail</string>
 
     <string name="name">Name</string>

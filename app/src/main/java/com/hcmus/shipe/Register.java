@@ -18,9 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hcmus.DAO.UserDao;
 import com.hcmus.DTO.UserDto;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -106,7 +103,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(i,i1,i2);
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
                 edtBirthdate.setText(simpleDateFormat.format(calendar.getTime()));
             }
         },year,month,day);
