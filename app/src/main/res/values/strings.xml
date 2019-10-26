@@ -5,11 +5,13 @@
     <string name="shop">Shop</string>
     <string name="shipper">Shipper</string>
     <string name="customer">Customer</string>
+    <string name="image_description">This is an image</string>
     <!-- Shipper -->
     <string name="tab_home">Home</string>
     <string name="tab_task">Task</string>
     <string name="tab_order">Order</string>
     <string name="tab_map">Map</string>
+    <string name="accept">Accept</string>
 
     <!-- Manager -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -56,10 +58,10 @@
     <string name="description">Description:</string>
     <string name="created">Created Date:</string>
     <string name="delivery">Delivery Date:</string>
-    <string name="item_name">Item Name</string>
-    <string name="item_price">Item Price</string>
-    <string name="item_amount">Item Amount</string>
-    <string name="item_total_price">Item Total Price</string>
+    <string name="item_name">Name</string>
+    <string name="item_price">Price</string>
+    <string name="item_amount">Amount</string>
+    <string name="item_total_price">Total Price</string>
     <string name="list_Bill_Detail">List Bill Detail</string>
 
     <string name="name">Name</string>

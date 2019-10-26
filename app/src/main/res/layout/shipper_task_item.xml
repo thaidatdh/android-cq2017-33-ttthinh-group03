@@ -37,8 +37,7 @@
             android:textSize="@dimen/sub_text_size"
             android:textColor="@color/md_grey_500"
             android:gravity="top"
-            android:textStyle="italic"
-            android:text="dsa"/>
+            android:textStyle="italic"/>
         <TextView
             android:id="@+id/shipper_task_duration"
             android:layout_width="match_parent"
@@ -47,7 +46,6 @@
             android:textSize="@dimen/sub_text_size"
             android:textColor="@color/md_grey_500"
             android:gravity="start"
-            android:textStyle="italic"
-            android:text="123"/>
+            android:textStyle="italic"/>
     </RelativeLayout>
 </LinearLayout>
