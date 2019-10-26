@@ -4,6 +4,8 @@ import android.os.StrictMode;
 
 import com.hcmus.DTO.ShopDto;
 
+import net.sourceforge.jtds.util.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -47,10 +49,12 @@ public class Database {
             Connection conn = getConnection();
             Statement statement = conn.createStatement();
             result = statement.executeUpdate(sql);
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+            String exceptionStr = ex.getMessage();
+        }
         return result;
     }
-    public static int GetLastestId(String table, String id_field) {
+    public static int GetLatestId(String table, String id_field) {
         String sql = "SELECT TOP 1 "+id_field+" FROM " + table + " ORDER BY " + id_field +" DESC";
         ResultSet rsRow = SelectQuery(sql);
         int result = -1;

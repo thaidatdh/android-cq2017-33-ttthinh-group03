@@ -28,7 +28,7 @@ public class ItemDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("items","item_id");
+        return Database.GetLatestId("items","item_id");
     }
 
     public static boolean Update(ItemDto item) {

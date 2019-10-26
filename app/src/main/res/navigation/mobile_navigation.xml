@@ -24,14 +24,14 @@
         tools:layout="@layout/fragment_bill_management" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.hcmus.Activities.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        android:id="@+id/nav_shop_information"
+        android:name="com.hcmus.Activities.ui.ShopInformation.ShopInformationFragment"
+        android:label="@string/menu_shop_information"
+        tools:layout="@layout/fragment_shop_information" />
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="com.hcmus.Activities.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_product_management"
+        android:name="com.hcmus.Activities.ui.ProductManagement.ProductManagementFragment"
+        android:label="@string/menu_product_management"
+        tools:layout="@layout/fragment_product_management" />
 </navigation>

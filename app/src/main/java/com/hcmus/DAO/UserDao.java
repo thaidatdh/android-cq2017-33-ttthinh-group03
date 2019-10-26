@@ -28,7 +28,7 @@ public class UserDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("users","user_id");
+        return Database.GetLatestId("users","user_id");
     }
 
     public static boolean Update(UserDto user) {

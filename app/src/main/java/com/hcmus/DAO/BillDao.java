@@ -29,16 +29,22 @@ public class BillDao {
     }
 
     public static int Insert(BillDto bill){
-        String sql = "insert into Bill(customer, created_date, description, total_price, ship_charge, accepted, status, shipper, deliver_time, is_completed) values(" + bill.getCustomerId() + ", '" + bill.getCreatedDate() + "', '" + bill.getDescription() + "', " + bill.getTotalPrice()+ ", " + bill.getShipCharge() + ", " + bill.isAccepted() + ", '" + bill.getStatus()+ "', " + bill.getShipperId() + ", '" + bill.getDeliverTime() + "', " + bill.isCompleted()+ ")";
+        String accepted = ("" + bill.isAccepted()).toUpperCase().trim();
+        String completed = ("" + bill.isCompleted()).toUpperCase().trim();
+        String sql = "insert into Bill(customer, created_date, description, total_price, ship_charge, accepted, status, shipper, deliver_time, is_completed) values(" + bill.getCustomerId() + ", '" + bill.getCreatedDate() + "', '" + bill.getDescription() + "', " + bill.getTotalPrice()+ ", " + bill.getShipCharge() + ", '" + accepted + "', '" + bill.getStatus()+ "', " + bill.getShipperId() + ", '" + bill.getDeliverTime() + "', '" + completed+ "')";
+        sql = sql.replace("null","");
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("bill","bill_id");
+        return Database.GetLatestId("bill","bill_id");
     }
 
     public static boolean Update(BillDto bill){
-        String sql = "Update Bill set bill_id = " + bill.getBillId() + ", customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = " + bill.isAccepted() + ", status = '" + bill.getStatus()
-                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = " + bill.isCompleted() + " where bill_id = " + bill.getBillId()+ ")" ;
+        String accepted = ("" + bill.isAccepted()).toUpperCase().trim();
+        String completed = ("" + bill.isCompleted()).toUpperCase().trim();
+        String sql = "Update Bill set bill_id = " + bill.getBillId() + ", customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = '" + accepted + "', status = '" + bill.getStatus()
+                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ ")" ;
+        sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else

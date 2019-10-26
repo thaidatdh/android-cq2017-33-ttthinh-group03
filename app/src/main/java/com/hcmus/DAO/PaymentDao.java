@@ -32,7 +32,7 @@ public class PaymentDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("payment","payment_id");
+        return Database.GetLatestId("payment","payment_id");
     }
 
     public static boolean Update(PaymentDto payment) {

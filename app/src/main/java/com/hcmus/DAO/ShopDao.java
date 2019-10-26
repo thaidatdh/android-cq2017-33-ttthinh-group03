@@ -29,7 +29,7 @@ public class ShopDao {
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
             return result;
-        return Database.GetLastestId("shop","shop_id");
+        return Database.GetLatestId("shop","shop_id");
     }
 
     public static boolean Update(ShopDto shop) {

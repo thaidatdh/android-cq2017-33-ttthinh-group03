@@ -10,25 +10,24 @@
             android:title="@string/menu_shipper_management" />
         <item
             android:id="@+id/nav_customer_management"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_send"
             android:title="@string/menu_customer_management" />
         <item
             android:id="@+id/nav_bill_management"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_bill_management" />
         <item
-            android:id="@+id/nav_send"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/menu_send" />
+            android:id="@+id/nav_product_management"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_product_management" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Shop">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
-
+                android:id="@+id/nav_shop_information"
+                android:icon="@drawable/ic_menu_cart"
+                android:title="@string/menu_shop_information" />
         </menu>
     </item>
 
