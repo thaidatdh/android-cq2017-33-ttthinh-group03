@@ -42,8 +42,8 @@ public class BillDao {
     public static boolean Update(BillDto bill){
         String accepted = ("" + bill.isAccepted()).toUpperCase().trim();
         String completed = ("" + bill.isCompleted()).toUpperCase().trim();
-        String sql = "Update Bill set bill_id = " + bill.getBillId() + ", customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = '" + accepted + "', status = '" + bill.getStatus()
-                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ ")" ;
+        String sql = "Update Bill set customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = '" + accepted + "', status = '" + bill.getStatus()
+                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ "" ;
         sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -62,7 +62,7 @@ public class BillDao {
 
     public static BillDto findById(int Id){
         BillDto bill = new BillDto();
-        String sql = "select * from Bill where ID = " + Id;
+        String sql = "select * from Bill where bill_id = " + Id;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
