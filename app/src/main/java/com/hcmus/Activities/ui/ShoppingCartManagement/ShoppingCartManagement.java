@@ -66,7 +66,7 @@ public class ShoppingCartManagement extends AppCompatActivity {
                     CartDomain.ListItemInCart.clear();
                     ca.notifyDataSetChanged();
                     BillDao.Update(bill);
-                    Toast.makeText(ShoppingCartManagement.this, "Buy success", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
