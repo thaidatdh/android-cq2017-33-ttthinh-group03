@@ -42,8 +42,8 @@ public class BillDao {
     public static boolean Update(BillDto bill){
         String accepted = ("" + bill.isAccepted()).toUpperCase().trim();
         String completed = ("" + bill.isCompleted()).toUpperCase().trim();
-        String sql = "Update Bill set bill_id = " + bill.getBillId() + ", customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = '" + accepted + "', status = '" + bill.getStatus()
-                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ ")" ;
+        String sql = "Update Bill set customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = '" + accepted + "', status = '" + bill.getStatus()
+                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ "" ;
         sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
@@ -62,7 +62,7 @@ public class BillDao {
 
     public static BillDto findById(int Id){
         BillDto bill = new BillDto();
-        String sql = "select * from Bill where ID = " + Id;
+        String sql = "select * from Bill where bill_id = " + Id;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
@@ -119,12 +119,12 @@ public class BillDao {
         } catch (Exception ex) {}
         return bill;
     }
-    public static List<Task> GetTaskOfShipper(int shipper){
+    public static List<Task> GetAllAvailableTask(){
         List<Task> bill = new ArrayList<>();
         String sql = "select * " +
                 "from users us inner join bill " +
                 "on us.user_id = bill.customer " +
-                "where bill.shipper = " + shipper;
+                "where us.type = 'CUSTOMER' AND bill.shipper is NULL";
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
@@ -132,6 +132,28 @@ public class BillDao {
             }
         } catch (Exception ex) {}
         return bill;
+    }
+    public static List<Task> GetTaskOfShipper(int shipper){
+        List<Task> bill = new ArrayList<>();
+        String sql = "select * " +
+                "from users us inner join bill " +
+                "on us.user_id = bill.customer " +
+                "where us.type = 'CUSTOMER' AND bill.shipper = " + shipper;
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                bill.add(new Task(rs.getInt("bill_id"), rs.getInt("customer"), rs.getString("created_date"), rs.getString("description"), rs.getLong("total_price"), rs.getLong("ship_charge"), rs.getBoolean("accepted"), rs.getString("status").charAt(0), rs.getInt("shipper"), rs.getString("deliver_time"), rs.getBoolean("is_completed"), rs.getString("type"), rs.getString("username"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone")));
+            }
+        } catch (Exception ex) {}
+        return bill;
+    }
+    public static void AssignShipper(int billId, int shipperID){
+        String sql = "UPDATE bill " +
+                "SET shipper = " + shipperID + " " +
+                "WHERE " + shipperID + " IN (SELECT user_id FROM users ) AND bill_id = " + billId + " AND shipper is NULL";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+        } catch (Exception ex) {}
     }
     public static List<BillDto> FindByCustomer(int customer_id){
         List<BillDto> bill = new ArrayList<>();

@@ -63,6 +63,14 @@ public class ConversionUtils {
          } catch (Exception ex) { }
          return null;
       }
+      public static String formatTime(String timeInput) {
+         String time = "00:00";
+         try {
+            Time t = parseTime(timeInput);
+            time = formatTime(t);
+         } catch (Exception ex) {}
+         return time;
+      }
 
       public static TimeZone getTimeZone(String timezone) {
          TimeZone oTimezone;
