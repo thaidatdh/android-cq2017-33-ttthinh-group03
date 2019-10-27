@@ -69,4 +69,7 @@
 
     <!-- Customer -->
     <string name="btn_buy">Buy</string>
+    <string name="salary">Salary bill</string>
+    <string name="setting">Setting</string>
+    <string name="signout">Sign Out</string>
 </resources>
