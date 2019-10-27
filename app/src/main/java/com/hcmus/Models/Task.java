@@ -1,5 +1,7 @@
 package com.hcmus.Models;
 
+import java.util.HashMap;
+
 public class Task {
     //Bill
     private int bill_id;
@@ -22,6 +24,11 @@ public class Task {
     private String birth_date;
     private String address;
     private String phone;
+
+    //Google Map
+    private HashMap<String, String> distance;
+    private HashMap<String, String> duration;
+
     public Task() {}
 
     public Task(int bill_id, int customer_id, String created_date, String description, long total_price, long ship_charge, boolean accepted, char status, int shipper, String deliver_time, boolean completed,  String user_type, String username, String first_name, String last_name, String birth_date, String address, String phone) {
@@ -46,6 +53,10 @@ public class Task {
         this.birth_date = birth_date;
         this.address = address;
         this.phone = phone;
+
+        //Google map
+        this.distance = null;
+        this.duration = null;
     }
 
     //Bill
@@ -194,4 +205,11 @@ public class Task {
         this.phone = phone;
     }
 
+    public HashMap<String, String> getDistance(){ return distance;}
+
+    public void setDistance(HashMap<String, String> distance){ this.distance = distance;}
+
+    public HashMap<String, String> getDuration(){ return duration;}
+
+    public void setDuration(HashMap<String, String> duration){ this.duration = duration;}
 }

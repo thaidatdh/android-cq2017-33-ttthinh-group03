@@ -6,10 +6,36 @@
     android:layout_height="match_parent"
     tools:context="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement">
 
-    <ListView
-        android:id="@+id/list_selected_item"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <ListView
+            android:id="@+id/list_selected_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/button_buy"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_marginTop="288dp"
+        android:background="@drawable/buttonshape"
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="10dp"
+        android:text="@string/btn_buy"
+        android:textColor="#FFFFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/close"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

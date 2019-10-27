@@ -60,7 +60,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
         }
         mMapUtils = new MapUtils(this);
-        final List<Task> tasks = BillDao.GetTaskOfShipper(2);
+        final List<Task> tasks = BillDao.GetAllAvailableTask();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
