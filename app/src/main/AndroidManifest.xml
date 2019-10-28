@@ -39,8 +39,7 @@
         </activity>
 
         <activity android:name="com.hcmus.Activities.ui.ItemManagement.ItemManagement"></activity>
-        <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory" />
         <activity android:name="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement"></activity>
       
         <activity
