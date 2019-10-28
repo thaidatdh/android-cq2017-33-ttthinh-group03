@@ -45,7 +45,8 @@
     <string name="status">Status:</string>
     <string name="customer_spent">Spent amount</string>
     <string name="back">Back</string>
-
+    <string name="open_time">Open: </string>
+    <string name="close_time">Close: </string>
     <string name="bill_type">Bill Type: </string>
     <string name="customer_name">Customer Name</string>
     <string name="bill_price">Bill Price</string>
@@ -65,6 +66,10 @@
     <string name="item_amount">Amount</string>
     <string name="item_total_price">Total Price</string>
     <string name="list_Bill_Detail">List Bill Detail</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="time_format">HH:mm</string>
 
     <string name="name">Name</string>
     <string name="price">Price</string>
@@ -73,4 +78,7 @@
 
     <!-- Customer -->
     <string name="btn_buy">Buy</string>
+    <string name="salary">Salary bill</string>
+    <string name="setting">Setting</string>
+    <string name="signout">Sign Out</string>
 </resources>
