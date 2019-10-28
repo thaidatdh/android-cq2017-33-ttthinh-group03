@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.DAO.UserDao;
-
+import com.hcmus.DTO.UserDto;
 
 
 public class Login extends AppCompatActivity  {
@@ -20,6 +20,7 @@ public class Login extends AppCompatActivity  {
 
     EditText edtUsername,edtPassword;
     Button btnSignIn;
+    UserLocalStore userLocalStore;
 
     @Override
 
@@ -45,6 +46,15 @@ public class Login extends AppCompatActivity  {
 
                 if(test==true)
                 {
+                    userLocalStore=new UserLocalStore(Login.this);
+                    UserDto user=new UserDto();
+                    user.setUsername(username);
+                    user.setPassword(password);
+
+                    userLocalStore.storeUserData(user);
+                    userLocalStore.setUserLoggedIn(true);
+
+
                     android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
                     builder.setMessage("Login success!").create().show();
                     Intent intent=new Intent(Login.this,MainActivity.class);

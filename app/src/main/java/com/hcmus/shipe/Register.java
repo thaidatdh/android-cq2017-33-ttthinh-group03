@@ -77,8 +77,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 String currentDateTime=simpleDateFormat.format(new Date());
 
                 //Tao userDto
-                UserDto userDto=new UserDto(username,password,fname,lname,birthdate,address,phone,usertype,currentDateTime);
-
+                UserDto userDto=new UserDto();
+                userDto.setUsername(username);
+                userDto.setPassword(password);
+                userDto.setFirstName(fname);
+                userDto.setLastName(lname);
+                userDto.setBirthDate(birthdate);
+                userDto.setAddress(address);
+                userDto.setPhone(phone);
+                userDto.setUserType(usertype);
+                userDto.setCreatedDate(currentDateTime);
                 //Dua thong tin user vao database
                 UserDao.Insert(userDto);
 
