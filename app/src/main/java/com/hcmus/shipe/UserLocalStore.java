@@ -3,6 +3,8 @@ package com.hcmus.shipe;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.hcmus.DTO.UserDto;
+
 public class UserLocalStore {
     public static final String SP_NAME="userDetails";
     SharedPreferences userLocalDatabase;
@@ -13,31 +15,49 @@ public class UserLocalStore {
 
     }
 
-    public void storeUserData (User user)
+    public void storeUserData (UserDto user)
     {
         SharedPreferences.Editor spEditor=userLocalDatabase.edit();
-        spEditor.putString("name",user.name);
-        spEditor.putInt("age",user.age);
-        spEditor.putString("username",user.username);
-        spEditor.putString("password",user.password);
-        spEditor.putString("usertype",user.type);
-        spEditor.putString("phone",user.phone);
-        spEditor.putString("address",user.address);
+        spEditor.putInt("user_id",user.getUserId());
+        spEditor.putString("user_type",user.getUserType());
+        spEditor.putString("username",user.getUsername());
+        spEditor.putString("password",user.getPassword());
+        spEditor.putString("first_name",user.getFirstName());
+        spEditor.putString("last_name",user.getLastName());
+        spEditor.putString("birth_date",user.getBirthDate());
+        spEditor.putString("address",user.getAddress());
+        spEditor.putString("phone",user.getPhone());
+        spEditor.putString("created_date",user.getCreatedDate());
 
         spEditor.commit();
 
 
     }
 
-    public User getLoggedInUser(){
-        String name=userLocalDatabase.getString("name","");
+    public UserDto getLoggedInUser(){
+        int id=userLocalDatabase.getInt("id",-1);
+        String type=userLocalDatabase.getString("user_type","");
         String username=userLocalDatabase.getString("username","");
         String password=userLocalDatabase.getString("password","");
-        int age=userLocalDatabase.getInt("age",-1);
-        String type=userLocalDatabase.getString("usertype","");
-        String phone=userLocalDatabase.getString("phone","");
+        String fname=userLocalDatabase.getString("first_name","");
+        String lname=userLocalDatabase.getString("last_name","");
+        String birth_date=userLocalDatabase.getString("birth_date","");
         String address=userLocalDatabase.getString("address","");
-        User storedUser=new User(name,username,password,age,type,phone,address);
+        String phone=userLocalDatabase.getString("phone","");
+        String created_date=userLocalDatabase.getString("created_date","");
+
+
+        UserDto storedUser=new UserDto();
+        storedUser.setUsername(username);
+        storedUser.setPassword(password);
+        storedUser.setUserId(id);
+        storedUser.setAddress(address);
+        storedUser.setBirthDate(birth_date);
+        storedUser.setUserType(type);
+        storedUser.setFirstName(fname);
+        storedUser.setLastName(lname);
+        storedUser.setPhone(phone);
+        storedUser.setCreatedDate(created_date);
 
         return storedUser;
 

@@ -1,7 +1,5 @@
 package com.hcmus.shipe;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.DAO.CategoryDao;
 import com.hcmus.DAO.ItemDao;
@@ -82,9 +82,17 @@ public class InsertItems extends AppCompatActivity {
 
                 String updatedDate=null;
 
-
-                ItemDto item=new ItemDto(name,description,thumbnail,price,category,status,currentDateTime,updatedDate);
-
+                //Tao ItemDto
+                ItemDto item=new ItemDto();
+                item.setName(name);
+                item.setDescription(description);
+                item.setThumbnail(thumbnail);
+                item.setPrice(price);
+                item.setCategory(category);
+                item.setStatus(status);
+                item.setCreatedDate(currentDateTime);
+                item.setUpdatedDate(updatedDate);
+                //Dua ItemDto vao database
                 ItemDao.Insert(item);
                 AlertDialog.Builder builder=new AlertDialog.Builder(InsertItems.this);
                 builder.setMessage("Insert item success!").create().show();

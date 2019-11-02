@@ -138,8 +138,18 @@ public class UpdateItems extends AppCompatActivity {
                 String currentDateTime=simpleDateFormat.format(new Date());
 
 
-
+                //Tao ItemDto
                 ItemDto item=new ItemDto(id,name,description,thumbnail,price,category,status,currentDateTime);
+                item.setId(id);
+                item.setName(name);
+                item.setDescription(description);
+                item.setThumbnail(thumbnail);
+                item.setPrice(price);
+                item.setCategory(category);
+                item.setStatus(status);
+                item.setUpdatedDate(currentDateTime);
+
+                //Dua ItemDto vao database
                 ItemDao.UpdateItem(item);
 
                 AlertDialog.Builder builder=new AlertDialog.Builder(UpdateItems.this);
