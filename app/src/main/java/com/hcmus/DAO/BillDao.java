@@ -155,6 +155,14 @@ public class BillDao {
             ResultSet rs = Database.SelectQuery(sql);
         } catch (Exception ex) {}
     }
+    public static void CancelBill(int billId){
+        String sql = "UPDATE bill " +
+                "SET shipper = NULL " +
+                "where bill_id = " + billId + " AND is_completed LIKE 'False' COLLATE SQL_Latin1_General_CP1_CI_AS";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+        } catch (Exception ex) {}
+    }
     public static List<BillDto> FindByCustomer(int customer_id){
         List<BillDto> bill = new ArrayList<>();
         String sql = "select * from Bill where customer=" + customer_id + " order by created_date desc;";

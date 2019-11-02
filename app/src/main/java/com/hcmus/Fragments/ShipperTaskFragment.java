@@ -34,12 +34,12 @@ public class ShipperTaskFragment extends Fragment {
     public ShipperTaskFragment(Context context) {
         // Required empty public constructor
         mContext = context;
+        mMapUtils = new MapUtils(mContext);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMapUtils = new MapUtils(mContext);
     }
 
     @Override

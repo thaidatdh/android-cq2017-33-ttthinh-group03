@@ -2,13 +2,10 @@ package com.hcmus.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,10 +19,9 @@ import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.Models.Task;
 import com.hcmus.shipe.R;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.ShipperTaskViewHolder> {
+public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapter.ShipperOrderViewHolder>{
     private List<Task> mDataset;
     private Context mContext;
     private LayoutInflater layoutInflater;
@@ -33,7 +29,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private View dialogView;
-    private Button acceptBtn;
+    private Button cancelBtn;
     private Button closeBtn;
 
     private ListView taskListItem;
@@ -45,7 +41,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     private TextView description;
     private TextView deliveryDate;
 
-    public class ShipperTaskViewHolder extends RecyclerView.ViewHolder {
+    public class ShipperOrderViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public LinearLayout taskView;
         public TextView id;
@@ -53,7 +49,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         public TextView distance;
         public TextView duration;
 
-        public ShipperTaskViewHolder(LinearLayout v) {
+        public ShipperOrderViewHolder(LinearLayout v) {
             super(v);
             taskView = v;
             id = taskView.findViewById(R.id.shipper_task_id);
@@ -64,7 +60,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShipperTaskAdapter(Context context, View parent, List<Task> myDataset) {
+    public ShipperOrderAdapter(Context context, View parent, List<Task> myDataset) {
         mDataset = myDataset;
         mContext = context;
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -74,13 +70,13 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ShipperTaskAdapter.ShipperTaskViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+    public ShipperOrderAdapter.ShipperOrderViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                       int viewType) {
         // create a new view
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.shipper_task_item, parent, false);
 
-        final ShipperTaskViewHolder vh = new ShipperTaskViewHolder(v);
+        final ShipperOrderAdapter.ShipperOrderViewHolder vh = new ShipperOrderAdapter.ShipperOrderViewHolder(v);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,12 +84,13 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
                 showDialog();
             }
         });
+
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ShipperTaskViewHolder holder, int position) {
+    public void onBindViewHolder(ShipperOrderAdapter.ShipperOrderViewHolder holder, int position) {
         Task task = mDataset.get(position);
         holder.id.setText(String.valueOf(task.getBillId()));
         holder.address.setText(task.getAddress());
@@ -109,12 +106,12 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
 
     private void settingTaskDialog(){
         dialogBuilder = new AlertDialog.Builder(mContext);
-        dialogView = layoutInflater.inflate(R.layout.shipper_task_dialog, null);
+        dialogView = layoutInflater.inflate(R.layout.shipper_order_dialog, null);
         dialogBuilder.setView(dialogView);
         dialog = dialogBuilder.create();
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        acceptBtn = (Button) dialogView.findViewById(R.id.task_accept_btn);
+        cancelBtn = (Button) dialogView.findViewById(R.id.task_accept_btn);
         closeBtn = (Button) dialogView.findViewById(R.id.task_close_btn);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -146,10 +143,10 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         description.setText(task.getDescription());
         deliveryDate.setText(task.getDeliverTime());
 
-        acceptBtn.setOnClickListener(new View.OnClickListener() {
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptTask(mDataset.get(index).getBillId());
+                cancelTask(mDataset.get(index).getBillId());
                 mDataset.remove(index);
                 notifyItemRemoved(index);
                 closeDialog();
@@ -169,7 +166,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
             dialog.dismiss();
         }
     }
-    private void acceptTask(int billId){
-        BillDao.AssignShipper(billId, 2);
+    private void cancelTask(int billId){
+        BillDao.CancelBill(billId);
     }
 }

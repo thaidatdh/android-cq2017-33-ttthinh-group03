@@ -60,7 +60,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
         }
         mMapUtils = new MapUtils(this);
-        final List<Task> tasks = BillDao.GetAllAvailableTask();
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -89,7 +89,12 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                 int index = tab.getPosition();
                 switch (index){
                     case 1:
+                        final List<Task> tasks = BillDao.GetAllAvailableTask();
                         shipperTask.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), tasks);
+                        break;
+                    case 2:
+                        final List<Task> orders = BillDao.GetTaskOfShipper(2);
+                        shipperOrder.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), orders);
                         break;
                     case 3:
                         if (mLocation != null){
@@ -102,8 +107,8 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                             //addresses.add("DH BK");
                             //addresses.add("ĐH Sài Gòn");
                             //addresses.add("Van Hanh Mall");
-                            PagerAdapter viewPagerAdapter = viewPager.getAdapter();
-                            shipperMap.createRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), addresses);
+                            final List<Task> ordersMap = BillDao.GetTaskOfShipper(2);
+                            shipperMap.createRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), ordersMap);
                         }
                         break;
                 }

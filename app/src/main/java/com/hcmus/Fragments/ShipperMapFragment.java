@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.hcmus.Models.Task;
 import com.hcmus.Utils.MapUtils;
 import com.hcmus.Utils.MyCallback;
 import com.hcmus.shipe.R;
@@ -41,11 +42,11 @@ public class ShipperMapFragment extends Fragment{
     private List<Marker> markers;
     public ShipperMapFragment (Context context){
         mContext = context;
+        mapUtils = new MapUtils(mContext);
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mapUtils = new MapUtils(mContext);
         routePolylineOptions = new PolylineOptions();
         routePolylineOptions.width(polylineDefaultWidth);
         routePolylineOptions.color(polylineDefaultColor);
@@ -70,17 +71,17 @@ public class ShipperMapFragment extends Fragment{
         });
         return rootView;
     }
-    public void createRoute(Object start, List<String> addresses){
+    public void createRoute(Object start, final List<Task> tasks){
         if (routePolyline != null)
             clearRoutePolyline();
-
+        List<String> addresses = new ArrayList<String>();
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("mode", defaultMode);
-        ArrayList<String> waypoints = new ArrayList<String>();
-        for (String address : addresses){
-            waypoints.add(address);
+        //new LatLng(10.774853, 106.641888)
+        for (Task task : tasks){
+            addresses.add(task.getAddress());
         }
-        mapUtils.callDirectionAPIWithWaypoints(start, waypoints, params, new MyCallback() {
+        mapUtils.callDirectionAPIWithWaypoints(start, addresses, params, new MyCallback() {
             @Override
             public void onCompleteDirection(List<List<HashMap<String, String>>> routes, List<Integer> distances) {
                 for (int i = 0; i < routes.size(); i++){
