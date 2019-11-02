@@ -33,7 +33,7 @@ public class ShopDao {
     }
 
     public static boolean Update(ShopDto shop) {
-        String sql = "Update Shop set name = '" + shop.getName() + "', address = '" + shop.getAddress() + "', open_time = '" + shop.getOpenTime() +"', close_time = '"+ shop.getCloseTime() + "' where shop_id = " + shop.getShopId() + ")" ;
+        String sql = "Update Shop set name = N'" + shop.getName().replace("'","''") + "', address = N'" + shop.getAddress().replace("'","''") + "', open_time = '" + shop.getOpenTime() +"', close_time = '"+ shop.getCloseTime() + "' where shop_id = " + shop.getShopId() + ";" ;
         sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
