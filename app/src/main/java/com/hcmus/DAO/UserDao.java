@@ -74,7 +74,7 @@ public class UserDao {
         return user;
     }
     public static boolean CheckLogin(String username, String password) {
-        String sql = "Select * from Users where username = '" + username +"' AND password = '" + password+"'";
+        String sql = "Select * from Users where username = '" + username.replace("'","''") +"' AND password = '" + password.replace("'","''") +"'";
         ResultSet rs = Database.SelectQuery(sql);
         try {
             if (rs.next())
@@ -84,6 +84,15 @@ public class UserDao {
         }
         return false;
     }
-
-
+    public static UserDto findByUsername(String username) {
+        UserDto user = null;
+        String sql = "select * from users where username='" + username.replace("'","''") + "'";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                user = new UserDto(rs.getInt("user_id"), rs.getString("type"), rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("birth_date"), rs.getString("address"), rs.getString("phone"), rs.getString("created_date"));
+            }
+        } catch (Exception ex) {}
+        return user;
+    }
 }
