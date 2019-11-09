@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.hcmus.DAO.ShopDao;
 import com.hcmus.DTO.ShopDto;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -39,8 +40,10 @@ public class ManagerActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+                Login.Logout(getApplicationContext());
+                finishAndRemoveTask();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -77,5 +80,9 @@ public class ManagerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    @Override
+    public void onBackPressed() {
+        //finishAndRemoveTask();
     }
 }

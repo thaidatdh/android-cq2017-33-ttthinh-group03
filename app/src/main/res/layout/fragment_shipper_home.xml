@@ -206,7 +206,7 @@
                 app:srcCompat="@drawable/signout" />
 
             <TextView
-                android:id="@+id/txtSignOut"
+                android:id="@+id/txtShipperSignOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"

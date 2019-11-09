@@ -19,6 +19,7 @@ import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.Const.CategoryCustomAdapter;
 import com.hcmus.DAO.CategoryDao;
 import com.hcmus.DTO.CategoryDto;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
 import java.util.List;
@@ -70,7 +71,11 @@ public class CustomerCategory extends AppCompatActivity {
         });
         return true;
     }
-
+    @Override
+    public void onBackPressed() {
+        //Login.Logout(getApplicationContext());
+        //finishAndRemoveTask();
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();

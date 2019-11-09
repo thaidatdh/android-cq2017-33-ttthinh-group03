@@ -156,4 +156,9 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
+    @Override
+    public void onBackPressed() {
+        //Login.Logout(getApplicationContext());
+        //finishAndRemoveTask();
+    }
 }

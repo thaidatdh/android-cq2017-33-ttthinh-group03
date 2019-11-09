@@ -113,7 +113,7 @@ public class ConversionUtils {
    }
    public static class User {
       public static String EncryptPassword(String pwd) {
-         return CryptoUtil.encryptWithSHA256(CryptoUtil.encodeWithBase64(pwd));
+         return CryptoUtil.encryptWithSHA256(pwd);
       }
       public static String FormatPhone(String phonenumber) {
          String phone = phonenumber.replaceAll("[^\\d.]", "");

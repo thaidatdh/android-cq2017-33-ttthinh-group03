@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 >
                 <TextView
-                    android:id="@+id/txtvSignIn"
+                    android:id="@+id/txtrSignIn"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_weight=".50"
@@ -300,11 +300,11 @@
                     android:id="@+id/radioGroupUserType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
-                    <RadioButton
+                    <!--<RadioButton
                         android:id="@+id/radShop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/shop" />
+                        android:text="@string/shop" /> -->
                     <RadioButton
                         android:id="@+id/radShipper"
                         android:layout_width="wrap_content"

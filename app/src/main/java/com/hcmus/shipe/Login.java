@@ -1,5 +1,6 @@
 package com.hcmus.shipe;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +12,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hcmus.Activities.ManagerActivity;
+import com.hcmus.Activities.ui.Category.CustomerCategory;
 import com.hcmus.DAO.UserDao;
 import com.hcmus.DTO.UserDto;
+import com.hcmus.Utils.ConversionUtils;
 
 
 public class Login extends AppCompatActivity  {
     TextView txtvRegister;
-
-    EditText edtUsername,edtPassword;
+    TextView txtvSignUp;
+    EditText edtUsername, edtPassword;
     Button btnSignIn;
-    UserLocalStore userLocalStore;
+    public static UserLocalStore userLocalStore;
 
     @Override
 
@@ -28,6 +32,7 @@ public class Login extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        txtvSignUp = (TextView)findViewById(R.id.txtvSignUp);
         txtvRegister=(TextView)findViewById(R.id.txtvRegister);
         edtUsername=(EditText)findViewById(R.id.edtUsername);
         edtPassword=(EditText)findViewById(R.id.edtPassword);
@@ -38,29 +43,13 @@ public class Login extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 String username=edtUsername.getText().toString();
-                String password=edtPassword.getText().toString();
+                String password= ConversionUtils.User.EncryptPassword(edtPassword.getText().toString());
 
-                boolean test=false;
+                boolean test = UserDao.CheckLogin(username,password);
 
-                test= UserDao.CheckLogin(username,password);
-
-                if(test==true)
+                if(test)
                 {
-                    userLocalStore=new UserLocalStore(Login.this);
-                    UserDto user=new UserDto();
-                    user.setUsername(username);
-                    user.setPassword(password);
-
-                    userLocalStore.storeUserData(user);
-                    userLocalStore.setUserLoggedIn(true);
-
-
-                    android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
-                    builder.setMessage("Login success!").create().show();
-                    Intent intent=new Intent(Login.this,MainActivity.class);
-
-                    Login.this.startActivity(intent);
-
+                    Authorize(getApplicationContext(), username);
                 }
                 else
                 {
@@ -73,14 +62,40 @@ public class Login extends AppCompatActivity  {
         txtvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Login.this, Register.class));
-
+                startActivity(new Intent(getApplicationContext(), Register.class));
+            }
+        });
+        txtvSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });
 
-
     }
+    public static void Authorize(Context context, String username) {
+        userLocalStore=new UserLocalStore(context);
+        UserDto currentUser = UserDao.findByUsername(username);
+        userLocalStore.storeUserData(currentUser);
+        userLocalStore.setUserLoggedIn(true);
 
+        /*android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Login.this);
+        builder.setMessage("Login success!").create().show();*/
+        Intent intent = null;
+        switch (currentUser.getUserType().toUpperCase()) {
+            case "ADMIN":
+                intent =new Intent(context, ManagerActivity.class);
+                break;
+            case "CUSTOMER":
+                intent =new Intent(context, CustomerCategory.class);
+                break;
+            case "SHIPPER":
+                intent=new Intent(context, ShipperActivity.class);
+                break;
+        }
+        if (intent!= null)
+            context.startActivity(intent);
+    }
     private void ClickLogin()
     {
         AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);
@@ -93,5 +108,12 @@ public class Login extends AppCompatActivity  {
             }
         });
         alertDialog.show();
+    }
+    @Override
+    public void onBackPressed() {
+        finishAndRemoveTask();
+    }
+    public static void Logout(Context context) {
+        Login.userLocalStore.clearUserData();
     }
 }
