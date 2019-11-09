@@ -20,6 +20,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.DAO.BillDao;
+import com.hcmus.DAO.UserDao;
+import com.hcmus.DTO.UserDto;
 import com.hcmus.Models.Task;
 import com.hcmus.Fragments.ShipperHomeFragment;
 import com.hcmus.Fragments.ShipperMapFragment;
@@ -34,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShipperActivity extends AppCompatActivity implements LocationListener {
+    private String username;
+    private UserDto user;
     private LocationManager mLocationManager;
     private Location mLocation;
     private MapUtils mMapUtils;
@@ -53,6 +57,9 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipper);
+
+        username = Login.userLocalStore.GetUsername();
+        user = UserDao.findByUsername(username);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -102,7 +109,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                         break;
                     case 2:
                         try {
-                            final List<Task> orders = BillDao.GetTaskOfShipper(2);
+                            final List<Task> orders = BillDao.GetTaskOfShipper(user.getUserId());
                             if (orders.size() > 0 && mLocation != null){
                                 shipperOrder.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), orders);
                             }
@@ -114,7 +121,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                     case 3:
                         //viewPager.setCurrentItem(index);
                         try {
-                            final List<Task> ordersMap = BillDao.GetTaskOfShipper(2);
+                            final List<Task> ordersMap = BillDao.GetTaskOfShipper(user.getUserId());
                             if (mLocation != null){
                                 shipperMap.setInputRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), ordersMap);
                             }
