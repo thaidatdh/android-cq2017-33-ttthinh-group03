@@ -122,7 +122,7 @@ public class Login extends AppCompatActivity  {
     public void onBackPressed() {
         finishAndRemoveTask();
     }
-    public static void Logout(Context context) {
+    public static void Logout() {
         Login.userLocalStore.clearUserData();
     }
 }

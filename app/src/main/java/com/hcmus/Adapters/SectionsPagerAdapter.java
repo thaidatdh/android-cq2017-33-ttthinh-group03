@@ -35,7 +35,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         mContext = context;
         numOfTabs = num;
-        shipperHome = new ShipperHomeFragment();
+        shipperHome = new ShipperHomeFragment(context);
         shipperTask = new ShipperTaskFragment(context);
         shipperOrder = new ShipperOrderFragment(context);
         shipperMap = new ShipperMapFragment(context);
