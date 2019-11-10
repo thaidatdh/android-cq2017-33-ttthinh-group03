@@ -42,15 +42,15 @@ public class ItemCustomAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.customlayout_item, null);
-        TextView id=(TextView)view.findViewById(R.id.item_ID);
-        TextView name=(TextView)view.findViewById(R.id.items_Name);
+        TextView id=(TextView)view.findViewById(R.id.items_ID);
+        TextView name=(TextView)view.findViewById(R.id.item_Name);
         TextView price=(TextView)view.findViewById(R.id.items_Price);
 
         ItemDto  itemDto = myList.get(i);
 
-        id.setText(Integer.toString(itemDto.getId()));
-        name.setText(itemDto.getName());
-        price.setText(Long.toString(itemDto.getPrice()));
+        id.setText("ID: "+Integer.toString(itemDto.getId()));
+        name.setText("Product: "+itemDto.getName());
+        price.setText("Price: "+Long.toString(itemDto.getPrice())+" VND");
 
         return view;
     }

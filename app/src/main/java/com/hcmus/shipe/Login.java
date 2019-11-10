@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.Activities.ManagerActivity;
-import com.hcmus.Activities.ui.Category.CustomerCategory;
+import com.hcmus.Activities.ui.ItemManagement.CustomerHome;
 import com.hcmus.DAO.UserDao;
 import com.hcmus.DTO.UserDto;
 import com.hcmus.Utils.ConversionUtils;
@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity  {
                 intent =new Intent(context, ManagerActivity.class);
                 break;
             case "CUSTOMER":
-                intent =new Intent(context, CustomerCategory.class);
+                intent =new Intent(context, CustomerHome.class);
                 break;
             case "SHIPPER":
                 intent=new Intent(context, ShipperActivity.class);

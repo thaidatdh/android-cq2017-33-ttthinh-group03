@@ -4,20 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hcmus.Activities.ui.Category.CustomerCategory">
+    tools:context="com.hcmus.Activities.ui.ItemManagement.Customer_History">
 
-    <GridView
-        android:id="@+id/gridView"
+
+    <ListView
+        android:id="@+id/list_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -51,10 +47,10 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
-            android:background="@color/colorTabText"
+            android:background="@drawable/back"
+            android:textColor="@android:color/black"
             android:gravity="center"
             android:text="@string/caterory"
-            android:textColor="@android:color/black"
             android:textSize="15dp"
             android:textStyle="bold" />
 
@@ -64,10 +60,11 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
-            android:background="@drawable/back"
+            android:background="@color/colorTabText"
+            android:textColor="@android:color/black"
             android:gravity="center"
             android:text="@string/history"
-            android:textColor="@android:color/black"
+
             android:textSize="15dp"
             android:textStyle="bold" />
         <TextView
@@ -76,12 +73,14 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:background="@drawable/back"
             android:gravity="center"
             android:text="@string/account"
-            android:textColor="@android:color/black"
+
             android:textSize="15dp"
             android:textStyle="bold" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

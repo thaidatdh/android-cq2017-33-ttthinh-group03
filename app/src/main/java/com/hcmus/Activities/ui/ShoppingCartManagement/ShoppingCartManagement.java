@@ -21,7 +21,10 @@ import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.DTO.BillDto;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +32,7 @@ import java.util.Date;
 public class ShoppingCartManagement extends AppCompatActivity {
 
     ListView listSelectedItem;
+    TextView total;
     TextView textCartItemCount;
     Button btnBuy;
     long totalPrice;
@@ -38,10 +42,19 @@ public class ShoppingCartManagement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart_management);
 
+        total=(TextView)findViewById(R.id.totalPrice);
+
         Intent intent=getIntent();
         listSelectedItem=(ListView)findViewById(R.id.list_selected_item);
         final BillDetailCustomAdapter ca=new BillDetailCustomAdapter(ShoppingCartManagement.this,CartDomain.ListItemInCart);
         listSelectedItem.setAdapter(ca);
+
+        for (int i = 0; i < CartDomain.ListItemInCart.size(); i++) {
+            BillDetailDto bill_detail = CartDomain.ListItemInCart.get(i);
+            totalPrice += bill_detail.getAmount();
+        }
+        total.setText("Total: "+Long.toString(totalPrice)+" VND");
+
 
         btnBuy=(Button)findViewById(R.id.button_buy);
         btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -53,16 +66,17 @@ public class ShoppingCartManagement extends AppCompatActivity {
                     for (int i = 0; i < CartDomain.ListItemInCart.size(); i++) {
                         BillDetailDto bill_detail = CartDomain.ListItemInCart.get(i);
                         bill_detail.setBillId(bill_id);
-                        totalPrice += bill_detail.getAmount();
                         BillDetailDao.Insert(bill_detail);
                     }
                     bill = BillDao.findById(bill_id);
+                    //inform bill
                     bill.setTotalPrice(totalPrice);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     String currentDateTime = simpleDateFormat.format(new Date());
                     bill.setCreatedDate(currentDateTime);
-
+                    bill.setStatus('N');
+                    bill.setCustomerId(Login.userLocalStore.GetUserId());
                     CartDomain.ListItemInCart.clear();
                     ca.notifyDataSetChanged();
                     BillDao.Update(bill);

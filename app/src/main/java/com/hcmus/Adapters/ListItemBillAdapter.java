@@ -1,31 +1,27 @@
-package com.hcmus.Const;
+package com.hcmus.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hcmus.Activities.ui.ItemManagement.CartDomain;
-import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.DAO.ItemDao;
 import com.hcmus.DTO.BillDetailDto;
-import com.hcmus.DTO.CategoryDto;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.shipe.R;
 
 import java.util.List;
 
-public class BillDetailCustomAdapter extends BaseAdapter {
+public class ListItemBillAdapter extends BaseAdapter {
 
     List<BillDetailDto> myList;
     private Context context;
 
-    public BillDetailCustomAdapter(Context context, List<BillDetailDto> myList){
+    public ListItemBillAdapter(Context context, List<BillDetailDto> myList){
         this.context=context;
         this.myList=myList;
     }
@@ -47,7 +43,7 @@ public class BillDetailCustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(context).inflate(R.layout.customlayout_billdetail, null);
+        view = LayoutInflater.from(context).inflate(R.layout.customlayout_bill_list_item, null);
         TextView id=(TextView)view.findViewById(R.id.billdetail_ID);
         TextView name=(TextView)view.findViewById(R.id.billdetail_Name);
         TextView ammount=(TextView)view.findViewById(R.id.billdetail_Price);
@@ -55,18 +51,11 @@ public class BillDetailCustomAdapter extends BaseAdapter {
 
         BillDetailDto bill=myList.get(i);
         ItemDto selectedItem= (ItemDto) ItemDao.findById(bill.getItemId());
-        if(selectedItem!=null){
-            id.setText("ID: "+Integer.toString(selectedItem.getId()));
-            name.setText("Product: "+selectedItem.getName());
-            ammount.setText("Price: "+Long.toString(selectedItem.getPrice())+" VND");
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CartDomain.ListItemInCart.remove(i);
-                    BillDetailCustomAdapter.this.notifyDataSetChanged();
-                }
-            });
-        }
+
+        id.setText("ID: "+Integer.toString(selectedItem.getId()));
+        name.setText("Product: "+selectedItem.getName());
+        ammount.setText("Price: "+Long.toString(selectedItem.getPrice())+" VND");
+
         return view;
     }
 }
