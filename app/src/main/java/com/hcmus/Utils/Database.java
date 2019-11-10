@@ -16,8 +16,11 @@ import java.sql.Statement;
 public class Database {
     private static Connection connection;
     public static Connection getConnection() {
-        String ConnectionString = "jdbc:jtds:sqlserver://" + ConfigUtils.SERVER.SERVER + ":" + ConfigUtils.SERVER.PORT
+        /*String ConnectionString = "jdbc:jtds:sqlserver://" + ConfigUtils.SERVER.SERVER + ":" + ConfigUtils.SERVER.PORT
                 + ";databaseName=" + ConfigUtils.SERVER.DBN + ";integratedSecurity=true;"
+                + "user=" + ConfigUtils.SERVER.UID + ";password=" + ConfigUtils.SERVER.PWD + ";";*/
+        String ConnectionString = "jdbc:jtds:sqlserver://" + ConfigUtils.SERVER.SERVER + "/" +ConfigUtils.SERVER.DBN
+                + ";instance="+ConfigUtils.SERVER.INSTANCE + ";"
                 + "user=" + ConfigUtils.SERVER.UID + ";password=" + ConfigUtils.SERVER.PWD + ";";
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
