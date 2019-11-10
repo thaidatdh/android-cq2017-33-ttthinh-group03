@@ -11,7 +11,6 @@
         android:layout_height="127dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +19,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/item_ID"
+        android:id="@+id/item_Name"
         android:layout_width="206dp"
         android:layout_height="29dp"
         android:layout_alignParentStart="true"
@@ -32,12 +31,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.809"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@android:color/black"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/items_Name"
+        android:id="@+id/items_Price"
         android:layout_width="206dp"
+        android:textColor="@android:color/black"
         android:layout_height="29dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -52,14 +53,14 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/items_Price"
+        android:id="@+id/items_ID"
         android:layout_width="206dp"
         android:layout_height="29dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
+        android:textColor="@android:color/black"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.809"

@@ -82,4 +82,8 @@
     <string name="salary">Salary bill</string>
     <string name="setting">Setting</string>
     <string name="signout">Sign Out</string>
+    <string name="home">Home</string>
+    <string name="caterory">Category</string>
+    <string name="history">History</string>
+    <string name="account">Account</string>
 </resources>

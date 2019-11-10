@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:textSize="20sp"
+        android:textColor="@android:color/black"
         android:padding="10dp"
         android:paddingLeft="150dp"
         android:text="TextView"

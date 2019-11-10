@@ -14,6 +14,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.hcmus.Activities.ui.ItemManagement.CartDomain;
+import com.hcmus.Activities.ui.ItemManagement.CustomerHome;
+import com.hcmus.Activities.ui.ItemManagement.Customer_History;
 import com.hcmus.Activities.ui.ItemManagement.ItemManagement;
 import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.Const.CategoryCustomAdapter;
@@ -28,6 +30,8 @@ public class CustomerCategory extends AppCompatActivity {
 
     GridView gridView;
     TextView textCartItemCount;
+    TextView txtvHome;
+    TextView txtvHis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,21 @@ public class CustomerCategory extends AppCompatActivity {
                 int pos=categoryDtos.get(i).getCategoryId();
                 intent.putExtra("pos",pos);
                 startActivity(intent);
+            }
+        });
+
+        txtvHis=(TextView)findViewById(R.id.txtvHistory);
+        txtvHome=(TextView)findViewById(R.id.txtvHome);
+        txtvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CustomerHome.class));
+            }
+        });
+        txtvHis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Customer_History.class));
             }
         });
     }

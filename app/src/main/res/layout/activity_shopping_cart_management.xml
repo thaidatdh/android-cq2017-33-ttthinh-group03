@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement">
+    tools:context="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        android:layout_height="500dp"
+        android:layout_weight="10"
+        app:layout_constraintBottom_toTopOf="@+id/totalPrice">
 
         <ListView
             android:id="@+id/list_selected_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Total: "
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/button_buy"
         android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:layout_marginTop="288dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@drawable/buttonshape"
         android:paddingLeft="30dp"
         android:paddingTop="10dp"
@@ -29,13 +42,7 @@
         android:paddingBottom="10dp"
         android:text="@string/btn_buy"
         android:textColor="#FFFFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/close"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958"
-        tools:ignore="MissingConstraints" />
+        android:textSize="30sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
