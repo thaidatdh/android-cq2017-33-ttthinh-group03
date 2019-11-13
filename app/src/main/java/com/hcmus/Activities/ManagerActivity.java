@@ -40,7 +40,8 @@ public class ManagerActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Login.Logout();
+                finishAndRemoveTask();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
