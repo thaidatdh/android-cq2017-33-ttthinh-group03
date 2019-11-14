@@ -22,7 +22,17 @@ public class ItemDao {
         } catch (Exception ex) {}
         return item;
     }
-
+    public static ArrayList<ItemDto> ArrayListfindByCategory(int category) {
+        ArrayList<ItemDto> item = new ArrayList<>();
+        String sql = "select * from Items where category =" + category;
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                item.add(new ItemDto(rs.getInt("item_id"), rs.getString("name"), rs.getString("description"), rs.getString("thumnail"), rs.getInt("price"), rs.getInt("category"), rs.getString("status").charAt(0), rs.getString("created_date"), rs.getString("updated_date")));
+            }
+        } catch (Exception ex) {}
+        return item;
+    }
     public static int Insert(ItemDto item) {
         String sql = "insert into Items(name , description , thumnail , price , category , status , created_date , updated_date) VALUES ('" + item.getName() + "', '" + item.getDescription() + "', '" + item.getThumbnail() + "', " + item.getPrice() + ", " + item.getCategory() + ", '" + item.getStatus() + "', '" + item.getCreatedDate() + "', '" + item.getUpdatedDate() +"')";
         sql = sql.replace("null","");
@@ -72,9 +82,20 @@ public class ItemDao {
         } catch (Exception ex) {}
         return item;
     }
+    public static ItemDto findByName(String name) {
+        ItemDto item = new ItemDto();
+        String sql = "select * from Items where name = " + name;
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                item = new ItemDto(rs.getInt("item_id"), rs.getString("name"), rs.getString("description"), rs.getString("thumnail"), rs.getInt("price"), rs.getInt("category"), rs.getString("status").charAt(0), rs.getString("created_date"), rs.getString("updated_date"));
+            }
+        } catch (Exception ex) {}
+        return item;
+    }
     public static List<ItemDto> findByCategory(int category) {
         List<ItemDto> item = new ArrayList<>();
-        String sql = "select * from Items where category = " + category;
+        String sql = "select * from Items where category =" + category;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){

@@ -72,7 +72,7 @@ public class CategoryDao {
 
         return data;
     }
-    public static int findByName(String name){
+    public static int findIDByName(String name){
         String sql = "select category_id from Category where name = '"+name+"'";
         int id=-1;
         try {
@@ -82,5 +82,28 @@ public class CategoryDao {
             }
         } catch (Exception ex) {}
         return id;
+    }
+    public static CategoryDto findByName(String name){
+        String sql = "select * from Category where name = '"+name+"'";
+        CategoryDto result=new CategoryDto();
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            if (rs.next()) {
+                result = new CategoryDto(rs.getInt("category_id"), rs.getString("name"), rs.getString("description"));
+            }
+        } catch (Exception ex) {}
+        return result;
+    }
+
+    public static List<String> ListCategoryName(){
+        ArrayList<String> billDetail = new ArrayList<>();
+        String sql = "select * from Category";
+        try {
+            ResultSet rs = Database.SelectQuery(sql);
+            while (rs.next()){
+                billDetail.add(rs.getString("name"));
+            }
+        } catch (Exception ex) {}
+        return billDetail;
     }
 }

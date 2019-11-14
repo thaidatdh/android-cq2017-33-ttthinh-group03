@@ -1,6 +1,8 @@
+/*
 package com.hcmus.shipe;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,14 +28,17 @@ public class UpdateItems extends AppCompatActivity {
     Button btnUpdateItem;
 
     Spinner spnCategoryItem,spnStatusItem;
-    int id=5;
-
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_items);
 
-        String name="item 5";
+
+
+
+        */
+/*String name="item 5";
         long price=45;
         int category=2;
         char status='N';
@@ -41,7 +46,8 @@ public class UpdateItems extends AppCompatActivity {
         String des=null;
         String thumb=null;
         String update=null;
-        ItemDto itemDB=new ItemDto(id,name,des,thumb,price,category,status,date,update);
+        ItemDto itemDB=new ItemDto(id,name,des,thumb,price,category,status,date,update);*//*
+
 
 
         edtDescriptionItem=(EditText)findViewById(R.id.edtDescriptionItem);
@@ -53,13 +59,32 @@ public class UpdateItems extends AppCompatActivity {
         spnCategoryItem=(Spinner)findViewById(R.id.spnCategoryItem);
         spnStatusItem=(Spinner)findViewById(R.id.spnStatusItem);
 
+        //lay thong tin tu ItemInfo
+        Intent callerIntent = getIntent();
+        Bundle dataBundle = callerIntent.getBundleExtra(ItemInfo.BUNDLE);
 
+        //Hien ra du lieu duoc lay tu ItemInfo
+        edtNameItem.setText(dataBundle.getString("name"));
+        edtPriceItem.setText(dataBundle.getString("price"));
+        edtDescriptionItem.setText(dataBundle.getString("description"));
+        edtThumbnail.setText(dataBundle.getString("thumbnail"));
+
+        id=Integer.parseInt(dataBundle.getString("item_id"));
+        String itemStatus=dataBundle.getString("status");
+        int selectedStatus=1;
+        if(itemStatus=="New")
+            selectedStatus=1;
+        if(itemStatus=="Sold out")
+            selectedStatus=2;
+        if(itemStatus=="Stop selling")
+            selectedStatus=3;
         //Hien ra du lieu trong database
-        edtNameItem.setText(name);
+        */
+/*edtNameItem.setText(name);
         String priceS=Long.toString(price);
         edtPriceItem.setText(priceS);
         edtDescriptionItem.setText(des);
-        edtThumbnail.setText(thumb);
+        edtThumbnail.setText(thumb);*//*
 
 
 
@@ -71,7 +96,10 @@ public class UpdateItems extends AppCompatActivity {
 
         ArrayAdapter<String> adapterStatus = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listStatus);
         adapterStatus.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
         spnStatusItem.setAdapter(adapterStatus);
+        spnStatusItem.setSelection(selectedStatus);
+
         spnStatusItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -158,3 +186,4 @@ public class UpdateItems extends AppCompatActivity {
         });
     }
 }
+*/
