@@ -71,7 +71,7 @@ public class InsertItems extends AppCompatActivity {
                 long price=Long.parseLong(priceString);
                 //Category
                 String categoryName=spnCategoryItem.getSelectedItem().toString();
-                int category=CategoryDao.findByName(categoryName);
+                int category=CategoryDao.findIDByName(categoryName);
                 //status
                 char status='N';
 

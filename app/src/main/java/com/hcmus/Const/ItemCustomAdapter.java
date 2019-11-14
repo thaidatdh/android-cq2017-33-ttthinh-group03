@@ -2,6 +2,8 @@ package com.hcmus.Const;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,9 @@ import android.widget.Toast;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.shipe.R;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class ItemCustomAdapter extends BaseAdapter {
@@ -45,12 +50,29 @@ public class ItemCustomAdapter extends BaseAdapter {
         TextView id=(TextView)view.findViewById(R.id.items_ID);
         TextView name=(TextView)view.findViewById(R.id.item_Name);
         TextView price=(TextView)view.findViewById(R.id.items_Price);
+        ImageView thumbnail=(ImageView)view.findViewById(R.id.imageView_thumbnail);
 
         ItemDto  itemDto = myList.get(i);
 
         id.setText("ID: "+Integer.toString(itemDto.getId()));
         name.setText("Product: "+itemDto.getName());
         price.setText("Price: "+Long.toString(itemDto.getPrice())+" VND");
+        String res=itemDto.getThumbnail();
+        if(res!=null) {
+            URL url = null;
+            try {
+                url = new URL(res);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Bitmap bmp = null;
+            try {
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            thumbnail.setImageBitmap(bmp);
+        }
 
         return view;
     }
