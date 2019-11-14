@@ -5,6 +5,22 @@
     android:layout_height="match_parent"
     tools:context="com.hcmus.Fragments.ShipperOrderFragment">
 
+    <ProgressBar
+        android:id="@+id/get_order_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:indeterminateTint="@color/colorBorder"/>
+
+    <TextView
+        android:id="@+id/no_order_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:text="@string/no_task_found"
+        android:visibility="gone"/>
+
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shipper_order_list"

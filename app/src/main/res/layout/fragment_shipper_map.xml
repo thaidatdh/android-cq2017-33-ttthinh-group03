@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context="com.hcmus.Fragments.ShipperMapFragment">
 
+    <ProgressBar
+        android:id="@+id/map_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationZ="2dp"
+        android:gravity="center_horizontal"
+        android:indeterminateTint="@color/colorBorder"/>
+
     <fragment android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"

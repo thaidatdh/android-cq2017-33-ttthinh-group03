@@ -58,13 +58,16 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipper);
 
-        username = Login.userLocalStore.GetUsername();
-        user = UserDao.findByUsername(username);
+        //username = Login.userLocalStore.GetUsername();
+        //user = UserDao.findByUsername(username);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        else {
+            finish();
         }
         mMapUtils = new MapUtils(this);
 
@@ -96,38 +99,19 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                 int index = tab.getPosition();
                 switch (index){
                     case 1:
-                        try {
-                            final List<Task> tasks = BillDao.GetAllAvailableTask();
-                            if (tasks.size() > 0 && mLocation != null){
-                                shipperTask.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), tasks);
-                            }
-
-                        } catch (Exception e){
-                            Log.e("Task Create", "Error");
-                            e.printStackTrace();
+                        if (mLocation != null){
+                            shipperTask.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
                         }
                         break;
                     case 2:
-                        try {
-                            final List<Task> orders = BillDao.GetTaskOfShipper(user.getUserId());
-                            if (orders.size() > 0 && mLocation != null){
-                                shipperOrder.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), orders);
-                            }
-                        } catch (Exception e){
-                            Log.e("Orders Create", "Error");
-                            e.printStackTrace();
+                        if (mLocation != null){
+                            shipperOrder.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
                         }
                         break;
                     case 3:
                         //viewPager.setCurrentItem(index);
-                        try {
-                            final List<Task> ordersMap = BillDao.GetTaskOfShipper(user.getUserId());
-                            if (mLocation != null){
-                                shipperMap.setInputRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), ordersMap);
-                            }
-                        } catch (Exception e){
-                            Log.e("Orders Map Create", "Error");
-                            e.printStackTrace();
+                        if (mLocation != null){
+                            shipperMap.createRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
                         }
                         break;
                 }

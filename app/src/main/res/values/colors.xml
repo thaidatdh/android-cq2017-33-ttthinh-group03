@@ -28,4 +28,6 @@
     <color name="LightSkyBlue">#87CEFA</color>
     <color name="SkyBlue">#87CEEB</color>
     <color name="RedBold">#e30e0e</color>
+    <color name="Gmail">#ea4335</color>
+    <color name="Line">#00c300</color>
 </resources>
