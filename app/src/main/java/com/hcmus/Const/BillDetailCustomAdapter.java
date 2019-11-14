@@ -2,6 +2,8 @@ package com.hcmus.Const;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,9 @@ import com.hcmus.DTO.CategoryDto;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.shipe.R;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class BillDetailCustomAdapter extends BaseAdapter {
@@ -52,6 +57,7 @@ public class BillDetailCustomAdapter extends BaseAdapter {
         TextView name=(TextView)view.findViewById(R.id.billdetail_Name);
         TextView ammount=(TextView)view.findViewById(R.id.billdetail_Price);
         ImageView close=(ImageView)view.findViewById(R.id.billdetail_close);
+        ImageView thumbnail=(ImageView)view.findViewById(R.id.imageView_thumbnail);
 
         BillDetailDto bill=myList.get(i);
         ItemDto selectedItem= (ItemDto) ItemDao.findById(bill.getItemId());
@@ -66,6 +72,20 @@ public class BillDetailCustomAdapter extends BaseAdapter {
                     BillDetailCustomAdapter.this.notifyDataSetChanged();
                 }
             });
+            String res3 = selectedItem.getThumbnail();
+            URL url3 = null;
+            try {
+                url3 = new URL(res3);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Bitmap bmp3 = null;
+            try {
+                bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            thumbnail.setImageBitmap(bmp3);
         }
         return view;
     }

@@ -30,7 +30,7 @@ public class UserLocalStore {
         return userLocalDatabase.getString("user_type","");
     }
     public int GetUserId() {
-        return userLocalDatabase.getInt("id",-1);
+        return userLocalDatabase.getInt("user_id",-1);
     }
 
     public void setUserLoggedIn(boolean loggedIn)

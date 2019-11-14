@@ -20,18 +20,18 @@
 
     <TextView
         android:id="@+id/Name_item"
-        android:layout_width="212dp"
-        android:layout_height="24dp"
+        android:layout_width="214dp"
+        android:layout_height="44dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:textColor="@android:color/black"
         android:layout_marginStart="163dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:text="TextView"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.82"
@@ -48,24 +48,24 @@
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintHorizontal_bias="0.876"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="211dp"
         android:layout_height="154dp"
         android:layout_marginTop="108dp"
-        android:textColor="@android:color/black"
         android:text="TextView"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.007" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <ImageView
         android:id="@+id/close"

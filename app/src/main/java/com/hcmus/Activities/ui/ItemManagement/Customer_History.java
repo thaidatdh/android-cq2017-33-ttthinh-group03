@@ -36,6 +36,7 @@ public class Customer_History extends AppCompatActivity {
     TextView textCartItemCount;
     TextView txtvCate;
     TextView txtvHome;
+    TextView txtvAcc;
     ListView listView;
 
 
@@ -47,6 +48,7 @@ public class Customer_History extends AppCompatActivity {
         txtvCate=(TextView)findViewById(R.id.txtvCategory);
         txtvHome=(TextView)findViewById(R.id.txtvHome);
         listView=(ListView)findViewById(R.id.list_history);
+        txtvAcc=(TextView)findViewById(R.id.txtvAccount);
 
         Context context=getApplicationContext();
         final List<BillDto> listBill= BillDao.FindByCustomer(Login.userLocalStore.GetUserId());
@@ -63,6 +65,12 @@ public class Customer_History extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), CustomerCategory.class));
+            }
+        });
+        txtvAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CustomerInfo.class));
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

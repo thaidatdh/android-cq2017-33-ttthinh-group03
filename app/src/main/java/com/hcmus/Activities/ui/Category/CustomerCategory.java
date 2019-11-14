@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.hcmus.Activities.ui.ItemManagement.CartDomain;
 import com.hcmus.Activities.ui.ItemManagement.CustomerHome;
+import com.hcmus.Activities.ui.ItemManagement.CustomerInfo;
 import com.hcmus.Activities.ui.ItemManagement.Customer_History;
 import com.hcmus.Activities.ui.ItemManagement.ItemManagement;
 import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
@@ -32,6 +33,7 @@ public class CustomerCategory extends AppCompatActivity {
     TextView textCartItemCount;
     TextView txtvHome;
     TextView txtvHis;
+    TextView txtvAcc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class CustomerCategory extends AppCompatActivity {
 
         txtvHis=(TextView)findViewById(R.id.txtvHistory);
         txtvHome=(TextView)findViewById(R.id.txtvHome);
+        txtvAcc=(TextView)findViewById(R.id.txtvAccount);
         txtvHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +68,12 @@ public class CustomerCategory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Customer_History.class));
+            }
+        });
+        txtvAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CustomerInfo.class));
             }
         });
     }
