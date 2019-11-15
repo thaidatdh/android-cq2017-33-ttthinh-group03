@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InsertCategorys">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Name"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edit_text_background"
+
+                    android:id="@+id/edtNameCategory"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:padding="10dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/text_size"
+                    tools:ignore="RtlCompat"
+                    android:textStyle="bold"
+                    android:text="Description"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edit_text_background"
+
+                    android:id="@+id/edtDescriptionCategory"
+                    />
+            </LinearLayout>
+
+
+
+
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:background="@drawable/buttonshape"
+                android:layout_gravity="center"
+                android:text="INSERT"
+                android:textStyle="bold"
+                android:layout_marginTop="25dp"
+                android:id="@+id/btnInsertCategory"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

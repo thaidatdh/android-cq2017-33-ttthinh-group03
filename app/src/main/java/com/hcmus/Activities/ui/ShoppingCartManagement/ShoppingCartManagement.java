@@ -77,10 +77,12 @@ public class ShoppingCartManagement extends AppCompatActivity {
                     bill.setCreatedDate(currentDateTime);
                     bill.setStatus('N');
                     bill.setCustomerId(Login.userLocalStore.GetUserId());
+                    bill.setShipCharge(15);
+                    bill.setCompleted(false);
                     CartDomain.ListItemInCart.clear();
                     ca.notifyDataSetChanged();
                     BillDao.Update(bill);
-
+                    total.setText("Total: ");
                 }
             }
         });

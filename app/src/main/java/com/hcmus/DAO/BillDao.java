@@ -31,7 +31,7 @@ public class BillDao {
     public static int Insert(BillDto bill){
         String accepted = ("" + bill.isAccepted()).toUpperCase().trim();
         String completed = ("" + bill.isCompleted()).toUpperCase().trim();
-        String sql = "insert into Bill(customer, created_date, description, total_price, ship_charge, accepted, status, shipper, deliver_time, is_completed) values(" + bill.getCustomerId() + ", '" + bill.getCreatedDate() + "', '" + bill.getDescription() + "', " + bill.getTotalPrice()+ ", " + bill.getShipCharge() + ", '" + accepted + "', '" + bill.getStatus()+ "', " + bill.getShipperId() + ", '" + bill.getDeliverTime() + "', '" + completed+ "')";
+        String sql = "insert into Bill(customer, created_date, description, total_price, ship_charge, accepted, status, deliver_time, is_completed) values(" + bill.getCustomerId() + ", '" + bill.getCreatedDate() + "', '" + bill.getDescription() + "', " + bill.getTotalPrice()+ ", " + bill.getShipCharge() + ", '" + accepted + "', '" + bill.getStatus()+ "', '" + bill.getDeliverTime() + "', '" + completed+ "')";
         sql = sql.replace("null","");
         int result = Database.ExecuteQuery(sql);
         if (result == -1)
@@ -43,7 +43,7 @@ public class BillDao {
         String accepted = ("" + bill.isAccepted()).toUpperCase().trim();
         String completed = ("" + bill.isCompleted()).toUpperCase().trim();
         String sql = "Update Bill set customer = " + bill.getCustomerId() + ", created_date = '" + bill.getCreatedDate() + "', description = '" + bill.getDescription() + "', total_price = " + bill.getTotalPrice() + ", ship_charge = " + bill.getShipCharge() + ", accepted = '" + accepted + "', status = '" + bill.getStatus()
-                + "', shipper = " + bill.getShipperId() + ", deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ "" ;
+                + "', deliver_time = '" + bill.getDeliverTime() + "', is_completed = '" + completed + "' where bill_id = " + bill.getBillId()+ "" ;
         sql = sql.replace("null","");
         if (Database.ExecuteQuery(sql) > 0) {
             return true;

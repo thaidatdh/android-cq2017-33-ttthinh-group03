@@ -15,7 +15,7 @@
         android:id="@+id/caption"
         android:layout_width="100dp"
         android:textColor="@android:color/black"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 </LinearLayout>

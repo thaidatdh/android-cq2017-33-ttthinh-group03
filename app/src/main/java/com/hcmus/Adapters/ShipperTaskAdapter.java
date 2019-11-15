@@ -20,6 +20,7 @@ import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.Models.Task;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     private Button acceptBtn;
     private Button closeBtn;
 
+    private View root;
     private ListView taskListItem;
     private TextView billId;
     private TextView customerName;
@@ -77,6 +79,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     public ShipperTaskAdapter.ShipperTaskViewHolder onCreateViewHolder(ViewGroup parent,
                                                               int viewType) {
         // create a new view
+        root = parent;
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.shipper_task_item, parent, false);
 
@@ -97,8 +100,13 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         Task task = mDataset.get(position);
         holder.id.setText(String.valueOf(task.getBillId()));
         holder.address.setText(task.getAddress());
-        holder.distance.setText(task.getDistance().get("text"));
-        holder.duration.setText(task.getDuration().get("text"));
+        if (task.getDistance() != null){
+            holder.distance.setText(task.getDistance().get("text"));
+        }
+        if (task.getDuration() != null){
+            holder.duration.setText(task.getDuration().get("text"));
+        }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -153,6 +161,10 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
                 mDataset.remove(index);
                 notifyItemRemoved(index);
                 closeDialog();
+
+                if (mDataset.size() == 0){
+                    showNoTaskMsg();
+                }
             }
         });
     }
@@ -170,6 +182,14 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         }
     }
     private void acceptTask(int billId){
-        BillDao.AssignShipper(billId, 2);
+        BillDao.AssignShipper(billId, Login.userLocalStore.GetUserId());
+    }
+
+    private void showNoTaskMsg(){
+        try {
+            root.findViewById(R.id.no_task_message).setVisibility(View.VISIBLE);
+        } catch(Exception e){
+
+        }
     }
 }
