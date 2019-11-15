@@ -24,6 +24,7 @@ import com.hcmus.DAO.CategoryDao;
 import com.hcmus.DAO.ItemDao;
 import com.hcmus.DTO.CategoryDto;
 import com.hcmus.DTO.ItemDto;
+import com.hcmus.shipe.InsertCategorys;
 import com.hcmus.shipe.InsertItems;
 import com.hcmus.shipe.R;
 import com.squareup.picasso.Picasso;
@@ -74,7 +75,8 @@ public class ProductManagementFragment extends Fragment {
         btnAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), InsertCategorys.class);
+                startActivity(intent);
             }
         });
 

@@ -30,7 +30,13 @@ public class CategoryDao {
             return result;
         return Database.GetLatestId("category","category_id");
     }
-
+    public static int InsertNoID(CategoryDto billDetail){
+        String sql = "insert into Category(name, description) values('"+ billDetail.getName() + "', '" + billDetail.getDescription() + "')";
+        int result = Database.ExecuteQuery(sql);
+        if (result == -1)
+            return result;
+        return Database.GetLatestId("category","category_id");
+    }
     public static boolean Update(CategoryDto billDetail){
         String sql = "Update Category set name = '" + billDetail.getName() +"', description = '"+ billDetail.getDescription() + "' where billId = " + billDetail.getCategoryId() + ")" ;
         if (Database.ExecuteQuery(sql) > 0) {
