@@ -20,9 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".InsertCategorys"></activity>
-        <activity android:name="com.hcmus.Activities.ui.ItemManagement.CustomerInfo" />
-        <activity android:name="com.hcmus.Activities.ui.ItemManagement.Customer_History" />
-        <activity android:name="com.hcmus.Activities.ui.ItemManagement.CustomerHome" />
         <activity android:name=".InsertItems" />
         <activity android:name=".ShipperActivity" />
         <activity
@@ -31,6 +28,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
+        <activity android:name="com.hcmus.Activities.ui.ItemManagement.CustomerInfo" />
+        <activity android:name="com.hcmus.Activities.ui.ItemManagement.Customer_History" />
+        <activity android:name="com.hcmus.Activities.ui.ItemManagement.CustomerHome" />
         <activity android:name="com.hcmus.Activities.ui.ItemManagement.ItemManagement" />
         <activity android:name="com.hcmus.Activities.ui.Category.CustomerCategory" />
         <activity android:name="com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement" />

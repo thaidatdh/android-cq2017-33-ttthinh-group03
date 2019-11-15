@@ -11,13 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_weight="10"
-        app:layout_constraintBottom_toTopOf="@+id/totalPrice">
+        app:layout_constraintBottom_toTopOf="@+id/totalPrice"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/list_selected_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" >
+        </ListView>
+
+        <ProgressBar
+            android:id="@+id/load_progress"
+            android:layout_width="match_parent"
+            android:layout_height="231dp"
+            android:gravity="center_horizontal"
+            android:indeterminateTint="@color/colorBorder" />
+
     </LinearLayout>
+
 
     <TextView
         android:id="@+id/totalPrice"

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hcmus.Activities.ui.ItemManagement.Bitmap_Image;
 import com.hcmus.Activities.ui.ItemManagement.CartDomain;
 import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
 import com.hcmus.DAO.ItemDao;
@@ -73,19 +74,8 @@ public class BillDetailCustomAdapter extends BaseAdapter {
                 }
             });
             String res3 = selectedItem.getThumbnail();
-            URL url3 = null;
-            try {
-                url3 = new URL(res3);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Bitmap bmp3 = null;
-            try {
-                bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            thumbnail.setImageBitmap(bmp3);
+            Bitmap_Image bmp3=new Bitmap_Image(res3);
+            thumbnail.setImageBitmap(bmp3.bmp);
         }
         return view;
     }

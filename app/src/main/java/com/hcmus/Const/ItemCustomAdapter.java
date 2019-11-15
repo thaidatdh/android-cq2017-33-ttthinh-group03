@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hcmus.Activities.ui.ItemManagement.Bitmap_Image;
 import com.hcmus.DTO.ItemDto;
 import com.hcmus.shipe.R;
 
@@ -59,19 +60,8 @@ public class ItemCustomAdapter extends BaseAdapter {
         price.setText("Price: "+Long.toString(itemDto.getPrice())+" VND");
         String res=itemDto.getThumbnail();
         if(res!=null) {
-            URL url = null;
-            try {
-                url = new URL(res);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Bitmap bmp = null;
-            try {
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            thumbnail.setImageBitmap(bmp);
+            Bitmap_Image bmp1=new Bitmap_Image(res);
+            thumbnail.setImageBitmap(bmp1.bmp);
         }
 
         return view;

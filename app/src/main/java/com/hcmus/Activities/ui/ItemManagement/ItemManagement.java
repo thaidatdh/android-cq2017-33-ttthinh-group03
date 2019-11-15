@@ -85,20 +85,8 @@ public class ItemManagement extends AppCompatActivity {
 
         String res = selectedItem.getThumbnail();
 
-
-        URL url = null;
-        try {
-            url = new URL(res);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        Bitmap bmp = null;
-        try {
-            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        thumbnailItem.setImageBitmap(bmp);
+        Bitmap_Image bmp1=new Bitmap_Image(res);
+        thumbnailItem.setImageBitmap(bmp1.bmp);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

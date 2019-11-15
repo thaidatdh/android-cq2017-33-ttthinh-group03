@@ -88,6 +88,8 @@ public class Login extends AppCompatActivity  {
                 intent =new Intent(context, ManagerActivity.class);
                 break;
             case "CUSTOMER":
+//                CustomerHome customerHome=new CustomerHome();
+//                customerHome.createListItem();
                 intent =new Intent(context, CustomerHome.class);
                 break;
             case "SHIPPER":
@@ -96,6 +98,7 @@ public class Login extends AppCompatActivity  {
         }
         if (intent!= null){
             try {
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } catch(Exception e){
