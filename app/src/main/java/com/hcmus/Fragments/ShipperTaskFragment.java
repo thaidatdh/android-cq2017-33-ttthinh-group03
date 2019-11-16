@@ -20,11 +20,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.hcmus.Adapters.ShipperTaskAdapter;
 import com.hcmus.DAO.BillDao;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.Common;
 import com.hcmus.Utils.MapUtils;
 import com.hcmus.Utils.MyCallback;
 import com.hcmus.shipe.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -133,6 +136,7 @@ public class ShipperTaskFragment extends Fragment {
                                     tasks.get(i).setDistance(results.get(i).get("distance"));
                                     tasks.get(i).setDuration(results.get(i).get("duration"));
                                 }
+                                Common.sortTaskListAsc(tasks);
                                 mTasks.addAll(tasks);
                                 showTask();
                                 dismissProgress();

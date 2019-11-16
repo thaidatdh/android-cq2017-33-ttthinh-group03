@@ -1,19 +1,17 @@
 package com.hcmus.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDao;
-import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.Dialog.ShipperOrderDialog;
 import com.hcmus.Models.Task;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
@@ -70,8 +68,10 @@ public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapte
                 final int index =  vh.getAdapterPosition();
                 ShipperOrderDialog dialog = new ShipperOrderDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
                     @Override
-                    public void onBtnClick(){
-                        cancelTask(mDataset.get(index).getBillId());
+                    public void onBtnClick(String action){
+                        if (action.toLowerCase().equals("cancel")){
+                            cancelTask(mDataset.get(index).getBillId());
+                        }
                         mDataset.remove(index);
                         notifyItemRemoved(index);
 
@@ -107,8 +107,16 @@ public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapte
     public int getItemCount() {
         return mDataset.size();
     }
-    private void cancelTask(int billId){
-        BillDao.CancelBill(billId);
+    @SuppressLint("CheckResult")
+    private void cancelTask(final int billId){
+        try {
+            BillDao.CancelBill(billId);
+
+        } catch (Exception e){
+            Log.e("Cancel Task", "Error");
+            e.printStackTrace();
+        }
+
     }
 
     private void showNoTaskMsg(){

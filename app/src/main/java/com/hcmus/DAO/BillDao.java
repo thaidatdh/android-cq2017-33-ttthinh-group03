@@ -124,7 +124,7 @@ public class BillDao {
         String sql = "select * " +
                 "from users us inner join bill " +
                 "on us.user_id = bill.customer " +
-                "where us.type = 'CUSTOMER' AND bill.shipper is NULL";
+                "where us.type = 'CUSTOMER' AND bill.shipper is NULL AND bill.status = 'N'";
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
@@ -138,7 +138,7 @@ public class BillDao {
         String sql = "select * " +
                 "from users us inner join bill " +
                 "on us.user_id = bill.customer " +
-                "where us.type = 'CUSTOMER' AND bill.shipper = " + shipper;
+                "where us.type = 'CUSTOMER' AND bill.status NOT IN ('N', 'C') AND bill.shipper = " + shipper;
         try {
             ResultSet rs = Database.SelectQuery(sql);
             while (rs.next()){
@@ -149,19 +149,26 @@ public class BillDao {
     }
     public static void AssignShipper(int billId, int shipperID){
         String sql = "UPDATE bill " +
-                "SET shipper = " + shipperID + " " +
-                "WHERE " + shipperID + " IN (SELECT user_id FROM users ) AND bill_id = " + billId + " AND shipper is NULL";
+                "SET shipper = " + shipperID + ", status = 'G' " +
+                "WHERE " + shipperID + " IN (SELECT user_id FROM users ) AND bill_id = " + billId + " AND shipper is NULL AND bill.status = 'N'";
         try {
             ResultSet rs = Database.SelectQuery(sql);
         } catch (Exception ex) {}
     }
     public static void CancelBill(int billId){
         String sql = "UPDATE bill " +
-                "SET shipper = NULL " +
+                "SET shipper = NULL, status = 'N' " +
                 "where bill_id = " + billId + " AND is_completed LIKE 'False' COLLATE SQL_Latin1_General_CP1_CI_AS";
         try {
             ResultSet rs = Database.SelectQuery(sql);
         } catch (Exception ex) {}
+    }
+    public static boolean SetStatusBill(int billId, char status){
+        String sql = "UPDATE bill SET bill.status = '" + status + "' WHERE bill_id = " + billId + " AND shipper is not null";
+        if (Database.ExecuteQuery(sql) > 0) {
+            return true;
+        } else
+            return false;
     }
     public static List<BillDto> FindByCustomer(int customer_id){
         List<BillDto> bill = new ArrayList<>();

@@ -13,7 +13,9 @@ public class DirectionsJSONParser {
         JSONArray jRoutes;
         JSONArray jLegs;
         JSONArray jSteps;
+        JSONArray viaWaypoints;
 
+        List<HashMap<String, String>> addressLatLng = new ArrayList<>();
         try {
             jRoutes = jObject.getJSONArray("routes");
             for (int i = 0; i < jRoutes.length(); i++){
@@ -33,14 +35,38 @@ public class DirectionsJSONParser {
                             hm = new HashMap<String, String>();
                             hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude));
                             hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude));
-                            if (l == 0 && k == 0)
-                                hm.put("address", startAddress);
                             path.add(hm);
                         }
                     }
-                    if (hm != null && j == jLegs.length() - 1){
-                        hm.put("address", endAddress);
+                    //Empty HashMap to seperate
+                    HashMap<String, String> emptyHm = new HashMap<>();
+                    path.add(emptyHm);
+
+                    //Start Location
+                    HashMap<String, String> startHm = new HashMap<>();
+                    JSONObject startLocation = (JSONObject)((JSONObject)jLegs.get(j)).get("start_location");
+                    startHm.put("lat", startLocation.get("lat").toString());
+                    startHm.put("lng", startLocation.get("lng").toString());
+                    addressLatLng.add(startHm);
+
+                    viaWaypoints = ((JSONObject)jLegs.get(j)).getJSONArray("via_waypoint");
+                    for (int l = 0; l < viaWaypoints.length(); l++){
+                        String latStr = ((JSONObject)((JSONObject)viaWaypoints.get(l)).get("location")).get("lat").toString();
+                        String lngStr = ((JSONObject)((JSONObject)viaWaypoints.get(l)).get("location")).get("lng").toString();
+                        hm = new HashMap<String, String>();
+                        hm.put("lat", latStr);
+                        hm.put("lng", lngStr);
+                        addressLatLng.add(hm);
                     }
+
+                    //End Location
+                    HashMap<String, String> endHm = new HashMap<>();
+                    JSONObject endLocation = (JSONObject)((JSONObject)jLegs.get(j)).get("end_location");
+                    endHm.put("lat", endLocation.get("lat").toString());
+                    endHm.put("lng", endLocation.get("lng").toString());
+                    addressLatLng.add(endHm);
+
+                    path.addAll(addressLatLng);
                     routes.add(path);
                 }
             }

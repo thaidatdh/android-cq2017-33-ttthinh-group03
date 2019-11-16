@@ -1,5 +1,5 @@
 package com.hcmus.Utils;
 
 public interface DialogBtnCallBackInterface {
-    void onBtnClick();
+    void onBtnClick(String action);
 }

@@ -1,32 +1,26 @@
 package com.hcmus.Adapters;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
+
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
+
 import com.hcmus.DAO.BillDao;
-import com.hcmus.DAO.BillDetailDao;
-import com.hcmus.Dialog.ShipperOrderDialog;
 import com.hcmus.Dialog.ShipperTaskDialog;
 import com.hcmus.Models.Task;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.ShipperTaskViewHolder> {
@@ -77,7 +71,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
                 final int index =  vh.getAdapterPosition();
                 ShipperTaskDialog dialog = new ShipperTaskDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
                     @Override
-                    public void onBtnClick(){
+                    public void onBtnClick(String action){
                         acceptTask(mDataset.get(index).getBillId());
                         mDataset.remove(index);
                         notifyItemRemoved(index);
@@ -113,9 +107,15 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     public int getItemCount() {
         return mDataset.size();
     }
+    @SuppressLint("CheckResult")
+    private void acceptTask(final int billId){
+        try {
+            BillDao.AssignShipper(billId, Login.userLocalStore.GetUserId());
 
-    private void acceptTask(int billId){
-        BillDao.AssignShipper(billId, Login.userLocalStore.GetUserId());
+        } catch (Exception e){
+            Log.e("Cancel Task", "Error");
+            e.printStackTrace();
+        }
     }
 
     private void showNoTaskMsg(){

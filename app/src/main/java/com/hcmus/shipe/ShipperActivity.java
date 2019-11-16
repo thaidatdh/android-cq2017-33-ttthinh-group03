@@ -41,8 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShipperActivity extends AppCompatActivity implements LocationListener {
-    private String username;
-    private UserDto user;
     private LocationManager mLocationManager;
     private Location mLocation;
     private MapUtils mMapUtils;
@@ -69,17 +67,6 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
         //user = UserDao.findByUsername(username);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        checkLocationPermission();
-        if (!mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-        else {
-            finish();
-        }
         mMapUtils = new MapUtils(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -138,7 +125,11 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
             }
         });
 
+        if (!checkLocationPermission() && !mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
     }
+
     @Override
     public void onLocationChanged(Location location) {
         mLocation = location;
@@ -193,7 +184,8 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                             == PackageManager.PERMISSION_GRANTED) {
 
                         //Request location updates:
-                        mLocationManager.requestLocationUpdates(provider, 400, 1, this);
+                        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 5, this);
+                        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     }
 
                 } else {
@@ -214,11 +206,12 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
+                        finish();
                         dialog.cancel();
                     }
                 });

@@ -15,6 +15,9 @@
     <string name="bill_id">Bill ID</string>
     <string name="no_task_found">No Tasks Found</string>
     <string name="no_order_found">No Orders Found</string>
+    <string name="task_getting_msg">Getting</string>
+    <string name="task_on_going_msg">On Going</string>
+    <string name="task_complete_msg">Complete</string>
 
     <!-- Manager -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

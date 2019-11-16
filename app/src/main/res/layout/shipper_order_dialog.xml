@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:visibility="gone">
+        android:visibility="invisible">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -261,6 +261,18 @@
                         android:gravity="end"/>
                 </TableRow>
             </TableLayout>
+            <Button
+                android:id="@+id/task_status_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"/>
             <Button
                 android:id="@+id/task_cancel_btn"
                 android:layout_width="match_parent"

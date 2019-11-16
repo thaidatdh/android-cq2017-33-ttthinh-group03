@@ -19,6 +19,7 @@ import com.hcmus.Adapters.ShipperOrderAdapter;
 import com.hcmus.Adapters.ShipperTaskAdapter;
 import com.hcmus.DAO.BillDao;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.Common;
 import com.hcmus.Utils.MapUtils;
 import com.hcmus.Utils.MyCallback;
 import com.hcmus.shipe.R;
@@ -130,6 +131,7 @@ public class ShipperOrderFragment extends Fragment {
                                     tasks.get(i).setDistance(results.get(i).get("distance"));
                                     tasks.get(i).setDuration(results.get(i).get("duration"));
                                 }
+                                Common.sortTaskListAsc(tasks);
                                 mTasks.addAll(tasks);
                                 showTask();
                                 dismissProgress();

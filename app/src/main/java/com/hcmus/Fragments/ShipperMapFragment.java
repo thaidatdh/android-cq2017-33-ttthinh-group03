@@ -2,6 +2,7 @@ package com.hcmus.Fragments;
 
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -26,9 +27,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.hcmus.DAO.BillDao;
+import com.hcmus.Dialog.ShipperOrderDialog;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.Common;
+import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.Utils.MapUtils;
 import com.hcmus.Utils.MyCallback;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
 import java.util.ArrayList;
@@ -59,7 +64,6 @@ public class ShipperMapFragment extends Fragment{
     private List<Task> mTasks;
 
     private ProgressBar mapLoading;
-    private boolean isInputReady;
     public ShipperMapFragment (Context context){
         mContext = context;
         mapUtils = new MapUtils(mContext);
@@ -87,6 +91,27 @@ public class ShipperMapFragment extends Fragment{
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+                    @Override
+                    public boolean onMarkerClick(final Marker marker) {
+                        final int index = destinationMarkers.indexOf(marker);
+                        if (index >= 0 && index < destinationMarkers.size()){
+                            ShipperOrderDialog dialog = new ShipperOrderDialog(mContext, mTasks, index, new DialogBtnCallBackInterface(){
+                                @Override
+                                public void onBtnClick(String action){
+                                    if (action.toLowerCase().equals("cancel")){
+                                        cancelTask(mTasks.get(index).getBillId());
+                                    }
+                                    mTasks.remove(index);
+                                    createRoute(shipperLatLng, Login.userLocalStore.GetUserId());
+
+                                }
+                            });
+                            dialog.show();
+                        }
+                        return true;
+                    }
+                });
             }
         });
         return rootView;
@@ -96,6 +121,7 @@ public class ShipperMapFragment extends Fragment{
     public void createRoute(Object start, int userId){
         if (start == null)
             return;
+        emptyTask();
         shipperLatLng = (LatLng) start;
         clearRoutePolyline();
         clearDestinationMarkers();
@@ -112,8 +138,6 @@ public class ShipperMapFragment extends Fragment{
                 List<Task> tasks = new ArrayList<>();
                 try {
                     tasks = BillDao.GetTaskOfShipper(userId);
-                    mTasks.addAll(tasks);
-
                 } catch (Exception e){
                     Log.e("Task Create", "Error");
                     e.printStackTrace();
@@ -141,52 +165,78 @@ public class ShipperMapFragment extends Fragment{
                 }
                 if (tasks.size() > 0){
                     //Shipper has no orders
-                    if (mTasks.size() == 0)
-                        return;
-                    List<String> addresses = new ArrayList<String>();
-                    HashMap<String, String> params = new HashMap<String, String>();
+                    final List<String> addresses = new ArrayList<String>();
+                    final HashMap<String, String> params = new HashMap<String, String>();
                     params.put("mode", defaultMode);
 
-                    for (Task task : mTasks){
+                    for (Task task : tasks){
                         addresses.add(task.getAddress());
                     }
                     try {
-                        mapUtils.callDirectionAPIWithWaypoints(shipperLatLng, addresses, params, new MyCallback() {
+                        mapUtils.callDistanceMatrixAPI(shipperLatLng, addresses, params,new MyCallback() {
                             @Override
                             public void onCompleteDirection(List<List<HashMap<String, String>>> routes, List<Integer> distances) {
-                                int countAddress = 0;
-                                for (int i = 0; i < routes.size(); i++){
-                                    List<HashMap<String, String>> path = routes.get(i);
-                                    for (int j = 0; j < path.size(); j++){
-                                        HashMap point = path.get(j);
-                                        LatLng position = new LatLng(Double.parseDouble((String)point.get("lat")), Double.parseDouble((String)point.get("lng")));
-                                        points.add(position);
 
-                                        String address = (String)point.get("address");
-                                        if (address != null && j != 0){
-                                            Marker marker = mMap.addMarker(createDestinationMarkerOptions(mTasks.get(countAddress).getBillId(), position));
-
-                                            destinationMarkers.add(marker);
-                                            countAddress++;
-                                        }
-
-                                    }
-
-                                    routePolyline = mMap.addPolyline(createRoutePolylineOptions(points));
-
-                                    if (points.size() > 0)
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points.get(0), defaultZoom  ));
-                                    dismissMapLoading();
-
-                                }
                             }
                             @Override
                             public void onCompleteDistanceMatrix(List<HashMap<String, HashMap<String, String>>> results){
+                                for (int i = 0; i < results.size(); i++){
+                                    tasks.get(i).setDistance(results.get(i).get("distance"));
+                                    tasks.get(i).setDuration(results.get(i).get("duration"));
+                                }
+                                Common.sortTaskListAsc(tasks);
+                                mTasks.addAll(tasks);
+                                addresses.clear();
+                                for (Task task : mTasks){
+                                    addresses.add(task.getAddress());
+                                }
+                                try {
+                                    mapUtils.callDirectionAPIWithWaypoints(shipperLatLng, addresses, params, new MyCallback() {
+                                        @Override
+                                        public void onCompleteDirection(List<List<HashMap<String, String>>> routes, List<Integer> distances) {
+                                            int countAddress = 0;
+                                            for (int i = 0; i < routes.size(); i++){
+                                                List<HashMap<String, String>> path = routes.get(i);
+                                                int addressLatLngIdx = 0;
+                                                for (int j = 0; j < path.size(); j++){
+                                                    HashMap point = path.get(j);
+                                                    if (point.size() == 0){
+                                                        addressLatLngIdx = j + 1;
+                                                        break;
+                                                    }
+                                                    LatLng position = new LatLng(Double.parseDouble((String)point.get("lat")), Double.parseDouble((String)point.get("lng")));
+                                                    points.add(position);
 
+                                                }
+                                                for (int k = addressLatLngIdx + 1; k < path.size(); k++){
+                                                    HashMap point = path.get(k);
+                                                    LatLng position = new LatLng(Double.parseDouble((String)point.get("lat")), Double.parseDouble((String)point.get("lng")));
+                                                    Marker marker = mMap.addMarker(createDestinationMarkerOptions(mTasks.get(countAddress).getBillId(), position));
+                                                    destinationMarkers.add(marker);
+                                                    countAddress++;
+
+                                                }
+                                                routePolyline = mMap.addPolyline(createRoutePolylineOptions(points));
+
+                                                if (points.size() > 0)
+                                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points.get(0), defaultZoom  ));
+                                                dismissMapLoading();
+
+                                            }
+                                        }
+                                        @Override
+                                        public void onCompleteDistanceMatrix(List<HashMap<String, HashMap<String, String>>> results){
+
+                                        }
+                                    });
+                                } catch(Exception e){
+                                    Log.e("Map Route ERROR", "Create Route");
+                                    e.printStackTrace();
+                                }
                             }
                         });
-                    } catch(Exception e){
-                        Log.e("Map Route ERROR", "Create Route");
+                    } catch (Exception e){
+                        Log.e("Task Create Call Distance Matrix", "Error");
                         e.printStackTrace();
                     }
                 }
@@ -220,6 +270,7 @@ public class ShipperMapFragment extends Fragment{
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(position)
                 .title(String.valueOf(billId))
+                .zIndex(2.0f)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.customer_map_icon));
         return markerOptions;
     }
@@ -227,6 +278,7 @@ public class ShipperMapFragment extends Fragment{
     private MarkerOptions createShipperMarkerOptions(LatLng position){
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(position)
+                .zIndex(1.0f)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.shipper_map_icon));
         return markerOptions;
     }
@@ -260,5 +312,21 @@ public class ShipperMapFragment extends Fragment{
         if (mapLoading != null){
             mapLoading.setVisibility(View.GONE);
         }
+    }
+
+    private void emptyTask(){
+        mTasks.clear();
+    }
+
+    @SuppressLint("CheckResult")
+    private void cancelTask(final int billId){
+        try {
+            BillDao.CancelBill(billId);
+
+        } catch (Exception e){
+            Log.e("Cancel Task", "Error");
+            e.printStackTrace();
+        }
+
     }
 }

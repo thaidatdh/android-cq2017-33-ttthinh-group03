@@ -15,8 +15,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
+import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.Models.Task;
@@ -33,10 +35,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import com.hcmus.Utils.Constant;
+
 public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
     private Context mContext;
     private List<Task> mOrderList;
     private int mIndex;
+    private char mStatus;
     private DialogBtnCallBackInterface mCallback;
 
     private ScrollView dialogInfo;
@@ -44,6 +49,7 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
 
     private Button cancelBtn;
     private Button closeBtn;
+    private Button statusBtn;
     private ListView taskListItem;
     private TextView billId;
     private TextView customerName;
@@ -75,6 +81,7 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
 
         cancelBtn = (Button) findViewById(R.id.task_cancel_btn);
         closeBtn = (Button) findViewById(R.id.task_close_btn);
+        statusBtn = (Button) findViewById(R.id.task_status_btn);
 
         //Value
         taskListItem = (ListView) findViewById(R.id.task_list_item);
@@ -95,15 +102,16 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
     }
 
     public void setDialogValue(){
-        Task task = mOrderList.get(mIndex);
+        final Task task = mOrderList.get(mIndex);
 
+        final int id = task.getBillId();
         showProgress();
-        createBillDetailObservable(task.getBillId())
+        createBillDetailObservable(id)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(createBillDetailObserver());
 
-        billId.setText(String.valueOf(task.getBillId()));
+        billId.setText(String.valueOf(id));
         String name = task.getFirstName() + " " + task.getLastName();
         customerName.setText(name);
         customerAddress.setText(task.getAddress());
@@ -122,7 +130,33 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
             @Override
             public void onClick(View view) {
                 dismiss();
-                mCallback.onBtnClick();
+                mCallback.onBtnClick("Cancel");
+            }
+        });
+
+        mStatus = task.getStatus();
+        int statusIdx = Constant.billStatus.indexOf(mStatus);
+        if (statusIdx < Constant.billStatus.length() - 1){
+            mStatus = Constant.billStatus.charAt(statusIdx + 1);
+
+        }
+        setStatusBtn(mStatus);
+        statusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(mStatus){
+                    case 'O':
+                        handleOnGoingBtnClick(id);
+                        task.setStatus(mStatus);
+                        mStatus = 'C';
+                        break;
+                    case 'C':
+                        handleCompleteBtnClick(id);
+                        task.setStatus(mStatus);
+                        dismiss();
+                        mCallback.onBtnClick("Complete");
+                        break;
+                }
             }
         });
     }
@@ -202,4 +236,25 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
             dialogInfo.setVisibility(View.VISIBLE);
         }
     }
+    private void handleOnGoingBtnClick(int billId) {
+        BillDao.SetStatusBill(billId, 'O');
+        setStatusBtn('C');
+    }
+    private void handleCompleteBtnClick(int billId) {
+        BillDao.SetStatusBill(billId, 'C');
+    }
+    private void setStatusBtn(char status){
+        switch(status){
+            case 'O':
+                statusBtn.setText(R.string.task_on_going_msg);
+                statusBtn.setBackground(ContextCompat.getDrawable(mContext, R.drawable.status_on_going_button_style));
+                break;
+            case 'C':
+                statusBtn.setText(R.string.task_complete_msg);
+                statusBtn.setBackground(ContextCompat.getDrawable(mContext, R.drawable.status_complete_button_style));
+                break;
+        }
+    }
+
+
 }
