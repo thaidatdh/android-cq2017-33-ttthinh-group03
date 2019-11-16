@@ -69,6 +69,10 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
         //user = UserDao.findByUsername(username);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        checkLocationPermission();
+        if (!mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -116,7 +120,6 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
                         }
                         break;
                     case 3:
-                        //viewPager.setCurrentItem(index);
                         if (mLocation != null){
                             shipperMap.createRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
                         }
@@ -134,10 +137,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
             }
         });
-        checkLocationPermission();
-        if (!mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-        }
+
     }
     @Override
     public void onLocationChanged(Location location) {

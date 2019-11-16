@@ -19,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
+import com.hcmus.Dialog.ShipperOrderDialog;
+import com.hcmus.Dialog.ShipperTaskDialog;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
@@ -31,21 +34,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     private Context mContext;
     private LayoutInflater layoutInflater;
 
-    private AlertDialog.Builder dialogBuilder;
-    private AlertDialog dialog;
-    private View dialogView;
-    private Button acceptBtn;
-    private Button closeBtn;
-
     private View root;
-    private ListView taskListItem;
-    private TextView billId;
-    private TextView customerName;
-    private TextView customerAddress;
-    private TextView customerPhone;
-    private TextView totalPrice;
-    private TextView description;
-    private TextView deliveryDate;
 
     public class ShipperTaskViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -70,8 +59,6 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         mDataset = myDataset;
         mContext = context;
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        settingTaskDialog();
     }
 
     // Create new views (invoked by the layout manager)
@@ -87,8 +74,20 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialogValue(vh.getAdapterPosition());
-                showDialog();
+                final int index =  vh.getAdapterPosition();
+                ShipperTaskDialog dialog = new ShipperTaskDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
+                    @Override
+                    public void onBtnClick(){
+                        acceptTask(mDataset.get(index).getBillId());
+                        mDataset.remove(index);
+                        notifyItemRemoved(index);
+
+                        if (mDataset.size() == 0){
+                            showNoTaskMsg();
+                        }
+                    }
+                });
+                dialog.show();
             }
         });
         return vh;
@@ -115,72 +114,6 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         return mDataset.size();
     }
 
-    private void settingTaskDialog(){
-        dialogBuilder = new AlertDialog.Builder(mContext);
-        dialogView = layoutInflater.inflate(R.layout.shipper_task_dialog, null);
-        dialogBuilder.setView(dialogView);
-        dialog = dialogBuilder.create();
-        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        acceptBtn = (Button) dialogView.findViewById(R.id.task_accept_btn);
-        closeBtn = (Button) dialogView.findViewById(R.id.task_close_btn);
-
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeDialog();
-            }
-        });
-        //Value
-        taskListItem = (ListView) dialogView.findViewById(R.id.task_list_item);
-        billId = (TextView) dialogView.findViewById(R.id.task_bill_id);
-        customerName = (TextView) dialogView.findViewById(R.id.task_customer_name);
-        customerAddress = (TextView)dialogView.findViewById(R.id.task_customer_address);
-        customerPhone = (TextView) dialogView.findViewById(R.id.task_customer_phone);
-        totalPrice = (TextView)dialogView.findViewById(R.id.bill_total_price);
-        description = (TextView)dialogView.findViewById(R.id.task_bill_description);
-        deliveryDate = (TextView)dialogView.findViewById(R.id.task_delivery_date);
-    }
-    private void setDialogValue(final int index){
-        Task task = mDataset.get(index);
-        BillManagementFragment.BillListAdapter listItemAdapter = new BillManagementFragment.BillListAdapter(mContext, R.layout.bill_detail_list_item, BillDetailDao.findById(task.getBillId()));
-        taskListItem.setAdapter(listItemAdapter);
-        billId.setText(String.valueOf(task.getBillId()));
-        String name = task.getFirstName() + " " + task.getLastName();
-        customerName.setText(name);
-        customerAddress.setText(task.getAddress());
-        customerPhone.setText(task.getPhone());
-        totalPrice.setText(String.valueOf(task.getTotalPrice()));
-        description.setText(task.getDescription());
-        deliveryDate.setText(task.getDeliverTime());
-
-        acceptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                acceptTask(mDataset.get(index).getBillId());
-                mDataset.remove(index);
-                notifyItemRemoved(index);
-                closeDialog();
-
-                if (mDataset.size() == 0){
-                    showNoTaskMsg();
-                }
-            }
-        });
-    }
-
-    private void showDialog(){
-        if (dialog != null){
-            dialog.show();
-            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        }
-    }
-
-    private void closeDialog(){
-        if (dialog != null){
-            dialog.dismiss();
-        }
-    }
     private void acceptTask(int billId){
         BillDao.AssignShipper(billId, Login.userLocalStore.GetUserId());
     }

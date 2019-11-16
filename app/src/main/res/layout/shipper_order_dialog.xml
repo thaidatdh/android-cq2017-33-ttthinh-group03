@@ -2,11 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <ProgressBar
+        android:id="@+id/info_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="2dp"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:layout_margin="250dp"
+        android:indeterminateTint="@color/colorBorder"
+        android:visibility="invisible"/>
+
     <ScrollView
+        android:id="@+id/dialog_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -249,7 +262,7 @@
                 </TableRow>
             </TableLayout>
             <Button
-                android:id="@+id/task_accept_btn"
+                android:id="@+id/task_cancel_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cancel_button_style"

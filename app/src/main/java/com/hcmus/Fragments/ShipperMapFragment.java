@@ -164,7 +164,9 @@ public class ShipperMapFragment extends Fragment{
 
                                         String address = (String)point.get("address");
                                         if (address != null && j != 0){
-                                            destinationMarkers.add(mMap.addMarker(createDestinationMarkerOptions(mTasks.get(countAddress).getBillId(), position)));
+                                            Marker marker = mMap.addMarker(createDestinationMarkerOptions(mTasks.get(countAddress).getBillId(), position));
+
+                                            destinationMarkers.add(marker);
                                             countAddress++;
                                         }
 
