@@ -403,7 +403,6 @@ public class BillManagementFragment extends Fragment {
             TextView itemName = (TextView)view.findViewById(R.id.textView_Name_Item);
             TextView itemPrice = (TextView)view.findViewById(R.id.textView_Price_Item);
             TextView amountItem = (TextView)view.findViewById(R.id.textView_Amount);
-            TextView total_price = (TextView)view.findViewById(R.id.textView_Total);
             BillDetailDto billDetail = myList.get(i);
             ItemDto item = ItemDao.findById(billDetail.getItemId());
             String name = item.getName().trim();
@@ -414,7 +413,6 @@ public class BillManagementFragment extends Fragment {
             itemName.setText(name);
             itemPrice.setText(price.toString());
             amountItem.setText(String.valueOf(amount));
-            total_price.setText(total.toString());
             return view;
         }
     }
