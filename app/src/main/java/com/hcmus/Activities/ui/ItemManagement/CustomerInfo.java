@@ -1,8 +1,10 @@
 package com.hcmus.Activities.ui.ItemManagement;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.Activities.ui.Category.CustomerCategory;
 import com.hcmus.Activities.ui.ShoppingCartManagement.ShoppingCartManagement;
+import com.hcmus.DAO.UserDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.DTO.ItemDto;
+import com.hcmus.DTO.UserDto;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CustomerInfo extends AppCompatActivity {
     ItemDto selectedItem;
@@ -26,10 +33,33 @@ public class CustomerInfo extends AppCompatActivity {
     TextView txtvCate;
     TextView txtvHis;
     TextView txtvHome;
+    private String username;
+    private UserDto user;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_info);
+
+        TextView infoName = (TextView)findViewById(R.id.customer_info_name);
+        TextView address = (TextView)findViewById(R.id.customer_info_address);
+        TextView birthDate = (TextView)findViewById(R.id.customer_info_birthdate);
+        TextView phone = (TextView)findViewById(R.id.customer_info_phone);
+        username = Login.userLocalStore.GetUsername();
+        user = UserDao.findByUsername(username);
+        infoName.setText(user.getFirstName() + " " + user.getLastName());
+        birthDate.setText(user.getBirthDate());
+        phone.setText(user.getPhone());
+        address.setText(user.getAddress());
+        TextView singout = (TextView)findViewById(R.id.txtcustomerSignOut);
+
+        singout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Login.Logout();
+                Log.d(TAG, "Now log out and start the activity login");
+                startActivity(new Intent(getApplicationContext(), Login.class));
+            }
+        });
 
         txtvCate=(TextView)findViewById(R.id.txtvCategory);
         txtvHis=(TextView)findViewById(R.id.txtvHistory);
