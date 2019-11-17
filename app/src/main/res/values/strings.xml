@@ -65,6 +65,8 @@
     <string name="description">Description:</string>
     <string name="created">Created Date:</string>
     <string name="delivery">Delivery Date:</string>
+    <string name="add_product">Add Product</string>
+    <string name="add_category">Add Category</string>
 
     <string name="update_item">Update</string>
     <string name="item_name">Name</string>

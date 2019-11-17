@@ -122,6 +122,7 @@ public class CustomerManagementFragment extends Fragment {
         TextView shipper= (TextView)view.findViewById(R.id.bill_info_shipper);
         TextView description = (TextView)view.findViewById(R.id.bill_info_description);
         TextView created = (TextView)view.findViewById(R.id.bill_info_created);
+        TextView phone = view.findViewById(R.id.bill_phone_customer);
         TextView delivery = (TextView)view.findViewById(R.id.bill_info_delivery);
         TextView statusSpinner = (TextView)view.findViewById(R.id.bill_info_status);
         ImageView closeBtn = (ImageView)view.findViewById(R.id.bill_info_close);
@@ -139,6 +140,12 @@ public class CustomerManagementFragment extends Fragment {
                     fcustomer = billCustomer.getFirstName().trim();
                 }
                 namecustomer = lcustomer + " " + fcustomer;
+                if (billCustomer.getPhone() != null)
+                    phone.setText(billCustomer.getPhone());
+            }
+            else
+            {
+                phone.setText("");
             }
             if (billShipper != null) {
                 String fshipper = "", lshipper = "";

@@ -101,7 +101,7 @@ public class CustomerCategory extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        //Login.Logout(getApplicationContext());
+        //Login.Logout();
         //finishAndRemoveTask();
     }
     @Override
