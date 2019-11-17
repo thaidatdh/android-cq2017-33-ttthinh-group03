@@ -39,13 +39,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnAddItem"
-            android:text="Add Item"
+            android:text="@string/add_product"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnAddCategory"
-            android:text="Add Category"/>
+            android:text="@string/add_category"/>
 
     </LinearLayout>
     <ListView

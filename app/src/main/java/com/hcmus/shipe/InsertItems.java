@@ -52,7 +52,7 @@ public class InsertItems extends AppCompatActivity {
         spnCategoryItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(InsertItems.this, spnCategoryItem.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(InsertItems.this, spnCategoryItem.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -115,7 +115,6 @@ public class InsertItems extends AppCompatActivity {
 
             default:break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

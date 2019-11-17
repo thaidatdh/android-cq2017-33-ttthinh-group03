@@ -7,13 +7,15 @@
     android:orientation="vertical"
     tools:context=".InsertCategorys">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <TextView
+        android:id="@+id/insert_category_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:text="@string/add_category"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="30sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
