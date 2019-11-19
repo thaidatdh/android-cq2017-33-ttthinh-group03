@@ -120,7 +120,7 @@ public class ShipperTaskDialog extends Dialog implements View.OnClickListener{
         accepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismiss();
+                //dismiss();
                 mCallback.onBtnClick("");
             }
         });

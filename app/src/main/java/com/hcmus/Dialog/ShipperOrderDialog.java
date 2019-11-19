@@ -129,7 +129,6 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismiss();
                 mCallback.onBtnClick("Cancel");
             }
         });

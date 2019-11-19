@@ -1,7 +1,9 @@
 package com.hcmus.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.hcmus.DAO.BillDao;
 import com.hcmus.Dialog.ShipperOrderDialog;
 import com.hcmus.Models.Task;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
+import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
 
 import java.util.List;
@@ -23,6 +26,7 @@ public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapte
     private List<Task> mDataset;
     private Context mContext;
     private LayoutInflater layoutInflater;
+    private ShipperOrderDialog oDialog;
 
     private View root;
 
@@ -66,21 +70,23 @@ public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapte
             @Override
             public void onClick(View view) {
                 final int index =  vh.getAdapterPosition();
-                ShipperOrderDialog dialog = new ShipperOrderDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
+                oDialog = new ShipperOrderDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
                     @Override
                     public void onBtnClick(String action){
                         if (action.toLowerCase().equals("cancel")){
-                            cancelTask(mDataset.get(index).getBillId());
+                            cancelTask(index, mDataset.get(index).getBillId());
                         }
-                        mDataset.remove(index);
-                        notifyItemRemoved(index);
+                        else if (action.toLowerCase().equals("complete")){
+                            mDataset.remove(index);
+                            notifyItemRemoved(index);
 
-                        if (mDataset.size() == 0){
-                            showNoTaskMsg();
+                            if (mDataset.size() == 0){
+                                showNoTaskMsg();
+                            }
                         }
                     }
                 });
-                dialog.show();
+                oDialog.show();
             }
         });
 
@@ -108,14 +114,36 @@ public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapte
         return mDataset.size();
     }
     @SuppressLint("CheckResult")
-    private void cancelTask(final int billId){
-        try {
-            BillDao.CancelBill(billId);
+    private void cancelTask(final int index, final int billId){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Are you sure you want to CANCEL this task")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        try {
+                            BillDao.CancelBill(billId);
+                            if (oDialog != null){
+                                oDialog.dismiss();
+                            }
+                            mDataset.remove(index);
+                            notifyItemRemoved(index);
 
-        } catch (Exception e){
-            Log.e("Cancel Task", "Error");
-            e.printStackTrace();
-        }
+                            if (mDataset.size() == 0){
+                                showNoTaskMsg();
+                            }
+                        } catch (Exception e){
+                            Log.e("Cancel Task", "Error");
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
 
     }
 

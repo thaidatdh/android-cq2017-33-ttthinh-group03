@@ -162,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:textStyle="bold"
                             android:textColor="@color/lightBlue"
                             android:text="@string/item_price"/>
@@ -170,18 +170,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:textStyle="bold"
                             android:textColor="@color/lightBlue"
                             android:text="@string/item_amount"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textColor="@color/lightBlue"
-                            android:text="@string/total_price"/>
                     </LinearLayout>
                 </TableRow>
 

@@ -3,7 +3,9 @@ package com.hcmus.Fragments;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -59,6 +61,7 @@ public class ShipperMapFragment extends Fragment{
     private int polylineDefaultColor = Color.RED;
     private String defaultMode = "DRIVING";
     private List<LatLng> points;
+    private ShipperOrderDialog oDialog;
 
     private LatLng shipperLatLng;
     private List<Task> mTasks;
@@ -96,18 +99,19 @@ public class ShipperMapFragment extends Fragment{
                     public boolean onMarkerClick(final Marker marker) {
                         final int index = destinationMarkers.indexOf(marker);
                         if (index >= 0 && index < destinationMarkers.size()){
-                            ShipperOrderDialog dialog = new ShipperOrderDialog(mContext, mTasks, index, new DialogBtnCallBackInterface(){
+                            oDialog = new ShipperOrderDialog(mContext, mTasks, index, new DialogBtnCallBackInterface(){
                                 @Override
                                 public void onBtnClick(String action){
                                     if (action.toLowerCase().equals("cancel")){
-                                        cancelTask(mTasks.get(index).getBillId());
+                                        cancelTask(index, mTasks.get(index).getBillId());
                                     }
-                                    mTasks.remove(index);
-                                    createRoute(shipperLatLng, Login.userLocalStore.GetUserId());
-
+                                    else if (action.toLowerCase().equals("cancel")){
+                                        mTasks.remove(index);
+                                        createRoute(shipperLatLng, Login.userLocalStore.GetUserId());
+                                    }
                                 }
                             });
-                            dialog.show();
+                            oDialog.show();
                         }
                         return true;
                     }
@@ -319,14 +323,32 @@ public class ShipperMapFragment extends Fragment{
     }
 
     @SuppressLint("CheckResult")
-    private void cancelTask(final int billId){
-        try {
-            BillDao.CancelBill(billId);
-
-        } catch (Exception e){
-            Log.e("Cancel Task", "Error");
-            e.printStackTrace();
-        }
+    private void cancelTask(final int index, final int billId){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Are you sure you want to CANCEL this task")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        try {
+                            BillDao.CancelBill(billId);
+                            if (oDialog != null){
+                                oDialog.dismiss();
+                            }
+                            mTasks.remove(index);
+                            createRoute(shipperLatLng, Login.userLocalStore.GetUserId());
+                        } catch (Exception e){
+                            Log.e("Cancel Task", "Error");
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
 
     }
 }

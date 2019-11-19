@@ -125,7 +125,11 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
             }
         });
 
-        if (!checkLocationPermission() && !mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
+        if (checkLocationPermission() && mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)){
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 5, this);
+            mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        else if (!mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
     }
@@ -179,17 +183,14 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
                     // permission was granted, yay! Do the
                     // location-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
+                    if (checkLocationPermission() && mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
                         //Request location updates:
                         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 5, this);
                         mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     }
 
                 } else {
-
+                    finish();
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
 
@@ -219,3 +220,4 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
         alert.show();
     }
 }
+
