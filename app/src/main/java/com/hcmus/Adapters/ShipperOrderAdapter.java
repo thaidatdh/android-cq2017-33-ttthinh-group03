@@ -19,6 +19,7 @@ import com.hcmus.Models.Task;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
+import com.hcmus.shipe.ShipperActivity;
 
 import java.util.List;
 
@@ -99,13 +100,17 @@ public class ShipperOrderAdapter extends RecyclerView.Adapter<ShipperOrderAdapte
         Task task = mDataset.get(position);
         holder.id.setText(String.valueOf(task.getBillId()));
         holder.address.setText(task.getAddress());
+        int color = -1;
         if (task.getDistance() != null){
+            color = ShipperActivity.getColorOfDistance(mContext, Double.parseDouble(task.getDistance().get("value")));
             holder.distance.setText(task.getDistance().get("text"));
         }
         if (task.getDuration() != null){
             holder.duration.setText(task.getDuration().get("text"));
         }
-
+        if (color != -1){
+            holder.distance.setTextColor(color);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

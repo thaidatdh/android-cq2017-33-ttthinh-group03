@@ -19,10 +19,12 @@ import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.ConversionUtils;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -109,7 +111,9 @@ public class ShipperTaskDialog extends Dialog implements View.OnClickListener{
         customerPhone.setText(task.getPhone());
         totalPrice.setText(String.valueOf(task.getTotalPrice()));
         description.setText(task.getDescription());
-        deliveryDate.setText(task.getDeliverTime());
+
+        Date date = ConversionUtils.DateTime.parseDate(task.getDeliverTime(), "yyyy-MM-dd HH:mm:ss.s");
+        deliveryDate.setText(ConversionUtils.DateTime.formatDate(date, "HH:mm dd/MM/yyyy"));
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

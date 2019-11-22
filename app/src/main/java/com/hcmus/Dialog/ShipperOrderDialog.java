@@ -1,7 +1,9 @@
 package com.hcmus.Dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +24,12 @@ import com.hcmus.DAO.BillDao;
 import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.ConversionUtils;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -118,7 +122,9 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
         customerPhone.setText(task.getPhone());
         totalPrice.setText(String.valueOf(task.getTotalPrice()));
         description.setText(task.getDescription());
-        deliveryDate.setText(task.getDeliverTime());
+
+        Date date = ConversionUtils.DateTime.parseDate(task.getDeliverTime(), "yyyy-MM-dd HH:mm:ss.s");
+        deliveryDate.setText(ConversionUtils.DateTime.formatDate(date, "HH:mm dd/MM/yyyy"));
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,19 +149,39 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
         statusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setCancelable(false)
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                dialog.cancel();
+                            }
+                        });
                 switch(mStatus){
                     case 'O':
-                        handleOnGoingBtnClick(id);
-                        task.setStatus(mStatus);
-                        mStatus = 'C';
+                        builder.setMessage("Are you sure you want to change this task's status to ON GOING")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(final DialogInterface dialog, final int idd) {
+                                        handleOnGoingBtnClick(id);
+                                        task.setStatus(mStatus);
+                                        mStatus = 'C';
+                                    }
+                                });
+
                         break;
                     case 'C':
-                        handleCompleteBtnClick(id);
-                        task.setStatus(mStatus);
-                        dismiss();
-                        mCallback.onBtnClick("Complete");
+                        builder.setMessage("Are you sure you want to change this task's status to COMPLETE")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(final DialogInterface dialog, final int idd) {
+                                        handleCompleteBtnClick(id);
+                                        task.setStatus(mStatus);
+                                        dismiss();
+                                        mCallback.onBtnClick("Complete");
+                                    }
+                                });
                         break;
                 }
+                final AlertDialog alert = builder.create();
+                alert.show();
             }
         });
     }

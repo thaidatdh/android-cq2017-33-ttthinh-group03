@@ -40,7 +40,9 @@ public class ConversionUtils {
          try {
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             return format.parse(dateInput);
-         } catch (Exception ex) { }
+         } catch (Exception ex) {
+            ex.printStackTrace();
+         }
          return null;
       }
       public static String formatDate(Date dateInput) {
