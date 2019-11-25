@@ -107,30 +107,7 @@
         app:layout_constraintTop_toTopOf="@+id/tableLayout2">
 
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/setting"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/setting"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/setting" />
-
-            <TextView
-                android:id="@+id/txtSetting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/setting"
-                android:textSize="20sp" />
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"

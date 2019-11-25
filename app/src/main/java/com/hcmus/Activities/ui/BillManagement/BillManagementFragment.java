@@ -166,7 +166,11 @@ public class BillManagementFragment extends Fragment {
             shipper.setText(nameshipper);
             description.setText(selectedBill.getDescription());
             created.setText(ConversionUtils.DateTime.formatDate(selectedBill.getCreatedDate()));
-            delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
+            if((selectedBill.getDeliverTime()).equals("1900-01-01 00:00:00.0")){
+                delivery.setText("Not delivered yet");
+            } else {
+                delivery.setText(ConversionUtils.DateTime.formatDate(selectedBill.getDeliverTime()));
+            }
             switch (selectedBill.getStatus()) {
                 case 'N':
                     statusSpinner.setText(R.string.N);
