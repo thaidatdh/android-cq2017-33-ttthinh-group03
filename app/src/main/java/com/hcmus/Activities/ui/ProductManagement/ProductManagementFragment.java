@@ -208,7 +208,12 @@ public class ProductManagementFragment extends Fragment {
                 }
             });
             //con hinh anh chua biet lam sao
-            loadImageFromUrl(selectedItem.getThumbnail(),imgItem);
+            if(selectedItem.getThumbnail()!=null)
+            {
+                loadImageFromUrl(selectedItem.getThumbnail(),imgItem);
+
+            }
+
 
 
         }
