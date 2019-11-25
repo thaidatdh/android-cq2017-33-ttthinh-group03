@@ -1,7 +1,10 @@
 package com.hcmus.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +14,18 @@ import android.widget.LinearLayout;
 
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.hcmus.DAO.BillDao;
 import com.hcmus.Dialog.ShipperTaskDialog;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.Common;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.Login;
 import com.hcmus.shipe.R;
+import com.hcmus.shipe.ShipperActivity;
 
 import java.util.List;
 
@@ -27,7 +33,7 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
     private List<Task> mDataset;
     private Context mContext;
     private LayoutInflater layoutInflater;
-
+    private ShipperTaskDialog tDialog;
     private View root;
 
     public class ShipperTaskViewHolder extends RecyclerView.ViewHolder {
@@ -69,19 +75,13 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
             @Override
             public void onClick(View view) {
                 final int index =  vh.getAdapterPosition();
-                ShipperTaskDialog dialog = new ShipperTaskDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
+                tDialog = new ShipperTaskDialog(mContext, mDataset, index, new DialogBtnCallBackInterface(){
                     @Override
                     public void onBtnClick(String action){
-                        acceptTask(mDataset.get(index).getBillId());
-                        mDataset.remove(index);
-                        notifyItemRemoved(index);
-
-                        if (mDataset.size() == 0){
-                            showNoTaskMsg();
-                        }
+                        acceptTask(index, mDataset.get(index).getBillId());
                     }
                 });
-                dialog.show();
+                tDialog.show();
             }
         });
         return vh;
@@ -93,11 +93,16 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         Task task = mDataset.get(position);
         holder.id.setText(String.valueOf(task.getBillId()));
         holder.address.setText(task.getAddress());
+        int color = -1;
         if (task.getDistance() != null){
+            color = ShipperActivity.getColorOfDistance(mContext, Double.parseDouble(task.getDistance().get("value")));
             holder.distance.setText(task.getDistance().get("text"));
         }
         if (task.getDuration() != null){
             holder.duration.setText(task.getDuration().get("text"));
+        }
+        if (color != -1){
+            holder.distance.setTextColor(color);
         }
 
     }
@@ -108,14 +113,37 @@ public class ShipperTaskAdapter extends RecyclerView.Adapter<ShipperTaskAdapter.
         return mDataset.size();
     }
     @SuppressLint("CheckResult")
-    private void acceptTask(final int billId){
-        try {
-            BillDao.AssignShipper(billId, Login.userLocalStore.GetUserId());
+    private void acceptTask(final int index, final int billId){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Are you sure you want to ACCEPT this task")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        try {
+                            BillDao.AssignShipper(billId, Login.userLocalStore.GetUserId());
+                            if (tDialog != null){
+                                tDialog.dismiss();
+                            }
+                            mDataset.remove(index);
+                            notifyItemRemoved(index);
 
-        } catch (Exception e){
-            Log.e("Cancel Task", "Error");
-            e.printStackTrace();
-        }
+                            if (mDataset.size() == 0){
+                                showNoTaskMsg();
+                            }
+
+                        } catch (Exception e){
+                            Log.e("Accept Task", "Error");
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void showNoTaskMsg(){

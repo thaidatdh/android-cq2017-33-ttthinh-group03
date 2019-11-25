@@ -3,7 +3,9 @@ package com.hcmus.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -78,6 +80,9 @@ public class ShipperTaskFragment extends Fragment {
         taskAdapter = new ShipperTaskAdapter(mContext, mViewRoot, mTasks);
         taskList.setAdapter(taskAdapter);
 
+        DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(mContext,R.drawable.line_divider));
+        taskList.addItemDecoration(divider);
         return root;
     }
     public void createTask(LatLng origin){

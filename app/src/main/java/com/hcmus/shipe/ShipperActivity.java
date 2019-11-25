@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -57,6 +58,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
     private ShipperMapFragment shipperMap;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     String provider;
+    private int currentTabIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +70,11 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mMapUtils = new MapUtils(this);
+        currentTabIndex = -1;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
         tabLayout = findViewById(R.id.tabs);
@@ -95,23 +98,7 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int index = tab.getPosition();
-                switch (index){
-                    case 1:
-                        if (mLocation != null){
-                            shipperTask.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
-                        }
-                        break;
-                    case 2:
-                        if (mLocation != null){
-                            shipperOrder.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
-                        }
-                        break;
-                    case 3:
-                        if (mLocation != null){
-                            shipperMap.createRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
-                        }
-                        break;
-                }
+                doTabAction(index);
             }
 
             @Override
@@ -125,11 +112,35 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
             }
         });
 
-        if (!checkLocationPermission() && !mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
+        if (checkLocationPermission() && mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)){
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
+            mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        else if (!mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
     }
 
+    private void doTabAction(int index){
+        currentTabIndex = index;
+        switch (index){
+            case 1:
+                if (mLocation != null){
+                    shipperTask.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+                }
+                break;
+            case 2:
+                if (mLocation != null){
+                    shipperOrder.createTask(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
+                }
+                break;
+            case 3:
+                if (mLocation != null){
+                    shipperMap.createRoute(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), Login.userLocalStore.GetUserId());
+                }
+                break;
+        }
+    }
     @Override
     public void onLocationChanged(Location location) {
         mLocation = location;
@@ -179,17 +190,14 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
 
                     // permission was granted, yay! Do the
                     // location-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
+                    if (checkLocationPermission() && mLocationManager.isProviderEnabled (LocationManager.GPS_PROVIDER)) {
                         //Request location updates:
-                        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 5, this);
-                        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
+                        //mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     }
 
                 } else {
-
+                    finish();
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
 
@@ -218,4 +226,16 @@ public class ShipperActivity extends AppCompatActivity implements LocationListen
         final AlertDialog alert = builder.create();
         alert.show();
     }
+
+    public static int getColorOfDistance(Context context, double distance){
+        //Distance in meters
+        if (distance >= 0 && distance <= 5000){
+            return ContextCompat.getColor(context, R.color.Line);
+        } else if (distance > 5000 && distance <= 10000){
+            return ContextCompat.getColor(context, R.color.orange);
+        } else {
+            return ContextCompat.getColor(context, R.color.Gmail);
+        }
+    }
 }
+

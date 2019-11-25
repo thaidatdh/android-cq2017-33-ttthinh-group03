@@ -3,7 +3,10 @@ package com.hcmus.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,6 +74,11 @@ public class ShipperOrderFragment extends Fragment {
         taskList.setLayoutManager(layoutManager);
         orderAdapter = new ShipperOrderAdapter(mContext, mViewRoot, mTasks);
         taskList.setAdapter(orderAdapter);
+
+        DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(mContext,R.drawable.line_divider));
+        taskList.addItemDecoration(divider);
+
         return root;
     }
 
