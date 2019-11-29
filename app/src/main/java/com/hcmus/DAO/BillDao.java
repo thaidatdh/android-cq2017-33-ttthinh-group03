@@ -2,6 +2,8 @@ package com.hcmus.DAO;
 
 import com.hcmus.DTO.BillDto;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.Constant;
+import com.hcmus.Utils.ConversionUtils;
 import com.hcmus.Utils.Database;
 
 import java.sql.Connection;
@@ -165,6 +167,13 @@ public class BillDao {
     }
     public static boolean SetStatusBill(int billId, char status){
         String sql = "UPDATE bill SET bill.status = '" + status + "' WHERE bill_id = " + billId + " AND shipper is not null";
+        if (Database.ExecuteQuery(sql) > 0) {
+            return true;
+        } else
+            return false;
+    }
+    public static boolean SetBillComplete(int billId){
+        String sql = "UPDATE bill SET status = 'C', deliver_time = '" + ConversionUtils.DateTime.getCurrentFullDateTime(Constant.dbDateFormat) + "' WHERE bill_id = " + billId + " AND shipper is not null";
         if (Database.ExecuteQuery(sql) > 0) {
             return true;
         } else

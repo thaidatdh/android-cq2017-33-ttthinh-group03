@@ -14,6 +14,7 @@ import java.util.TimeZone;
 
 public class ConversionUtils {
    public static class DateTime {
+      public static Date nullDate = new Date(0, 0, 1, 0, 0, 0);
       public static Date parseDate(String dateInput) {
          try {
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -111,6 +112,17 @@ public class ConversionUtils {
 
          Calendar today = GregorianCalendar.getInstance(timeZone);
          return format.format(today.getTime());
+      }
+      public static String getCurrentFullDateTime(String pattern) {
+         TimeZone timeZone = getCustomerTimeZone();
+         SimpleDateFormat format = new SimpleDateFormat(pattern);
+         format.setTimeZone(timeZone);
+
+         Calendar today = GregorianCalendar.getInstance(timeZone);
+         return format.format(today.getTime());
+      }
+      public static boolean isDateNull(Date date){
+         return date.compareTo(nullDate) == 0;
       }
    }
    public static class User {

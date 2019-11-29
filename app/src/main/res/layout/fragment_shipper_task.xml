@@ -12,18 +12,51 @@
         android:gravity="center_horizontal"
         android:indeterminateTint="@color/colorBorder"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center|top">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/colorBorder"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            android:text="@string/id"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/colorBorder"
+            android:textStyle="bold"
+            android:text="@string/address_no_colon"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="start" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/no_task_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:textStyle="italic"
         android:text="@string/no_task_found"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shipper_task_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"/>
 
 </FrameLayout>

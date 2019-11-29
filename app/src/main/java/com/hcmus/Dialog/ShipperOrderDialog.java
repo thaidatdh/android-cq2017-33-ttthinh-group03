@@ -124,7 +124,14 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
         description.setText(task.getDescription());
 
         Date date = ConversionUtils.DateTime.parseDate(task.getDeliverTime(), "yyyy-MM-dd HH:mm:ss.s");
-        deliveryDate.setText(ConversionUtils.DateTime.formatDate(date, "HH:mm dd/MM/yyyy"));
+        if (ConversionUtils.DateTime.isDateNull(date)){
+            //If date null
+            deliveryDate.setText(mContext.getResources().getString(R.string.bill_not_delivered));
+            deliveryDate.setTextColor(mContext.getResources().getColor(R.color.Gmail));
+        } else {
+            deliveryDate.setText(ConversionUtils.DateTime.formatDate(date, "HH:mm dd/MM/yyyy"));
+            deliveryDate.setTextColor(mContext.getResources().getColor(R.color.Line));
+        }
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,7 +273,7 @@ public class ShipperOrderDialog extends Dialog implements View.OnClickListener{
         setStatusBtn('C');
     }
     private void handleCompleteBtnClick(int billId) {
-        BillDao.SetStatusBill(billId, 'C');
+        BillDao.SetBillComplete(billId);
     }
     private void setStatusBtn(char status){
         switch(status){

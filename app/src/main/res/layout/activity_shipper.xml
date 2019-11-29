@@ -27,21 +27,25 @@
             android:id="@+id/tab_home"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            app:tabBackground="@drawable/bg_unselected_tab_item"
             android:text="@string/tab_home" />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_task"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/bg_unselected_tab_item"
             android:text="@string/tab_task"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_order"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/bg_unselected_tab_item"
             android:text="@string/tab_order"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_map"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/bg_unselected_tab_item"
             android:text="@string/tab_map"/>
     </com.google.android.material.tabs.TabLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

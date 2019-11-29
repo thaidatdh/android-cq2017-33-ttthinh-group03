@@ -19,6 +19,7 @@ import com.hcmus.Activities.ui.BillManagement.BillManagementFragment;
 import com.hcmus.DAO.BillDetailDao;
 import com.hcmus.DTO.BillDetailDto;
 import com.hcmus.Models.Task;
+import com.hcmus.Utils.Constant;
 import com.hcmus.Utils.ConversionUtils;
 import com.hcmus.Utils.DialogBtnCallBackInterface;
 import com.hcmus.shipe.R;
@@ -112,8 +113,16 @@ public class ShipperTaskDialog extends Dialog implements View.OnClickListener{
         totalPrice.setText(String.valueOf(task.getTotalPrice()));
         description.setText(task.getDescription());
 
-        Date date = ConversionUtils.DateTime.parseDate(task.getDeliverTime(), "yyyy-MM-dd HH:mm:ss.s");
-        deliveryDate.setText(ConversionUtils.DateTime.formatDate(date, "HH:mm dd/MM/yyyy"));
+        Date date = ConversionUtils.DateTime.parseDate(task.getDeliverTime(), Constant.dbDateFormat);
+        if (ConversionUtils.DateTime.isDateNull(date)){
+            //If date null
+            deliveryDate.setText(mContext.getResources().getString(R.string.bill_not_delivered));
+            deliveryDate.setTextColor(mContext.getResources().getColor(R.color.Gmail));
+        } else {
+            deliveryDate.setText(ConversionUtils.DateTime.formatDate(date, "HH:mm dd/MM/yyyy"));
+            deliveryDate.setTextColor(mContext.getResources().getColor(R.color.Line));
+        }
+
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

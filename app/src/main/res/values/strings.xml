@@ -18,6 +18,9 @@
     <string name="task_getting_msg">Getting</string>
     <string name="task_on_going_msg">On Going</string>
     <string name="task_complete_msg">Complete</string>
+    <string name="bill_not_delivered">Not delivered yet</string>
+    <string name="id">ID</string>
+    <string name="address_no_colon">Address</string>
 
     <!-- Manager -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
